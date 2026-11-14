@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abril Romero — ISO 9001</title>
-<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&amp;family=DM+Sans:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Professional warmth — earthy, trustworthy */
@@ -458,6 +459,53 @@ footer {
   .st-c { animation: none !important; }
 }
 
+/* ───────────── Pestañas y notas ───────────── */
+nav ul { align-items: center; white-space: nowrap; }
+nav li { flex-shrink: 0; }
+nav li.corner { position: sticky; right: 0; padding-left: 6px; background: var(--bg); }
+nav a[aria-current="page"] { color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); padding-bottom: 3px; }
+nav li.corner a { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); color: var(--text-mid); box-shadow: none; padding: 0; transition: color .2s, border-color .2s, background .2s; }
+nav li.corner a:hover, nav li.corner a[aria-current="page"] { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
+nav li.corner svg { width: 16px; height: 16px; }
+nav li.corner[data-vis="owner"] { display: none; }
+.owner nav li.corner[data-vis="owner"] { display: list-item; }
+.owner nav li.corner[data-vis="owner"] a { border-style: dashed; }
+#site > .tab-off { display: none !important; }
+#site > [data-block] { animation: tab-in .45s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes tab-in { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { #site > [data-block] { animation: none; } }
+
+.note-full { display: none; }
+body:not(.editing) .note:not(.note-open-item) { cursor: pointer; }
+body:not(.editing) .note:not(.note-open-item)::after { content: 'Leer nota →'; display: block; margin-top: 10px; font-size: 12px; font-weight: 500; color: var(--accent-text); opacity: .7; transition: opacity .2s, transform .2s; }
+body:not(.editing) .note:not(.note-open-item):hover::after { opacity: 1; transform: translateX(3px); }
+body.note-open .has-open-note > .wrap > :is(.s-title, .s-desc) { display: none; }
+body.note-open .has-open-note .notes-grid { display: block; }
+body.note-open .has-open-note .note:not(.note-open-item) { display: none; }
+body.note-open .has-open-note { background: var(--bg); }
+.note-open-item { background: none !important; border: none !important; padding: 0 !important; max-width: 680px; }
+.note-open-item .tag { font-size: 12px; margin-bottom: 14px; }
+.note-open-item h3 { font-family: var(--font-head); font-size: 32px; font-weight: 500; line-height: 1.25; margin-bottom: 12px; text-wrap: balance; }
+@media (max-width: 520px) { .note-open-item h3 { font-size: 26px; } }
+.note-open-item > p { font-size: 17px; color: var(--text-mid); line-height: 1.6; padding-bottom: 22px; margin-bottom: 26px; border-bottom: 1px solid var(--border); }
+.note-open-item .note-full { display: block; font-size: 16px; line-height: 1.8; color: var(--text); min-height: 1.8em; }
+body:not(.editing) .note-open-item .note-full:empty { display: none; }
+.note-full > * + * { margin-top: 14px; }
+.note-open-item .note-full p, .note-open-item .note-full li { font-size: inherit; color: inherit; line-height: inherit; }
+.note-full h3 { font-family: var(--font-head); font-size: 21px; font-weight: 500; line-height: 1.35; margin-top: 28px; }
+.note-full ul, .note-full ol { padding-left: 22px; }
+.note-full a { color: var(--accent); }
+.note-back { all: unset; box-sizing: border-box; cursor: pointer; display: block; width: max-content; font-size: 14px; color: var(--text-soft); margin-bottom: 26px; }
+.note-back:hover { color: var(--accent); }
+
+.note { position: relative; }
+.note[data-private]::before { content: ''; position: absolute; top: 16px; right: 16px; width: 14px; height: 14px; background: var(--text-soft);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 018 0v4'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 018 0v4'/%3E%3C/svg%3E") center / contain no-repeat; }
+.note-open-item[data-private]::before { display: none; }
+.priv-banner { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; font-size: 13.5px; line-height: 1.5; color: var(--text-mid); background: var(--card); border: 1px dashed var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; }
+.priv-banner button { all: unset; cursor: pointer; font-weight: 500; color: var(--accent); white-space: nowrap; }
+
 /* ───────────── Editor (solo visible en modo edición) ───────────── */
 .ed-ui { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.4; }
 body.editing { padding-bottom: 96px; }
@@ -547,6 +595,13 @@ body.ed-typing .ed-bar { display: none !important; }
 .editing :is([data-fx="circular"], [data-fx="curved"]) { cursor: pointer; border-radius: 12px; }
 .editing :is([data-fx="circular"], [data-fx="curved"]):hover { outline: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 6px; }
 .ed-fmt .sep { width: 1px; background: #3A342E; margin: 4px 3px; }
+.ed-fmt .doc-only { display: none; }
+.ed-fmt.doc button.doc-only { display: grid; }
+.ed-fmt.doc .sep.doc-only { display: block; }
+.ed-fmt.doc [data-f="fx"], .ed-fmt.doc .sep:not(.doc-only) { display: none; }
+.ed-open { all: unset; box-sizing: border-box; cursor: pointer; position: absolute; right: 10px; bottom: 10px; display: none; padding: 4px 10px; border-radius: 6px; background: var(--accent); color: #fff; font: 500 12px system-ui, sans-serif; }
+.editing .note:hover > .ed-open, .editing .note.ed-sel > .ed-open { display: block; }
+.note-open-item > :is(.ed-ibar, .ed-open) { display: none !important; }
 .ed-fx-tabs { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; margin-bottom: 16px; }
 .ed-fx-tabs button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 8px 0; font-size: 13px; }
 .ed-fx-tabs button.on { background: var(--accent); color: #fff; }
@@ -601,155 +656,161 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json="{&quot;accent&quot;:&quot;#B5623A&quot;,&quot;font&quot;:&quot;lora&quot;,&quot;radius&quot;:24,&quot;mode&quot;:&quot;auto&quot;}">:root{--accent:#B5623A;--accent-hover:color-mix(in srgb,#B5623A 82%,#000);--accent-light:color-mix(in srgb,#B5623A 12%,#fff);--accent-text:color-mix(in srgb,#B5623A 75%,#000);--r:24px;--font-head:'Lora', Georgia, serif;--font-body:'DM Sans', system-ui, sans-serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}}
-:root[data-theme="dark"]{--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}</style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
 </head>
 <body>
 <div id="site">
 
 <nav>
   <div class="inner">
-    <a href="#" class="logo" data-e="">Abril Romero</a>
+    <a href="#" class="logo" data-e>Abril Romero</a>
     <ul><li><a href="#servicios">Servicios</a></li><li><a href="#notas">Notas</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li></ul>
   </div>
 </nav>
 
-<section class="hero" data-block="">
+<section class="hero" data-block>
   <div class="wrap hero-wrap">
   <div class="hero-text">
-    <span class="label" data-e="">Auditora interna Ssr. ISO 9001</span>
-    <h1 data-e="" data-fx="split" data-fx-cfg="{&quot;effect&quot;: &quot;rise&quot;, &quot;splitType&quot;: &quot;chars&quot;, &quot;delay&quot;: 50, &quot;duration&quot;: 1.25, &quot;staggerFrom&quot;: &quot;start&quot;, &quot;trigger&quot;: &quot;view&quot;, &quot;hoverEffect&quot;: &quot;lift&quot;, &quot;loop&quot;: false, &quot;loopDelay&quot;: 1.5, &quot;mask&quot;: false, &quot;threshold&quot;: 0.1, &quot;rootMargin&quot;: -100}">Ayudo a las organizaciones a construir sistemas de calidad</h1>
-    <p class="sub" data-e="" data-ml="">Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
+    <span class="label" data-e>ISO 9001 internal auditor</span>
+    <h1 data-e data-fx="split" data-fx-cfg="{&quot;effect&quot;: &quot;rise&quot;, &quot;splitType&quot;: &quot;chars&quot;, &quot;delay&quot;: 50, &quot;duration&quot;: 1.25, &quot;staggerFrom&quot;: &quot;start&quot;, &quot;trigger&quot;: &quot;view&quot;, &quot;hoverEffect&quot;: &quot;lift&quot;, &quot;loop&quot;: false, &quot;loopDelay&quot;: 1.5, &quot;mask&quot;: false, &quot;threshold&quot;: 0.1, &quot;rootMargin&quot;: -100}">Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <p class="sub" data-e data-ml>Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
     <div class="creds" data-list="cred">
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">Auditora interna ISO 9001</span></span>
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">Introduccion a ISO 9001:2015</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Auditora interna ISO 9001</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Introduccion a ISO 9001:2015</span></span>
     </div>
   </div>
-    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;:&quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;,&quot;onHover&quot;:&quot;speedUp&quot;,&quot;direction&quot;:&quot;clockwise&quot;,&quot;spinDuration&quot;:20,&quot;size&quot;:200,&quot;fontSize&quot;:21,&quot;draggable&quot;:true,&quot;hoverTilt&quot;:20,&quot;tilt&quot;:0,&quot;fontWeight&quot;:900,&quot;letterSpacing&quot;:0,&quot;startAngle&quot;:0,&quot;repeat&quot;:1,&quot;fill&quot;:true,&quot;ring&quot;:false,&quot;center&quot;:&quot;IRAM&quot;,&quot;color&quot;:&quot;&quot;}"></div>
+    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;: &quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;, &quot;onHover&quot;: &quot;speedUp&quot;, &quot;direction&quot;: &quot;clockwise&quot;, &quot;spinDuration&quot;: 20, &quot;size&quot;: 200, &quot;fontSize&quot;: 24, &quot;draggable&quot;: true, &quot;hoverTilt&quot;: 20, &quot;tilt&quot;: 0, &quot;fontWeight&quot;: 900, &quot;letterSpacing&quot;: 0, &quot;startAngle&quot;: 0, &quot;repeat&quot;: 1, &quot;fill&quot;: true, &quot;ring&quot;: false, &quot;center&quot;: &quot;&quot;, &quot;color&quot;: &quot;&quot;}"></div>
   </div>
 </section>
 
+<section class="curve-section" data-block>
+  <div class="curve" data-fx="curved" data-fx-cfg="{&quot;text&quot;: &quot;Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦&quot;, &quot;shape&quot;: &quot;arc&quot;, &quot;speed&quot;: 2, &quot;curveAmount&quot;: 400, &quot;direction&quot;: &quot;left&quot;, &quot;fontSize&quot;: 96, &quot;fontWeight&quot;: 700, &quot;letterSpacing&quot;: 0, &quot;separator&quot;: &quot;&quot;, &quot;outline&quot;: false, &quot;scrollBoost&quot;: 0, &quot;edgeFade&quot;: 0, &quot;interactive&quot;: true, &quot;pauseOnHover&quot;: false, &quot;color&quot;: &quot;&quot;}"></div>
+</section>
 
-
-<section class="services-section" id="servicios" data-block="" data-nav="Servicios">
+<section class="services-section" id="servicios" data-block data-nav="Servicios">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Servicios</h2>
-    <p class="s-desc" data-e="" data-ml="">Lo que puedo hacer por tu organización.</p>
+    <h2 class="s-title" data-e>Servicios</h2>
+    <p class="s-desc" data-e data-ml>Lo que puedo hacer por tu organizacion.</p>
     <div class="services-grid" data-list="service">
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="M9 14l2 2 4-4"></path></svg></div>
-        <h3 data-e="">Auditorías internas</h3>
-        <p data-e="" data-ml="">Evaluación sistemática de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atención.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg></div>
+        <h3 data-e>Auditorias internas</h3>
+        <p data-e data-ml>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
-        <h3 data-e="">Preparación para certificación</h3>
-        <p data-e="" data-ml="">Te acompaño paso a paso para que tu empresa llegue lista al día de la auditoria de certificación, sin sorpresas.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3 data-e>Preparacion para certificacion</h3>
+        <p data-e data-ml>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
-        <h3 data-e="">Documentación del SGC</h3>
-        <p data-e="" data-ml="">Manuales, procedimientos, instructivos y registros.&nbsp;</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 data-e>Documentacion del SGC</h3>
+        <p data-e data-ml>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg></div>
-        <h3 data-e="">Capacitación</h3>
-        <p data-e="" data-ml="">Talleres y formación para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="notes-section" id="notas" data-block="" data-nav="Notas">
-  <div class="wrap">
-    <h2 class="s-title" data-e="">Notas de estudio</h2>
-    <p class="s-desc" data-e="" data-ml="">Apuntes de mis cursos y formación en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
-    <div class="notes-grid" data-list="note">
-      <div class="note" data-item="">
-        <span class="tag" data-e="">ISO 9001</span>
-        <h3 data-e="">Los 7 principios de calidad</h3>
-        <p data-e="" data-ml="">Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
-      </div>
-      <div class="note" data-item="">
-        <span class="tag" data-e="">Auditoria</span>
-        <h3 data-e="">Planificacion de auditorias</h3>
-        <p data-e="" data-ml="">Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
-      </div>
-      <div class="note" data-item="">
-        <span class="tag" data-e="">ISO 9001</span>
-        <h3 data-e="">No conformidades y acciones correctivas</h3>
-        <p data-e="" data-ml="">Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
-      </div>
-      <div class="note" data-item="">
-        <span class="tag" data-e="">Auditoria</span>
-        <h3 data-e="">Tecnicas de entrevista</h3>
-        <p data-e="" data-ml="">Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
-      </div>
-      <div class="note" data-item="">
-        <span class="tag" data-e="">Calidad</span>
-        <h3 data-e="">Mapeo de procesos</h3>
-        <p data-e="" data-ml="">Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
-      </div>
-      <div class="note" data-item="">
-        <span class="tag" data-e="">Auditoria</span>
-        <h3 data-e="">Informes y seguimiento</h3>
-        <p data-e="" data-ml="">Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3 data-e>Capacitacion</h3>
+        <p data-e data-ml>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="exp-section" id="experiencia" data-block="" data-nav="Experiencia">
+<section class="notes-section" id="notas" data-block data-nav="Notas" data-corner data-vis="owner">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Experiencia</h2>
-    <p class="s-desc" data-e="" data-ml="">Mi recorrido profesional.</p>
+    <h2 class="s-title" data-e>Notas de estudio</h2>
+    <p class="s-desc" data-e data-ml>Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
+    <div class="notes-grid" data-list="note" data-gid="gnotas">
+      <div class="note" data-item data-nid="n01" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>Los 7 principios de calidad</h3>
+        <p data-e data-ml>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n02" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Planificacion de auditorias</h3>
+        <p data-e data-ml>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n03" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>No conformidades y acciones correctivas</h3>
+        <p data-e data-ml>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n04" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Tecnicas de entrevista</h3>
+        <p data-e data-ml>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n05" data-private>
+        <span class="tag" data-e>Calidad</span>
+        <h3 data-e>Mapeo de procesos</h3>
+        <p data-e data-ml>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n06" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Informes y seguimiento</h3>
+        <p data-e data-ml>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="exp-section" id="experiencia" data-block data-nav="Experiencia">
+  <div class="wrap">
+    <h2 class="s-title" data-e>Experiencia</h2>
+    <p class="s-desc" data-e data-ml>Mi recorrido profesional.</p>
     <div class="timeline" data-list="job">
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2024 – hoy</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2024 – hoy</span>
         <div class="info">
-          <p class="role" data-e="">Auditora interna (intern)</p>
-          <p class="co" data-e="">[Nombre de la empresa]</p>
-          <p class="desc" data-e="" data-ml="">Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
+          <p class="role" data-e>Auditora interna (intern)</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
         </div>
       </div>
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2023 – 2024</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2023 – 2024</span>
         <div class="info">
-          <p class="role" data-e="">[Tu rol anterior]</p>
-          <p class="co" data-e="">[Nombre de la empresa]</p>
-          <p class="desc" data-e="" data-ml="">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Tu rol anterior]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2022 – 2023</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2022 – 2023</span>
         <div class="info">
-          <p class="role" data-e="">[Otro rol]</p>
-          <p class="co" data-e="">[Nombre de la empresa]</p>
-          <p class="desc" data-e="" data-ml="">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Otro rol]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="contact-section" id="contacto" data-block="" data-nav="Contacto">
+<section class="contact-section" id="contacto" data-block data-nav="Contacto">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Contacto</h2>
-    <p class="contact-intro" data-e="" data-ml="" data-fx="split" data-fx-cfg="{&quot;effect&quot;:&quot;rise&quot;,&quot;splitType&quot;:&quot;chars&quot;,&quot;delay&quot;:50,&quot;duration&quot;:1.25,&quot;staggerFrom&quot;:&quot;start&quot;,&quot;trigger&quot;:&quot;view&quot;,&quot;hoverEffect&quot;:&quot;lift&quot;,&quot;loop&quot;:false,&quot;loopDelay&quot;:1.5,&quot;mask&quot;:false,&quot;threshold&quot;:0.1,&quot;rootMargin&quot;:-100}">Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.</p>
+    <h2 class="s-title" data-e>Contacto</h2>
+    <p class="contact-intro" data-e data-ml>Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.</p>
     <div class="contact-row" data-list="contact">
-      <a href="mailto:tu@email.com" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 7l-10 6L2 7"></path></svg></span><span class="t" data-e="">tu@email.com</span></a>
-      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></span><span class="t" data-e="">LinkedIn</span></a>
-      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg></span><span class="t" data-e="">WhatsApp</span></a>
+      <a href="mailto:tu@email.com" class="c-link" data-item><span class="ic" data-slot data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span><span class="t" data-e>tu@email.com</span></a>
+      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item><span class="ic" data-slot data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span><span class="t" data-e>LinkedIn</span></a>
+      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item><span class="ic" data-slot data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="t" data-e>WhatsApp</span></a>
     </div>
     <div class="cta-box">
-      <p data-e="" data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultame sin compromiso</p>
-      <span class="small" data-e="">Respondo en menos de 24 horas</span>
+      <p data-e data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultame sin compromiso</p>
+      <span class="small" data-e>Respondo en menos de 24 horas</span>
     </div>
   </div>
 </section>
 
-<footer><span data-e="">Abril Romero · 2026</span></footer>
+<footer><span data-e>Abril Romero · 2026</span></footer>
 
 </div>
 
@@ -854,7 +915,7 @@ body.ed-typing .ed-bar { display: none !important; }
   /* ── Plantillas de elementos y secciones ── */
   const ITEM_TPL = {
     service: () => `<div class="service-card" data-item><div class="icon-wrap" data-slot data-icon="star">${svg('star')}</div><h3 data-e>Nuevo servicio</h3><p data-e data-ml>Describí brevemente en qué consiste.</p></div>`,
-    note: () => `<div class="note" data-item><span class="tag" data-e>Tema</span><h3 data-e>Nueva nota</h3><p data-e data-ml>Resumen breve.</p></div>`,
+    note: () => `<div class="note" data-item data-private><span class="tag" data-e>Tema</span><h3 data-e>Nueva nota</h3><p data-e data-ml>Resumen breve.</p><div class="note-full" data-e data-doc></div></div>`,
     job: () => `<div class="t-item" data-item><span class="dates" data-e>2025 – hoy</span><div class="info"><p class="role" data-e>Puesto</p><p class="co" data-e>Empresa</p><p class="desc" data-e data-ml>Responsabilidades y logros.</p></div></div>`,
     cred: () => `<span class="cred" data-item>${svg('check', 2.5)}<span class="t" data-e>Nueva credencial</span></span>`,
     contact: () => `<a href="#" class="c-link" data-item><span class="ic" data-slot data-icon="globe">${svg('globe')}</span><span class="t" data-e>Nuevo enlace</span></a>`,
@@ -874,7 +935,7 @@ body.ed-typing .ed-bar { display: none !important; }
   ];
 
   const PH = [['h1', 'Título principal'], ['h2', 'Título de sección'], ['h3', 'Título'], ['.label,.tag', 'Etiqueta'],
-              ['.dates', 'Fechas'], ['.role', 'Puesto'], ['.co', 'Empresa'], ['.t', 'Texto'], ['.logo', 'Tu nombre']];
+              ['.note-full', 'Escribí acá la nota completa… (Enter crea un párrafo nuevo)'], ['.dates', 'Fechas'], ['.role', 'Puesto'], ['.co', 'Empresa'], ['.t', 'Texto'], ['.logo', 'Tu nombre']];
   const phFor = el => (PH.find(([s]) => el.matches(s)) || [, 'Escribí algo…'])[1];
 
   /* ── Utilidades ── */
@@ -893,11 +954,22 @@ body.ed-typing .ed-bar { display: none !important; }
   function clean(node) {
     if (node === site) stopFx();
     node.querySelectorAll('[data-fx-src], .fx-prev, .st, .tf').forEach(restoreFx);
-    node.querySelectorAll('.ed-x').forEach(n => n.remove());
+    node.querySelectorAll('.ed-x, .rt').forEach(n => n.remove());
+    node.querySelectorAll('[aria-current]').forEach(n => n.removeAttribute('aria-current'));
     node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
       n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
     });
-    node.querySelectorAll('.ed-sel,.ed-dragging').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging'); if (!n.classList.length) n.removeAttribute('class'); });
+    node.querySelectorAll('.ed-sel,.ed-dragging,.tab-off,.note-open-item,.has-open-note').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note'); if (!n.classList.length) n.removeAttribute('class'); });
+  }
+  function rid() { return Math.random().toString(36).slice(2, 9); }
+  function normGrids(rootEl) {   // sin espacios sueltos entre notas: así la página pública y la privada se comparan bien
+    rootEl.querySelectorAll('.notes-grid').forEach(g => [...g.childNodes].forEach(c => { if (c.nodeType === 3 && !c.nodeValue.trim()) c.remove(); }));
+  }
+  function ensureIds(rootEl = site) {   // ids estables para las notas (necesarios para las notas privadas)
+    normGrids(rootEl);
+    const seen = new Set();
+    rootEl.querySelectorAll('.notes-grid').forEach(g => { if (!g.dataset.gid || seen.has(g.dataset.gid)) g.dataset.gid = 'g' + rid(); seen.add(g.dataset.gid); });
+    rootEl.querySelectorAll('.note').forEach(n => { if (!n.dataset.nid || seen.has(n.dataset.nid)) n.dataset.nid = 'n' + rid(); seen.add(n.dataset.nid); });
   }
   const serialize = () => { const c = site.cloneNode(true); clean(c); return c.innerHTML; };
   const cloneClean = n => { const w = mk('div'); w.appendChild(n.cloneNode(true)); clean(w); const c = w.firstElementChild; c.removeAttribute('id'); return c; };
@@ -1130,10 +1202,12 @@ body.ed-typing .ed-bar { display: none !important; }
     const text = mkText(), tp = document.createElementNS(NS, 'textPath'); tp.setAttribute('href', '#' + id); text.appendChild(tp); svg.appendChild(text);
     el.appendChild(svg);
     const unit = (c.text || '').trim() + (c.separator ? ' ' + c.separator.trim() + ' ' : ' ');
-    let spacing = 1, offset = 0, raf = 0, last = performance.now(), dir = c.direction === 'right' ? 1 : -1, drag = null, hover = false, boost = 0, lastY = scrollY, alive = true;
+    let pending = false, spacing = 1, offset = 0, raf = 0, last = performance.now(), dir = c.direction === 'right' ? 1 : -1, drag = null, hover = false, boost = 0, lastY = scrollY, alive = true;
     const layout = () => {
       if (!alive) return;
-      measure.textContent = unit; spacing = measure.getComputedTextLength() || 1;
+      measure.textContent = unit; const L = measure.getComputedTextLength();
+      if (!L) { pending = true; return; }   // pestaña oculta: se mide al mostrarse
+      pending = false; spacing = L;
       tp.textContent = unit.repeat(Math.ceil(path.getTotalLength() / spacing) + 2);
       offset = -spacing + (offset % spacing);
     };
@@ -1141,6 +1215,7 @@ body.ed-typing .ed-bar { display: none !important; }
     const still = reduceMotion();
     const tick = t => {
       const dt = Math.min(0.05, (t - last) / 1000); last = t;
+      if (pending && svg.getBoundingClientRect().width) layout();
       if (!drag && !still && !(c.pauseOnHover && hover)) offset += dir * (c.speed * 60 + boost) * dt;
       boost *= Math.pow(0.05, dt);
       while (offset <= -spacing) offset += spacing;
@@ -1330,10 +1405,12 @@ body.ed-typing .ed-bar { display: none !important; }
 
   /* ── Estado, borrador e historial ── */
   const stateStr = (html = serialize(), th = theme) => html + '\u0000' + JSON.stringify(normTheme(th));
+  ensureIds(); buildNav();
   let baseHash = hash(stateStr());        // huella del archivo tal como se cargó
   let editing = false, hist = [], fut = [], saveT = 0, pendingDraft = null, textPre = null, themePre = null;
   const cur = () => ({ html: serialize(), theme: { ...theme } });
 
+  const loadHash = baseHash;   // huella de la página pública tal como se cargó
   const draft = parse(store.get(KEY));
   if (draft && typeof draft.html === 'string') {
     if (draft.base === baseHash) {
@@ -1357,16 +1434,94 @@ body.ed-typing .ed-bar { display: none !important; }
   function undo() { if (!hist.length) return toast('No hay nada para deshacer'); fut.push(cur()); restore(hist.pop()); }
   function redo() { if (!fut.length) return toast('No hay nada para rehacer'); hist.push(cur()); restore(fut.pop()); }
 
-  /* ── Menú de navegación automático ── */
-  function buildNav() {
-    const ul = site.querySelector('nav ul'); if (!ul) return;
-    const used = new Set(); ul.innerHTML = '';
-    site.querySelectorAll('[data-block]').forEach(s => {
-      const n = s.dataset.nav; if (!n || s.hasAttribute('data-hidden')) return;
-      let id = slug(n) || 'seccion', b = id, i = 2; while (used.has(id)) id = b + '-' + i++;
-      used.add(id); s.id = id;
-      const li = mk('li', null, `<a href="#${id}"></a>`); li.firstChild.textContent = n; ul.appendChild(li);
+  /* ── Pestañas ──
+     Cada sección con nombre (data-nav) empieza una pestaña; las secciones sin nombre
+     pertenecen a la pestaña anterior. Las primeras secciones sin nombre forman «Inicio». */
+  function tabGroups(rootEl = site) {
+    const gs = []; let g = null;
+    rootEl.querySelectorAll(':scope > [data-block]').forEach(sec => {
+      if (sec.dataset.nav) {
+        g = { id: sec.id, head: sec, label: sec.dataset.nav, sections: [sec], corner: sec.hasAttribute('data-corner'), vis: sec.dataset.vis === 'owner' ? 'owner' : 'all' };
+        gs.push(g);
+      } else {
+        if (!g) { g = { id: 'inicio', head: null, label: 'Inicio', sections: [] }; gs.push(g); }
+        g.sections.push(sec);
+      }
     });
+    return gs;
+  }
+  function buildNav(rootEl = site) {
+    const ul = rootEl.querySelector('nav ul'); if (!ul) return;
+    const gs = tabGroups(rootEl), used = new Set(['inicio']), doc = ul.ownerDocument;
+    gs.forEach(g => {
+      if (!g.head) return;
+      let id = slug(g.label) || 'pestana', b = id, i = 2; while (used.has(id)) id = b + '-' + i++;
+      used.add(id); g.head.id = id; g.id = id;
+    });
+    const item = g => {
+      const li = doc.createElement('li'), a = doc.createElement('a'); a.setAttribute('href', '#' + g.id); li.appendChild(a);
+      if (g.corner) { li.className = 'corner'; li.setAttribute('data-vis', g.vis); a.setAttribute('title', g.label); a.setAttribute('aria-label', g.label); a.innerHTML = svg('book'); }
+      else a.textContent = g.label;
+      return li;
+    };
+    ul.innerHTML = '';
+    const shown = gs.filter(g => !g.head || !g.head.hasAttribute('data-hidden'));
+    shown.filter(g => !g.corner).forEach(g => ul.appendChild(item(g)));
+    shown.filter(g => g.corner).forEach(g => ul.appendChild(item(g)));
+  }
+  const isOwnerHere = () => editing || !!store.get(OWNER);
+  const canSee = g => !g.head || editing || (!g.head.hasAttribute('data-hidden') && (g.vis !== 'owner' || isOwnerHere()));
+  function noteList() {
+    const used = new Set();
+    return [...site.querySelectorAll('.note')].map(n => {
+      const h = n.querySelector('h3'); let id = slug(h ? h.textContent : '') || 'nota', b = id, i = 2;
+      while (used.has(id)) id = b + '-' + i++; used.add(id); return { el: n, id };
+    });
+  }
+  const noteId = n => (noteList().find(x => x.el === n) || {}).id || 'nota';
+  let lastShown = null, lastKey = '';
+  let privState = '';   // estado de las notas privadas: '', 'loading', 'ok', 'nogh', 'missing', 'error'
+  function applyTabs(scrollTop) {
+    const gs = tabGroups(); if (!gs.length) return;
+    const h = decodeURIComponent(location.hash.slice(1));
+    const wantNote = h.startsWith('nota/') ? h.slice(5) : null, wantTab = wantNote ? null : h;
+    let g = null, note = null;
+    if (wantNote) { note = (noteList().find(x => x.id === wantNote) || {}).el || null; if (note) g = gs.find(x => x.sections.some(sec => sec.contains(note))); }
+    if (!g && wantTab) g = gs.find(x => x.id === wantTab) || gs.find(x => x.sections.some(sec => sec.id === wantTab));
+    if (!g && lastShown && lastShown.isConnected && (wantTab || wantNote)) g = gs.find(x => x.sections.includes(lastShown));
+    if (!g || !canSee(g)) { g = gs.find(canSee) || gs[0]; note = null; }
+    gs.forEach(x => x.sections.forEach(sec => sec.classList.toggle('tab-off', x !== g)));
+    lastShown = g.sections[0];
+    site.querySelectorAll('nav ul a').forEach(a => a.getAttribute('href') === '#' + g.id ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+    // vista de una nota
+    site.querySelectorAll('.rt').forEach(n => n.remove());
+    site.querySelectorAll('.note-open-item, .has-open-note').forEach(n => n.classList.remove('note-open-item', 'has-open-note'));
+    body.classList.toggle('note-open', !!note);
+    if (note) {
+      note.classList.add('note-open-item'); note.closest('[data-block]').classList.add('has-open-note');
+      const back = mk('button', 'note-back rt'); back.type = 'button'; back.contentEditable = 'false'; back.textContent = '← Volver a ' + g.label;
+      back.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); location.hash = '#' + g.id; });
+      note.prepend(back);
+    }
+    if (isOwnerHere() && !note) {
+      const msg = { nogh: 'Tus notas privadas están guardadas en GitHub. Conectá GitHub en este navegador para verlas y editarlas.',
+        missing: typeof gh !== 'undefined' && gh ? notesRepoMsg(gh) : '', error: 'No pude traer tus notas privadas de GitHub. Revisá la conexión.',
+        loading: 'Cargando tus notas privadas…' }[privState] || '';
+      if (msg) site.querySelectorAll('.notes-grid').forEach(gr => {
+        const bn = mk('div', 'priv-banner rt'); bn.contentEditable = 'false'; bn.appendChild(mk('span')).textContent = msg;
+        if (privState !== 'loading') {
+          const bt = mk('button'); bt.type = 'button'; bt.textContent = privState === 'nogh' ? 'Conectar GitHub' : 'Revisar conexión';
+          bt.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); if (editing) openSetup(); else location.href = location.pathname + '?editar' + location.hash; });
+          bn.appendChild(bt);
+        }
+        gr.before(bn);
+      });
+    }
+    const proper = note ? '#nota/' + wantNote : '#' + g.id;
+    if (location.hash && location.hash !== proper && decodeURIComponent(location.hash) !== proper) history.replaceState(null, '', proper);
+    const key = note ? 'n:' + wantNote : 't:' + g.id;
+    if (scrollTop && key !== lastKey) scrollTo(0, 0);
+    lastKey = key;
   }
 
   /* ── Decoración del modo edición ── */
@@ -1389,18 +1544,24 @@ body.ed-typing .ed-bar { display: none !important; }
     site.querySelectorAll('[data-e]').forEach(el => { el.contentEditable = 'true'; el.spellcheck = true; el.setAttribute('data-ph', phFor(el)); });
     site.querySelectorAll('[data-block]').forEach(s => s.appendChild(sectionBar(s)));
     site.querySelectorAll('[data-item]').forEach(it => it.appendChild(itemBar(it)));
+    site.querySelectorAll('.note[data-item]').forEach(n => { const b = mk('button', 'ed-open ed-x', 'Abrir nota ↗'); b.type = 'button'; b.dataset.act = 'open'; b.contentEditable = 'false'; n.appendChild(b); });
     site.querySelectorAll('[data-list]').forEach(l => {
       if (!l.querySelector(':scope > [data-item]')) l.appendChild(mk('button', 'ed-add ed-x', '+ Agregar elemento')).setAttribute('data-act', 'additem');
     });
   }
-  function refresh() { clean(site); buildNav(); if (editing) decorate(); renderFx(); scheduleSave(); }
+  function refresh() { clean(site); ensureIds(); buildNav(); if (editing) decorate(); applyTabs(false); renderFx(); scheduleSave(); }
 
   function focusFirst(n) {
     const f = n.matches('[data-e]') ? n : n.querySelector('[data-e]'); if (!f) return;
     f.focus(); const r = document.createRange(); r.selectNodeContents(f); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
   }
   function move(el, dir) {
-    const sel = el.hasAttribute('data-block') ? '[data-block]' : '[data-item]';
+    if (el.hasAttribute('data-block')) {
+      const g = tabGroups().find(x => x.sections.includes(el)), sib = g && g.sections[g.sections.indexOf(el) + dir];
+      if (!sib || sib.dataset.nav) return toast(dir < 0 ? 'Ya está arriba de todo en esta pestaña' : 'Ya está abajo de todo en esta pestaña');
+      commit(); dir < 0 ? sib.before(el) : sib.after(el); refresh(); el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); return;
+    }
+    const sel = '[data-item]';
     const sib = dir < 0 ? el.previousElementSibling : el.nextElementSibling;
     if (!sib || !sib.matches(sel)) return;
     commit(); dir < 0 ? sib.before(el) : sib.after(el); refresh();
@@ -1425,19 +1586,41 @@ body.ed-typing .ed-bar { display: none !important; }
       { label: 'Mover después', fn: () => move(it, 1) },
       { label: 'Duplicar', fn: () => run('dup', it, null, b) }
     ];
+    if (it.matches('.note')) {
+      m.unshift({ label: 'Abrir nota', hint: 'Para escribir la nota completa', fn: () => run('open', it, null, b) });
+      const priv = it.hasAttribute('data-private');
+      m.splice(1, 0, { label: priv ? 'Hacer pública' : 'Hacer privada', hint: priv ? 'Se publica en la página: la puede leer cualquiera' : 'Se guarda en tu repositorio privado: solo vos la ves',
+        fn: () => { commit(); it.toggleAttribute('data-private'); refresh(); toast(priv ? 'La nota ahora es pública (se publica con la página).' : 'La nota ahora es privada (se guarda en tu repositorio privado).', [], 4500); } });
+    }
     if (it.matches('a')) m.push({ label: 'Cambiar enlace', hint: it.getAttribute('href') || '', fn: () => run('link', it, null, b) });
     if (it.querySelector('[data-slot]')) m.push({ label: 'Cambiar ícono', fn: () => run('icon', it, null, b) });
     m.push({ label: 'Eliminar', danger: true, fn: () => run('del', it, null, b) });
     return m;
   }
   function secMenu(sec, b) {
-    return [
-      { label: 'Subir sección', fn: () => move(sec, -1) },
-      { label: 'Bajar sección', fn: () => move(sec, 1) },
-      { label: 'Nombre en el menú', hint: sec.dataset.nav ? `Ahora: ${sec.dataset.nav}` : 'No aparece en el menú', fn: () => run('nav', sec, sec, b, true) },
-      { label: 'Duplicar sección', fn: () => run('dup', sec, sec, b, true) },
-      { label: 'Eliminar sección', danger: true, fn: () => run('del', sec, sec, b, true) }
-    ];
+    const g = tabGroups().find(x => x.sections.includes(sec)), head = !!sec.dataset.nav, m = [];
+    if (head) m.push({ label: 'Mover pestaña antes', fn: () => moveTab(sec, -1) }, { label: 'Mover pestaña después', fn: () => moveTab(sec, 1) });
+    else m.push({ label: 'Subir sección', fn: () => move(sec, -1) }, { label: 'Bajar sección', fn: () => move(sec, 1) });
+    m.push({ label: head ? 'Nombre de la pestaña' : 'Convertir en pestaña propia', hint: head ? `Ahora: ${sec.dataset.nav}. Vacío: se une a la pestaña anterior` : `Ahora es parte de «${g ? g.label : 'Inicio'}»`, fn: () => run('nav', sec, sec, b, true) });
+    if (head) {
+      const corner = sec.hasAttribute('data-corner');
+      m.push({ label: corner ? 'Volver a mostrar en el menú' : 'Mover al ícono de arriba a la derecha', hint: corner ? 'Vuelve a ser una pestaña común' : 'Sale del menú y se abre con un ícono',
+        fn: () => { commit(); sec.toggleAttribute('data-corner'); if (!sec.hasAttribute('data-corner')) sec.removeAttribute('data-vis'); refresh(); } });
+      if (corner) m.push({ label: 'Ícono visible para: ' + (sec.dataset.vis === 'owner' ? 'solo vos' : 'todos'), hint: 'Tocá para cambiar',
+        fn: () => { commit(); if (sec.dataset.vis === 'owner') sec.removeAttribute('data-vis'); else sec.dataset.vis = 'owner'; refresh();
+          toast(sec.dataset.vis === 'owner' ? 'Ahora el ícono se ve solo en tus navegadores (donde entraste con ?editar).' : 'Ahora todos ven el ícono.', [], 5000); } });
+    }
+    m.push({ label: 'Duplicar sección', fn: () => run('dup', sec, sec, b, true) },
+           { label: 'Eliminar sección', danger: true, fn: () => run('del', sec, sec, b, true) });
+    return m;
+  }
+  function moveTab(head, dir) {
+    const gs = tabGroups(), i = gs.findIndex(x => x.head === head), o = gs[i + dir];
+    if (i < 0 || !o || !o.head) return toast(dir < 0 ? 'Ya es la primera pestaña' : 'Ya es la última pestaña');
+    commit();
+    if (dir < 0) gs[i].sections.forEach(x => o.head.before(x));
+    else { const last = o.sections[o.sections.length - 1]; gs[i].sections.slice().reverse().forEach(x => last.after(x)); }
+    refresh(); toast('Pestaña movida');
   }
   function run(name, target, sec, b, isSec) {
     const it = target;
@@ -1456,12 +1639,19 @@ body.ed-typing .ed-bar { display: none !important; }
       }
       case 'hide': { commit(); sec = target; sec.toggleAttribute('data-hidden'); refresh(); toast(sec.hasAttribute('data-hidden') ? 'Sección oculta para visitantes' : 'Sección visible otra vez'); break; }
       case 'nav':
-        sec = target; askText(b, 'Nombre en el menú superior (dejalo vacío para que no aparezca)', sec.dataset.nav || '').then(v => {
-          if (v === null) return; commit(); v = v.trim(); if (v) sec.dataset.nav = v; else delete sec.dataset.nav; refresh();
+        sec = target; askText(b, 'Nombre de la pestaña (vacío: la sección se une a la pestaña anterior)', sec.dataset.nav || '').then(v => {
+          if (v === null) return; commit(); v = v.trim();
+          if (v) sec.dataset.nav = v; else { delete sec.dataset.nav; sec.removeAttribute('data-corner'); sec.removeAttribute('data-vis'); }
+          refresh(); if (v) location.hash = '#' + sec.id;
         }); break;
       case 'addsec':
         showMenu(b, SEC_TPL.map(t => ({ label: t.label, hint: t.hint, fn: () => {
-          commit(); const n = frag(t.html()); target.after(n); refresh(); n.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => focusFirst(n), 300);
+          commit(); const n = frag(t.html());
+          if (n.dataset.nav) { const g = tabGroups().find(x => x.sections.includes(target)); (g ? g.sections[g.sections.length - 1] : target).after(n); } else target.after(n);
+          refresh();
+          if (n.dataset.nav) { location.hash = '#' + n.id; toast(`Nueva pestaña «${n.dataset.nav}». Cambiale el nombre desde ⋮⋮ de la sección.`, [], 5000); }
+          else n.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => focusFirst(n), 350);
         } }))); break;
       case 'link':
         askText(b, 'Enlace: email, número de WhatsApp o dirección web', it.getAttribute('href') || '').then(v => {
@@ -1470,6 +1660,7 @@ body.ed-typing .ed-bar { display: none !important; }
           refresh();
         }); break;
       case 'icon': iconPicker(b, it.querySelector('[data-slot]')); break;
+      case 'open': location.hash = '#nota/' + noteId(it); break;
     }
   }
 
@@ -1518,6 +1709,7 @@ body.ed-typing .ed-bar { display: none !important; }
     '<button type="button" data-f="italic" title="Cursiva"><i>K</i></button>' +
     '<button type="button" data-f="link" title="Enlace">' + ui('link').replace('<svg', '<svg width="14" height="14"') + '</button>' +
     '<button type="button" data-f="clear" title="Quitar formato">✕</button>' +
+    '<span class="sep doc-only"></span><button type="button" class="doc-only" data-f="h" title="Subtítulo"><b>T</b></button><button type="button" class="doc-only" data-f="ul" title="Lista">• —</button>' +
     '<span class="sep"></span><button type="button" data-f="fx" title="Efecto de texto">✦ Efecto</button>');
   fmt.addEventListener('mousedown', e => e.preventDefault());
   fmt.addEventListener('click', e => {
@@ -1526,6 +1718,8 @@ body.ed-typing .ed-bar { display: none !important; }
     const host = hostOf(s.anchorNode);
     if (f === 'fx') { if (host) textFxMenu(b, host); return; }
     if (f === 'bold' || f === 'italic') document.execCommand(f);
+    if (f === 'h') { const v = String(document.queryCommandValue('formatBlock') || '').toLowerCase(); document.execCommand('formatBlock', false, v === 'h3' ? 'p' : 'h3'); }
+    if (f === 'ul') document.execCommand('insertUnorderedList');
     if (f === 'clear') { document.execCommand('removeFormat'); document.execCommand('unlink'); }
     if (f === 'link') {
       const range = s.getRangeAt(0).cloneRange();
@@ -1545,6 +1739,7 @@ body.ed-typing .ed-bar { display: none !important; }
     const host = s.rangeCount ? hostOf(s.anchorNode) : null;
     if (!host || host.classList.contains('fx-prev')) { if (!pop.contains(document.activeElement) && pop.style.display !== 'block') fmt.style.display = 'none'; return; }
     const r = s.isCollapsed ? host.getBoundingClientRect() : s.getRangeAt(0).getBoundingClientRect(); if (!r.width && !s.isCollapsed) return;
+    fmt.classList.toggle('doc', host.hasAttribute('data-doc'));
     fmt.style.display = 'flex';
     const want = s.isCollapsed ? r.left + scrollX : r.left + scrollX + r.width / 2 - fmt.offsetWidth / 2;
     const left = Math.max(scrollX + 8, Math.min(want, scrollX + innerWidth - fmt.offsetWidth - 8));
@@ -1598,6 +1793,7 @@ body.ed-typing .ed-bar { display: none !important; }
     '<div class="grp"><span class="gl">Modo para visitantes</span><div class="ed-seg" data-g="mode">' +
       '<button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>' +
     '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Al pasar el mouse sobre una tarjeta aparece a su izquierda una manija <b>⋮⋮</b>: arrastrala para mover, o hacé clic para duplicar, cambiar el ícono o borrar. Con <b>+</b> agregás uno nuevo debajo. Las secciones tienen su barra arriba a la derecha.</div>' +
+    '<div class="ed-hint"><b>Pestañas.</b> Cada sección con nombre es una pestaña del menú. Las secciones sin nombre forman parte de la pestaña anterior (las primeras, de «Inicio»). Desde ⋮⋮ de una sección podés renombrarla, moverla o mandarla al ícono de arriba a la derecha, como las Notas. Para abrir una nota y escribirla completa, tocá «Abrir nota».</div>' +
     '<div class="ed-hint"><b>Efectos.</b> Hacé clic en un texto y tocá <b>✦</b> en la barrita negra para darle un efecto (Split Text o True Focus). Los textos con efecto tienen un subrayado punteado. El texto circular y el texto en curva se ajustan haciéndoles clic; para agregar más, usá «Agregar sección».</div>' +
     '<div class="ed-hint"><b>Guardar y publicar.</b> Mientras editás, todo se guarda solo en este navegador. Para que lo vean los demás, tocá <b>Publicar</b>: se guarda en tu repositorio de GitHub y la página se actualiza en 1 o 2 minutos.</div>' +
     '<div class="ed-hint"><b>Volver a editar.</b> Agregá <b>?editar</b> al final de la dirección de tu página, o usá Ctrl/Cmd + Shift + E. Los visitantes nunca ven estas herramientas.</div>';
@@ -1627,7 +1823,10 @@ body.ed-typing .ed-bar { display: none !important; }
 
   /* ── Entrar / salir / exportar ── */
   function enterEdit() {
-    store.set(OWNER, '1'); buildUI(); editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
+    store.set(OWNER, '1'); buildUI(); editing = true; root.classList.add('owner'); body.classList.add('editing'); fab.classList.remove('show');
+    try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch (e) {}
+    if (!gh) privState = 'nogh'; else if (privState !== 'ok') privState = 'loading';
+    refresh();
     if (gh) syncFromGitHub().then(showPending); else showPending();
   }
   function showPending() {
@@ -1642,6 +1841,7 @@ body.ed-typing .ed-bar { display: none !important; }
      El token se guarda SOLO en este navegador (localStorage) y nunca va dentro de la página. */
   const GH_KEY = 'site-gh';
   let gh = parse(store.get(GH_KEY)), publishing = false;
+  if (gh && gh.notesRepo === undefined) gh.notesRepo = gh.repo + '-notas';
   function guessRepo() {
     const m = location.hostname.match(/^([^.]+)\.github\.io$/i); if (!m) return {};
     const seg = location.pathname.split('/').filter(Boolean)[0];
@@ -1676,17 +1876,83 @@ body.ed-typing .ed-bar { display: none !important; }
     catch (e) { if (e.status === 404) { await ghFetch(c, apiBase(c)); return null; } throw e; }
     const doc = new DOMParser().parseFromString(b64dec(d.content || ''), 'text/html');
     const s = doc.getElementById('site'); if (!s) return { sha: d.sha, html: null };
+    buildNav(s); normGrids(s);
     const te = doc.getElementById('theme-style');
     const th = normTheme(parse(te && te.getAttribute('data-json')));
-    return { sha: d.sha, html: s.innerHTML, theme: th, hash: hash(stateStr(s.innerHTML, th)) };
+    const pubHtml = s.innerHTML, leaked = s.querySelectorAll('.note[data-private]').length, notes = await getNotes(c);
+    if (notes.data) mergePrivate(s, notes.data);
+    return { sha: d.sha, html: s.innerHTML, theme: th, hash: hash(stateStr(s.innerHTML, th)), pubHash: hash(stateStr(pubHtml, th)), notes, leaked };
   }
+
+  /* ── Notas privadas ──
+     Las notas marcadas como privadas (data-private) nunca van en la página publicada: se guardan
+     en notas.json dentro de un repositorio PRIVADO aparte, y solo se traen con tu token. */
+  const NOTES_PATH = 'notas.json';
+  const notesRepoMsg = c => `No encontré tu repositorio de notas privadas «${(c && c.notesRepo) || 'sin configurar'}». Crealo en GitHub como privado y sumalo a tu token.`;
+  function splitPrivate(html) {
+    const t = document.createElement('template'); t.innerHTML = html; normGrids(t.content);
+    const priv = { version: 1, grids: {} }; let count = 0;
+    t.content.querySelectorAll('.notes-grid').forEach(g => {
+      const order = [], notes = {};
+      g.querySelectorAll(':scope > .note').forEach(n => { order.push(n.dataset.nid); if (n.hasAttribute('data-private')) { notes[n.dataset.nid] = n.outerHTML; n.remove(); count++; } });
+      if (Object.keys(notes).length) priv.grids[g.dataset.gid] = { order, notes };
+    });
+    return { pub: t.innerHTML, priv, count };
+  }
+  function mergePrivate(rootEl, data) {
+    if (!data || !data.grids) return 0;
+    let added = 0; const grids = [...rootEl.querySelectorAll('.notes-grid')];
+    Object.entries(data.grids).forEach(([gid, g]) => {
+      const grid = grids.find(x => x.dataset.gid === gid) || grids[0]; if (!grid) return;
+      const have = new Map([...grid.querySelectorAll(':scope > .note')].map(x => [x.dataset.nid, x]));
+      const tpl = document.createElement('template'), seq = [];
+      (g.order || []).forEach(id => {
+        if (have.has(id)) { seq.push(have.get(id)); have.delete(id); return; }
+        if (!g.notes || !g.notes[id] || rootEl.querySelector(`.note[data-nid="${id}"]`)) return;
+        tpl.innerHTML = g.notes[id]; const el = tpl.content.firstElementChild; if (el) { seq.push(el); added++; }
+      });
+      have.forEach(x => seq.push(x));
+      seq.forEach(x => grid.appendChild(x));
+    });
+    return added;
+  }
+  async function getNotes(c) {   // → { missing:true } | { sha, text, data }
+    if (!c || !c.notesRepo) return { missing: true };
+    const nc = Object.assign({}, c, { repo: c.notesRepo, path: NOTES_PATH });
+    try {
+      const d = await ghFetch(nc, apiFile(nc));
+      const text = b64dec(d.content || ''); return { sha: d.sha, text, data: parse(text) };
+    } catch (e) {
+      if (e.status !== 404) throw e;
+      try { await ghFetch(nc, apiBase(nc)); } catch (e2) { if (e2.status === 404) return { missing: true }; throw e2; }
+      return { sha: null, text: '', data: null };   // el repositorio existe pero todavía no tiene notas
+    }
+  }
+  function putNotes(c, text, sha) {
+    const nc = Object.assign({}, c, { repo: c.notesRepo, path: NOTES_PATH });
+    return ghFetch(nc, apiFile(nc), 'PUT', Object.assign({ message: 'Actualizar notas privadas', content: b64enc(text) }, sha ? { sha } : {}));
+  }
+  function warnNotesRepo() {
+    if (privState === 'missing' && site.querySelector('.note[data-private]'))
+      toast(notesRepoMsg(gh) + ' Hasta entonces no vas a poder publicar.', [{ label: 'Revisar conexión', fn: openSetup }], 0);
+  }
+  async function loadPrivateNotes() {   // dueña mirando la página sin editar
+    try {
+      const n = await getNotes(gh); if (editing) return;
+      privState = n.missing ? 'missing' : 'ok';
+      if (n.data) mergePrivate(site, n.data);
+    } catch (e) { if (editing) return; privState = 'error'; }
+    applyTabs(false);
+  }
+
 
   async function syncFromGitHub() {
     setStatus('Buscando la última versión…', false);
     let rem;
     try { rem = await getRemote(gh); } catch (e) { setStatus('Sin conexión con GitHub', true); toast(e.message, [{ label: 'Revisar', fn: openSetup }], 8000); return; }
     if (!editing) return;
-    if (!rem || !rem.html || rem.hash === baseHash) { scheduleSave(); return; }
+    privState = rem && rem.notes && rem.notes.missing ? 'missing' : 'ok';
+    if (!rem || !rem.html || rem.hash === baseHash) { applyTabs(false); scheduleSave(); warnNotesRepo(); return; }
     // La página cargada no es la última publicada (caché de GitHub Pages u otro dispositivo).
     const d = parse(store.get(KEY));
     const mine = d && d.base === rem.hash;           // cambios sin publicar hechos sobre la última versión
@@ -1697,7 +1963,9 @@ body.ed-typing .ed-bar { display: none !important; }
     hist.push(cur()); fut = [];
     site.innerHTML = src.html; theme = normTheme(src.theme); applyTheme(); syncPanel(); refresh();
     if (mine) pendingDraft = null;
-    toast(mine ? 'Retomé tus cambios sin publicar.' : 'Cargué la última versión publicada.', [], 4000);
+    const msg = mine ? 'Retomé tus cambios sin publicar.' : rem.pubHash !== loadHash ? 'Cargué la última versión publicada.' : '';
+    if (msg) toast(msg, [], 4000);
+    warnNotesRepo();
   }
 
   async function publish() {
@@ -1713,13 +1981,22 @@ body.ed-typing .ed-bar { display: none !important; }
           !confirm('La versión publicada cambió desde que abriste el editor (quizás la editaste desde otro dispositivo). ¿Reemplazarla con esta?')) {
         setStatus('Publicación cancelada', true); return;
       }
-      if (rem && rem.hash === mineHash) { baseHash = mineHash; scheduleSave(); toast('Ya está publicado: no hay cambios nuevos.'); return; }
+      if (rem && rem.hash === mineHash && !rem.leaked) { baseHash = mineHash; scheduleSave(); toast('Ya está publicado: no hay cambios nuevos.'); return; }
+      const { pub, priv, count } = splitPrivate(html);
+      const notes = rem ? rem.notes : await getNotes(gh);
+      const text = JSON.stringify(priv, null, 1) + '\n';
+      if (count || (notes && notes.sha)) {
+        if (!notes || notes.missing) throw new Error(notesRepoMsg(gh) + ' Hasta entonces no publico nada, para no perder tus notas privadas.');
+        if (notes.text !== text) { setStatus('Guardando notas privadas…', true); await putNotes(gh, text, notes.sha); }
+      }
+      setStatus('Publicando…', true);
       await ghFetch(gh, apiFile(gh), 'PUT', Object.assign({
-        message: 'Actualizar la página desde el editor', content: b64enc(buildHTML(html)), branch: gh.branch
+        message: 'Actualizar la página desde el editor', content: b64enc(buildHTML(pub)), branch: gh.branch
       }, rem ? { sha: rem.sha } : {}));
       baseHash = mineHash; pendingDraft = null; store.del(KEY);
       setStatus('Publicado', false);
-      toast('¡Publicado! GitHub Pages tarda 1 o 2 minutos en mostrar los cambios a los visitantes.', [], 7000);
+      privState = 'ok';
+      toast('¡Publicado! GitHub Pages tarda 1 o 2 minutos en mostrar los cambios a los visitantes.' + (count ? ` Tus ${count} notas privadas quedaron en «${gh.notesRepo}», fuera de la página.` : ''), [], 8000);
     } catch (e) {
       setStatus('No se pudo publicar', true);
       toast(e.message, [{ label: 'Revisar conexión', fn: openSetup }], 0);
@@ -1734,16 +2011,18 @@ body.ed-typing .ed-bar { display: none !important; }
     <label>Repositorio<input class="ed-in" name="repo" autocomplete="off" spellcheck="false"></label></div>
     <div class="ed-two"><label>Rama<input class="ed-in" name="branch" autocomplete="off" spellcheck="false"></label>
     <label>Archivo<input class="ed-in" name="path" autocomplete="off" spellcheck="false"></label></div>
+    <label>Repositorio de notas privadas<input class="ed-in" name="notesRepo" autocomplete="off" spellcheck="false" placeholder="miweb-notas">
+      <small style="display:block;font-weight:400;color:var(--text-soft);margin-top:4px">Tiene que ser <b>privado</b>. Ahí se guardan las notas privadas, nunca en la página publicada.</small></label>
     <label>Token de acceso <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">crear uno</a>
       <input class="ed-in" name="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
     <details class="ed-hint"><summary>Cómo crear el token (2 minutos)</summary><ol>
       <li>Tocá <b>crear uno</b> (arriba). Es la página de GitHub <i>Fine-grained personal access tokens</i>.</li>
       <li><b>Token name:</b> «Editor de mi web». <b>Expiration:</b> lo que prefieras (por ejemplo, 1 año).</li>
-      <li><b>Repository access:</b> «Only select repositories» y elegí el repositorio de tu web.</li>
+      <li><b>Repository access:</b> «Only select repositories» y elegí <b>los dos</b>: el de tu web y el de notas privadas. (Si ya tenés un token, podés editarlo en GitHub y sumarle el segundo repositorio).</li>
       <li><b>Permissions → Repository permissions → Contents:</b> «Read and write».</li>
       <li>Tocá <b>Generate token</b>, copialo y pegalo acá.</li>
     </ol></details>
-    <p class="ed-mtext" style="font-size:12.5px">El token queda guardado solo en este navegador y nunca se incluye en la página publicada. Como solo tiene acceso a este repositorio, si algún día lo perdés, borralo en GitHub y creá otro.</p>
+    <p class="ed-mtext" style="font-size:12.5px">El token queda guardado solo en este navegador y nunca se incluye en la página publicada. Como solo tiene acceso a esos dos repositorios, si algún día lo perdés, borralo en GitHub y creá otro.</p>
     <p class="ed-merr"></p>
     <div class="ed-mactions"><button type="button" class="ed-linkbtn" data-forget>Desconectar</button><button type="button" class="ed-btn" data-save>Probar y guardar</button></div>
   </div>`;
@@ -1753,6 +2032,7 @@ body.ed-typing .ed-bar { display: none !important; }
     buildUI(); closePop();
     const g = Object.assign({ branch: 'main', path: 'index.html' }, guessRepo(), gh || {});
     ['owner', 'repo', 'branch', 'path'].forEach(n => mf(n).value = g[n] || '');
+    mf('notesRepo').value = g.notesRepo !== undefined ? g.notesRepo : (g.repo ? g.repo + '-notas' : '');
     mf('token').value = ''; mf('token').placeholder = gh && gh.token ? 'Guardado (dejalo vacío para mantenerlo)' : 'github_pat_…';
     modal.querySelector('[data-forget]').style.visibility = gh ? 'visible' : 'hidden';
     merr.textContent = ''; merr.classList.remove('ok');
@@ -1770,13 +2050,18 @@ body.ed-typing .ed-bar { display: none !important; }
     const c = {
       owner: mf('owner').value.trim(), repo: mf('repo').value.trim().replace(/\.git$/, ''),
       branch: mf('branch').value.trim() || 'main', path: mf('path').value.trim().replace(/^\/+/, '') || 'index.html',
-      token: mf('token').value.trim() || (gh && gh.token) || ''
+      token: mf('token').value.trim() || (gh && gh.token) || '',
+      notesRepo: mf('notesRepo').value.trim().replace(/\.git$/, '')
     };
     if (!c.owner || !c.repo || !c.token) { merr.textContent = 'Completá usuario, repositorio y token.'; return; }
     sv.disabled = true; merr.classList.remove('ok'); merr.textContent = 'Probando la conexión…';
     try {
       const repo = await ghFetch(c, apiBase(c));
       if (repo && repo.permissions && repo.permissions.push === false) throw new Error('Tu usuario no tiene permiso de escritura en ese repositorio.');
+      if (c.notesRepo) {
+        const nr = await ghFetch(c, apiBase(Object.assign({}, c, { repo: c.notesRepo }))).catch(err => { throw err.status === 404 ? new Error(notesRepoMsg(c)) : err; });
+        if (nr && nr.private === false) throw new Error(`«${c.notesRepo}» es público: tus notas no estarían protegidas. En GitHub, cambialo a privado (Settings → Danger Zone → Change visibility).`);
+      }
       await getRemote(c);   // verifica la rama y que el archivo se pueda leer
       gh = c; store.set(GH_KEY, JSON.stringify(c));
       merr.classList.add('ok'); merr.textContent = 'Conectado ✓';
@@ -1790,24 +2075,23 @@ body.ed-typing .ed-bar { display: none !important; }
   });
   function exitEdit() {
     editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open'); closeFx();
-    fmt.style.display = 'none'; toastEl.classList.remove('show'); closeFx(); clean(site); renderFx(); fab.classList.add('show');
+    fmt.style.display = 'none'; toastEl.classList.remove('show'); closeFx(); clean(site); applyTabs(false); renderFx(); fab.classList.add('show');
     if (document.activeElement) document.activeElement.blur();
   }
   function buildHTML(html) {
     const doc = root.cloneNode(true);
     doc.querySelector('#site').innerHTML = html;
     doc.querySelectorAll('.ed-ui').forEach(n => n.remove());
-    const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev'); if (!b.classList.length) b.removeAttribute('class');
-    OLD_FX_ATTRS.forEach(a => doc.removeAttribute(a)); doc.classList.remove('anim-ready'); if (!doc.classList.length) doc.removeAttribute('class');
+    const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev', 'note-open'); if (!b.classList.length) b.removeAttribute('class');
+    OLD_FX_ATTRS.forEach(a => doc.removeAttribute(a)); doc.classList.remove('anim-ready', 'owner'); if (!doc.classList.length) doc.removeAttribute('class');
     return '<!DOCTYPE html>\n' + doc.outerHTML + '\n';
   }
   function exportHTML() {
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-    const html = serialize();
-    const out = buildHTML(html);
+    const out = buildHTML(splitPrivate(serialize()).pub);
     const a = mk('a'); a.href = URL.createObjectURL(new Blob([out], { type: 'text/html' })); a.download = 'index.html';
     body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    toast('Se descargó una copia de index.html. Para publicar, usá el botón Publicar.', [], 5000);
+    toast('Se descargó una copia de index.html, sin las notas privadas. Para publicar, usá el botón Publicar.', [], 5000);
   }
   function discard() {
     if (!confirm('¿Descartar todos los cambios que no descargaste? Se vuelve a la versión del archivo.')) return;
@@ -1848,6 +2132,7 @@ body.ed-typing .ed-bar { display: none !important; }
     if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); closeFx(); if (field) field.blur(); }
     if (field && !mod && e.key.length === 1) body.classList.add('ed-typing');
     if (field && e.key === 'Enter') {
+      if (field.hasAttribute('data-doc')) return;   // en la nota completa, Enter crea párrafos
       e.preventDefault();
       if (field.hasAttribute('data-ml') && e.shiftKey) document.execCommand('insertLineBreak');
       else if (field.hasAttribute('data-ml') && field.closest('.para')) { const it = field.closest('[data-item]'); commit(); const n = frag(ITEM_TPL.para()); n.querySelector('p').textContent = ''; it.after(n); refresh(); n.querySelector('[data-e]').focus(); }
@@ -1855,15 +2140,25 @@ body.ed-typing .ed-bar { display: none !important; }
       else field.blur();
     }
   });
-  site.addEventListener('focusin', e => { if (editing && e.target.closest('[data-e]')) textPre = cur(); });
+  site.addEventListener('focusin', e => {
+    if (!editing || !e.target.closest('[data-e]')) return;
+    textPre = cur();
+    const d = e.target.closest('[data-doc]');
+    if (d && !d.textContent.trim()) {   // la nota completa siempre arranca con un párrafo
+      d.innerHTML = '<p><br></p>'; const r = document.createRange(); r.setStart(d.firstChild, 0); r.collapse(true);
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
+  });
   site.addEventListener('focusout', e => {
+    const d = e.target.closest && e.target.closest('[data-doc]');
+    if (d && !d.textContent.trim() && !d.querySelector('img')) d.innerHTML = '';
     if (!editing || !textPre || !e.target.closest('[data-e]')) return;
     if (serialize() !== textPre.html) { hist.push(textPre); fut = []; }
     textPre = null;
   });
   site.addEventListener('input', e => {
     const f = e.target.closest && e.target.closest('[data-e]');
-    if (f && !f.textContent.trim() && !f.querySelector('img')) f.innerHTML = '';
+    if (f && !f.hasAttribute('data-doc') && !f.textContent.trim() && !f.querySelector('img')) f.innerHTML = '';
     scheduleSave();
   });
   site.addEventListener('paste', e => {
@@ -1878,7 +2173,7 @@ body.ed-typing .ed-bar { display: none !important; }
   site.addEventListener('mousedown', e => {
     const h = e.target.closest('[data-act="menu"]'); if (!h || !editing) return;
     const t = h.closest('.ed-sbar') ? h.closest('[data-block]') : h.closest('[data-item]');
-    if (t) t.draggable = true;
+    if (t && !(t.matches('[data-block]') && t.dataset.nav)) t.draggable = true;
   });
   document.addEventListener('mouseup', () => { if (!dragEl) site.querySelectorAll('[draggable="true"]').forEach(n => n.removeAttribute('draggable')); });
   site.addEventListener('dragstart', e => {
@@ -1894,20 +2189,32 @@ body.ed-typing .ed-bar { display: none !important; }
     const r = over.getBoundingClientRect(), pr = over.parentElement.getBoundingClientRect();
     const horiz = r.width < pr.width * 0.8;
     const after = horiz ? e.clientX > r.left + r.width / 2 : e.clientY > r.top + r.height / 2;
+    if (dragSel === '[data-block]' && (over.classList.contains('tab-off') || (over.dataset.nav && !after))) return;
     if (after && over.nextElementSibling !== dragEl) over.after(dragEl);
     else if (!after && over.previousElementSibling !== dragEl) over.before(dragEl);
   });
   site.addEventListener('drop', e => { if (dragEl) e.preventDefault(); });
   site.addEventListener('dragend', () => { if (!dragEl) return; dragEl.removeAttribute('draggable'); dragEl.classList.remove('ed-dragging'); dragEl = null; refresh(); });
 
+  site.addEventListener('click', e => {   // visitantes: tocar una nota la abre
+    if (editing) return;
+    const n = e.target.closest('.note'); if (!n || n.classList.contains('note-open-item') || e.target.closest('a, button')) return;
+    location.hash = '#nota/' + noteId(n);
+  });
+  addEventListener('hashchange', () => applyTabs(true));
+
   /* ── Arranque ── */
   body.appendChild(fab);
   OLD_FX_ATTRS.forEach(a => root.removeAttribute(a)); root.classList.remove('anim-ready'); if (!root.classList.length) root.removeAttribute('class');
+  if (store.get(OWNER)) root.classList.add('owner');
   fxReady = true;
   if (new URLSearchParams(location.search).has('editar')) enterEdit();
-  else { renderFx(); if (store.get(OWNER)) fab.classList.add('show'); }
+  else {
+    if (store.get(OWNER)) { fab.classList.add('show'); privState = gh ? 'loading' : 'nogh'; }
+    applyTabs(false); renderFx();
+    if (store.get(OWNER) && gh) loadPrivateNotes();
+  }
 })();
 </script>
-
-
-</body></html>
+</body>
+</html>
