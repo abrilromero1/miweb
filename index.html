@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abril Romero — ISO 9001</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Professional warmth — earthy, trustworthy */
@@ -22,6 +22,9 @@
   --green: #3D7A4A;
   --green-light: #E4F0E6;
   --green-text: #2B5933;
+  --r: 12px;
+  --font-head: 'Lora', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
   color-scheme: light;
 }
 
@@ -66,7 +69,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -89,7 +92,7 @@ nav .inner {
   height: 56px;
 }
 nav .logo {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--font-head);
   font-weight: 500;
   font-size: 18px;
   color: var(--accent);
@@ -108,8 +111,10 @@ nav a {
 }
 nav a:hover { color: var(--accent); }
 
+nav .inner { gap: 16px; }
+nav .logo { white-space: nowrap; }
 @media (max-width: 520px) {
-  nav ul { gap: 16px; }
+  nav ul { gap: 16px; overflow-x: auto; scrollbar-width: none; }
   nav a { font-size: 13px; }
 }
 
@@ -136,7 +141,7 @@ section { padding: 0 24px; }
   margin-bottom: 16px;
 }
 .hero h1 {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--font-head);
   font-size: 34px;
   font-weight: 500;
   line-height: 1.3;
@@ -175,7 +180,7 @@ section { padding: 0 24px; }
 }
 
 .s-title {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--font-head);
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 8px;
@@ -188,7 +193,7 @@ section { padding: 0 24px; }
   max-width: 560px;
 }
 
-.services-section {
+.services-section, .text-section {
   padding-top: 48px;
   padding-bottom: 48px;
   border-bottom: 1px solid var(--border);
@@ -203,13 +208,13 @@ section { padding: 0 24px; }
 .service-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--r);
   padding: 24px;
 }
 .service-card .icon-wrap {
   width: 40px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: max(0px, calc(var(--r) - 2px));
   background: var(--accent-light);
   display: flex;
   align-items: center;
@@ -232,6 +237,14 @@ section { padding: 0 24px; }
   line-height: 1.6;
 }
 
+.text-body { max-width: 640px; }
+.text-body p {
+  font-size: 16px;
+  color: var(--text-mid);
+}
+.para + .para { margin-top: 14px; }
+.text-body a, .desc a, .sub a, .s-desc a, .service-card p a, .note p a { color: var(--accent); }
+
 .notes-section {
   padding-top: 48px;
   padding-bottom: 48px;
@@ -246,7 +259,7 @@ section { padding: 0 24px; }
 .note {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: max(0px, calc(var(--r) - 2px));
   padding: 18px 20px;
   transition: border-color 0.2s;
 }
@@ -299,7 +312,7 @@ section { padding: 0 24px; }
 .t-item .info {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: max(0px, calc(var(--r) - 2px));
   padding: 18px 20px;
 }
 .t-item .role {
@@ -339,7 +352,7 @@ section { padding: 0 24px; }
   gap: 8px;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: max(0px, calc(var(--r) - 2px));
   padding: 12px 20px;
   font-size: 14px;
   color: var(--text);
@@ -347,6 +360,7 @@ section { padding: 0 24px; }
   transition: border-color 0.2s;
 }
 .c-link:hover { border-color: var(--accent); }
+.c-link .ic { display: inline-flex; }
 .c-link svg {
   width: 18px;
   height: 18px;
@@ -357,19 +371,20 @@ section { padding: 0 24px; }
 .cta-box {
   background: var(--accent-light);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--r);
   padding: 28px 32px;
   margin-top: 32px;
   text-align: center;
 }
+.text-section .cta-box { margin-top: 0; }
 .cta-box p {
-  font-family: 'Lora', Georgia, serif;
+  font-family: var(--font-head);
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 6px;
 }
 .cta-box .small {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   color: var(--text-mid);
   font-weight: 400;
@@ -382,179 +397,961 @@ footer {
   color: var(--text-soft);
   border-top: 1px solid var(--border);
 }
+
+[data-hidden] { display: none; }
+
+/* ───────────── Editor (solo visible en modo edición) ───────────── */
+.ed-ui { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.4; }
+body.editing { padding-bottom: 96px; }
+.editing [data-e] { outline: none; border-radius: 4px; transition: background .15s, box-shadow .15s; cursor: text; }
+.editing [data-e]:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.editing [data-e]:focus { background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent); }
+.editing [data-e]:empty::before { content: attr(data-ph); color: var(--text-soft); opacity: .7; }
+.editing [data-block] { position: relative; }
+.editing [data-block]:hover { outline: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: -1px; }
+.editing [data-item] { position: relative; }
+.editing [data-slot] { cursor: pointer; }
+.editing [data-hidden] { display: block !important; opacity: .45; }
+.editing [data-hidden]::before { content: 'Oculta para visitantes'; position: absolute; top: 10px; left: 10px; font: 500 11px system-ui, sans-serif; background: var(--text); color: var(--bg); padding: 3px 8px; border-radius: 6px; }
+.ed-dragging { opacity: .35; }
+
+.ed-bar { position: absolute; display: none; gap: 1px; padding: 3px; background: #24201C; border: 1px solid #3A342E; border-radius: 9px; box-shadow: 0 6px 18px rgba(0,0,0,.22); z-index: 20; user-select: none; }
+.ed-bar button, .ed-toolbar button, .ed-fmt button { all: unset; box-sizing: border-box; cursor: pointer; }
+.ed-bar button { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; color: #CFC5BA; }
+.ed-bar button:hover { background: rgba(255,255,255,.12); color: #fff; }
+.ed-bar button[data-act="drag"] { cursor: grab; }
+.ed-bar button[data-act="del"]:hover { background: #7A2E22; }
+.ed-bar svg, .ed-toolbar svg { width: 15px; height: 15px; }
+.ed-ibar { top: -15px; right: 6px; }
+.ed-sbar { top: 10px; right: 10px; }
+.editing [data-item]:hover > .ed-ibar, .editing [data-item].ed-sel > .ed-ibar,
+.editing [data-block]:hover > .ed-sbar, .editing [data-block].ed-sel > .ed-sbar { display: flex; }
+.ed-add { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 18px; border: 1.5px dashed var(--border); border-radius: max(0px, calc(var(--r) - 2px)); color: var(--text-soft); font: 500 13px system-ui, sans-serif; }
+.ed-add:hover { border-color: var(--accent); color: var(--accent); }
+
+.ed-toolbar { position: fixed; left: 50%; width: max-content; bottom: 16px; transform: translateX(-50%); display: none; align-items: center; gap: 2px; background: #1E1B18; color: #E5DDD4; padding: 6px; border-radius: 14px; border: 1px solid #3A342E; box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 50; max-width: calc(100vw - 24px); flex-wrap: wrap; justify-content: center; }
+.editing .ed-toolbar { display: flex; }
+.ed-toolbar button { padding: 8px 11px; border-radius: 9px; font-size: 13px; display: inline-flex; gap: 6px; align-items: center; color: #E5DDD4; }
+.ed-toolbar button:hover { background: rgba(255,255,255,.1); }
+.ed-toolbar .primary { background: var(--accent); color: #fff; }
+.ed-toolbar .primary:hover { background: var(--accent-hover); }
+.ed-status { font-size: 12px; color: #A89888; padding: 0 10px 0 8px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.ed-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #5CAA6A; }
+.ed-status.dirty::before { background: #E0A04C; }
+.ed-sep { width: 1px; height: 20px; background: #3A342E; margin: 0 4px; }
+@media (max-width: 620px) { .ed-toolbar .lbl { display: none; } .ed-status { display: none; } .ed-sep { display: none; } }
+
+.ed-fab { all: unset; box-sizing: border-box; position: fixed; right: 16px; bottom: 16px; z-index: 50; cursor: pointer; background: #1E1B18; color: #E5DDD4; border: 1px solid #3A342E; padding: 10px 16px; border-radius: 999px; font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.25); display: none; align-items: center; gap: 8px; }
+.ed-fab svg { width: 14px; height: 14px; }
+.ed-fab.show { display: inline-flex; }
+
+.ed-fmt { position: absolute; z-index: 60; display: none; gap: 1px; padding: 3px; background: #1E1B18; border: 1px solid #3A342E; border-radius: 9px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.ed-fmt button { min-width: 30px; height: 28px; padding: 0 8px; display: grid; place-items: center; border-radius: 6px; color: #E5DDD4; font-size: 13px; }
+.ed-fmt button:hover { background: rgba(255,255,255,.12); }
+
+.ed-pop { position: absolute; z-index: 70; display: none; background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 14px 36px rgba(0,0,0,.2); padding: 6px; min-width: 220px; max-width: calc(100vw - 16px); }
+.ed-pop .mi { all: unset; box-sizing: border-box; display: block; width: 100%; padding: 8px 10px; border-radius: 7px; font-size: 13px; cursor: pointer; }
+.ed-pop .mi small { display: block; color: var(--text-soft); font-size: 12px; }
+.ed-pop .mi:hover { background: var(--accent-light); }
+.ed-pop .ed-lbl { display: block; font-size: 12px; color: var(--text-soft); padding: 4px 4px 6px; }
+.ed-pop .ed-row { display: flex; gap: 6px; }
+.ed-in { flex: 1; min-width: 0; font: 14px system-ui, sans-serif; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); outline: none; }
+.ed-in:focus { border-color: var(--accent); }
+.ed-btn { all: unset; box-sizing: border-box; cursor: pointer; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 13px; }
+.ed-icons { display: grid; grid-template-columns: repeat(6, 34px); gap: 4px; }
+.ed-icons button { all: unset; cursor: pointer; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; color: var(--accent); }
+.ed-icons button:hover { background: var(--accent-light); }
+.ed-icons svg { width: 18px; height: 18px; }
+
+.ed-panel { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; max-width: 100vw; background: var(--card); color: var(--text); border-left: 1px solid var(--border); z-index: 65; padding: 20px 22px 110px; overflow-y: auto; transform: translateX(105%); transition: transform .22s ease; box-shadow: -10px 0 30px rgba(0,0,0,.08); }
+.ed-panel.open { transform: none; }
+.ed-panel h3 { font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.ed-panel h3 button { all: unset; cursor: pointer; font-size: 20px; color: var(--text-soft); padding: 0 4px; }
+.ed-panel .grp { margin-bottom: 22px; }
+.ed-panel .gl { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-soft); margin-bottom: 8px; }
+.ed-sw { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.ed-sw button { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+.ed-sw button.on { box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--text); }
+.ed-sw input[type=color] { width: 32px; height: 32px; border: none; background: none; padding: 0; cursor: pointer; }
+.ed-opts { display: grid; gap: 6px; }
+.ed-opts button { all: unset; box-sizing: border-box; cursor: pointer; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px; font-size: 13px; display: flex; justify-content: space-between; }
+.ed-opts button small { color: var(--text-soft); }
+.ed-opts button.on { border-color: var(--accent); background: var(--accent-light); }
+.ed-seg { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+.ed-seg button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 8px 0; font-size: 13px; }
+.ed-seg button.on { background: var(--accent); color: #fff; }
+.ed-panel input[type=range] { width: 100%; accent-color: var(--accent); }
+.ed-hint { font-size: 12.5px; color: var(--text-mid); background: var(--bg-alt); border-radius: 10px; padding: 12px 14px; line-height: 1.55; }
+.ed-hint b { font-weight: 600; }
+.ed-hint + .ed-hint { margin-top: 8px; }
+
+.ed-modal { position: fixed; inset: 0; z-index: 90; background: rgba(20,18,16,.45); display: none; align-items: center; justify-content: center; padding: 16px; }
+.ed-modal.open { display: flex; }
+.ed-dialog { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 14px; width: 440px; max-width: 100%; max-height: calc(100vh - 32px); overflow-y: auto; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+.ed-dialog h3 { font-size: 17px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.ed-dialog h3 button { all: unset; cursor: pointer; font-size: 22px; color: var(--text-soft); padding: 0 4px; }
+.ed-mtext { font-size: 13.5px; color: var(--text-mid); margin-bottom: 16px; }
+.ed-dialog label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-mid); margin-bottom: 12px; }
+.ed-dialog label a { font-weight: 400; color: var(--accent); margin-left: 6px; }
+.ed-dialog label .ed-in { display: block; width: 100%; margin-top: 5px; font-weight: 400; }
+.ed-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ed-dialog details { margin-bottom: 12px; }
+.ed-dialog summary { cursor: pointer; font-weight: 600; }
+.ed-dialog ol { padding-left: 18px; margin-top: 8px; }
+.ed-dialog li + li { margin-top: 4px; }
+.ed-merr { font-size: 13px; color: #C0412B; min-height: 1em; margin-bottom: 10px; }
+.ed-merr.ok { color: var(--green-text); }
+.ed-mactions { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.ed-linkbtn { all: unset; cursor: pointer; font-size: 13px; color: var(--text-soft); }
+.ed-linkbtn:hover { color: #C0412B; }
+.ed-btn[disabled] { opacity: .6; pointer-events: none; }
+.ed-toolbar button[disabled] { opacity: .6; pointer-events: none; }
+
+.ed-toast { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 80; background: #1E1B18; color: #E5DDD4; border: 1px solid #3A342E; padding: 10px 14px; border-radius: 10px; font-size: 13px; display: none; align-items: center; gap: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.3); max-width: calc(100vw - 24px); }
+.ed-toast.show { display: flex; }
+.ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
 </head>
 <body>
+<div id="site">
 
 <nav>
   <div class="inner">
-    <a href="#" class="logo">Abril Romero</a>
-    <ul>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#notas">Notas</a></li>
-      <li><a href="#experiencia">Experiencia</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
+    <a href="#" class="logo" data-e>Abril Romero</a>
+    <ul><li><a href="#servicios">Servicios</a></li><li><a href="#notas">Notas</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li></ul>
   </div>
 </nav>
 
-<section class="hero">
+<section class="hero" data-block>
   <div class="wrap">
-    <span class="label">ISO 9001 internal auditor</span>
-    <h1>Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
-    <p class="sub">
-      Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.
-    </p>
-    <div class="creds">
-      <span class="cred">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Auditora interna ISO 9001
-      </span>
-      <span class="cred">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Introduccion a ISO 9001:2015
-      </span>
+    <span class="label" data-e>ISO 9001 internal auditor</span>
+    <h1 data-e>Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <p class="sub" data-e data-ml>Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
+    <div class="creds" data-list="cred">
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Auditora interna ISO 9001</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Introduccion a ISO 9001:2015</span></span>
     </div>
   </div>
 </section>
 
-<section class="services-section" id="servicios">
+<section class="services-section" id="servicios" data-block data-nav="Servicios">
   <div class="wrap">
-    <h2 class="s-title">Servicios</h2>
-    <p class="s-desc">Lo que puedo hacer por tu organizacion.</p>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
-        </div>
-        <h3>Auditorias internas</h3>
-        <p>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
+    <h2 class="s-title" data-e>Servicios</h2>
+    <p class="s-desc" data-e data-ml>Lo que puedo hacer por tu organizacion.</p>
+    <div class="services-grid" data-list="service">
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg></div>
+        <h3 data-e>Auditorias internas</h3>
+        <p data-e data-ml>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
       </div>
-      <div class="service-card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <h3>Preparacion para certificacion</h3>
-        <p>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3 data-e>Preparacion para certificacion</h3>
+        <p data-e data-ml>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
       </div>
-      <div class="service-card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>Documentacion del SGC</h3>
-        <p>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 data-e>Documentacion del SGC</h3>
+        <p data-e data-ml>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
       </div>
-      <div class="service-card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <h3>Capacitacion</h3>
-        <p>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3 data-e>Capacitacion</h3>
+        <p data-e data-ml>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="notes-section" id="notas">
+<section class="notes-section" id="notas" data-block data-nav="Notas">
   <div class="wrap">
-    <h2 class="s-title">Notas de estudio</h2>
-    <p class="s-desc">Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
-    <div class="notes-grid">
-      <div class="note">
-        <span class="tag">ISO 9001</span>
-        <h3>Los 7 principios de calidad</h3>
-        <p>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
+    <h2 class="s-title" data-e>Notas de estudio</h2>
+    <p class="s-desc" data-e data-ml>Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
+    <div class="notes-grid" data-list="note">
+      <div class="note" data-item>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>Los 7 principios de calidad</h3>
+        <p data-e data-ml>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
       </div>
-      <div class="note">
-        <span class="tag">Auditoria</span>
-        <h3>Planificacion de auditorias</h3>
-        <p>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
+      <div class="note" data-item>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Planificacion de auditorias</h3>
+        <p data-e data-ml>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
       </div>
-      <div class="note">
-        <span class="tag">ISO 9001</span>
-        <h3>No conformidades y acciones correctivas</h3>
-        <p>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
+      <div class="note" data-item>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>No conformidades y acciones correctivas</h3>
+        <p data-e data-ml>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
       </div>
-      <div class="note">
-        <span class="tag">Auditoria</span>
-        <h3>Tecnicas de entrevista</h3>
-        <p>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
+      <div class="note" data-item>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Tecnicas de entrevista</h3>
+        <p data-e data-ml>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
       </div>
-      <div class="note">
-        <span class="tag">Calidad</span>
-        <h3>Mapeo de procesos</h3>
-        <p>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
+      <div class="note" data-item>
+        <span class="tag" data-e>Calidad</span>
+        <h3 data-e>Mapeo de procesos</h3>
+        <p data-e data-ml>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
       </div>
-      <div class="note">
-        <span class="tag">Auditoria</span>
-        <h3>Informes y seguimiento</h3>
-        <p>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+      <div class="note" data-item>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Informes y seguimiento</h3>
+        <p data-e data-ml>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="exp-section" id="experiencia">
+<section class="exp-section" id="experiencia" data-block data-nav="Experiencia">
   <div class="wrap">
-    <h2 class="s-title">Experiencia</h2>
-    <p class="s-desc">Mi recorrido profesional.</p>
-    <div class="timeline">
-      <div class="t-item">
-        <span class="dates">2024 – hoy</span>
+    <h2 class="s-title" data-e>Experiencia</h2>
+    <p class="s-desc" data-e data-ml>Mi recorrido profesional.</p>
+    <div class="timeline" data-list="job">
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2024 – hoy</span>
         <div class="info">
-          <p class="role">Auditora interna (intern)</p>
-          <p class="co">[Nombre de la empresa]</p>
-          <p class="desc">Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
+          <p class="role" data-e>Auditora interna (intern)</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
         </div>
       </div>
-      <div class="t-item">
-        <span class="dates">2023 – 2024</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2023 – 2024</span>
         <div class="info">
-          <p class="role">[Tu rol anterior]</p>
-          <p class="co">[Nombre de la empresa]</p>
-          <p class="desc">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Tu rol anterior]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
-      <div class="t-item">
-        <span class="dates">2022 – 2023</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2022 – 2023</span>
         <div class="info">
-          <p class="role">[Otro rol]</p>
-          <p class="co">[Nombre de la empresa]</p>
-          <p class="desc">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Otro rol]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="contact-section" id="contacto">
+<section class="contact-section" id="contacto" data-block data-nav="Contacto">
   <div class="wrap">
-    <h2 class="s-title">Contacto</h2>
-    <p class="contact-intro">
-      Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.
-    </p>
-    <div class="contact-row">
-      <a href="mailto:tu@email.com" class="c-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
-        tu@email.com
-      </a>
-      <a href="https://linkedin.com/in/tu-perfil" class="c-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://wa.me/54XXXXXXXXXX" class="c-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        WhatsApp
-      </a>
+    <h2 class="s-title" data-e>Contacto</h2>
+    <p class="contact-intro" data-e data-ml>Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.</p>
+    <div class="contact-row" data-list="contact">
+      <a href="mailto:tu@email.com" class="c-link" data-item><span class="ic" data-slot data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span><span class="t" data-e>tu@email.com</span></a>
+      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item><span class="ic" data-slot data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span><span class="t" data-e>LinkedIn</span></a>
+      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item><span class="ic" data-slot data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="t" data-e>WhatsApp</span></a>
     </div>
     <div class="cta-box">
-      <p>Consultame sin compromiso</p>
-      <span class="small">Respondo en menos de 24 horas</span>
+      <p data-e>Consultame sin compromiso</p>
+      <span class="small" data-e>Respondo en menos de 24 horas</span>
     </div>
   </div>
 </section>
 
-<footer>Abril Romero · 2026</footer>
+<footer><span data-e>Abril Romero · 2026</span></footer>
 
+</div>
+
+<script>
+/* Editor visual de la página.
+   Visitantes: no ven nada de esto.
+   Para editar: abrí la página con ?editar al final de la dirección (o Ctrl/Cmd + Shift + E). */
+(() => {
+  const site = document.getElementById('site');
+  const root = document.documentElement;
+  const body = document.body;
+  const KEY = 'site-draft-v1', OWNER = 'site-owner';
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } },
+    del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  const parse = s => { try { return s ? JSON.parse(s) : null; } catch (e) { return null; } };
+
+  /* ── Íconos de contenido (se pueden elegir desde la página) ── */
+  const ICONS = {
+    check: '<polyline points="20 6 9 17 4 12"/>',
+    clipboard: '<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/>',
+    pen: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>',
+    file: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    users: '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+    search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+    chart: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+    trending: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    target: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    award: '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
+    star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+    book: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+    bulb: '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z"/>',
+    calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+    pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
+    mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/>',
+    linkedin: '<path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+    whatsapp: '<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>',
+    instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>',
+    globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>',
+    phone: '<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+    download: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+    heart: '<path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/>'
+  };
+  const svg = (n, w = 2) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${ICONS[n] || ICONS.check}</svg>`;
+
+  /* ── Íconos de la interfaz del editor ── */
+  const UI = {
+    drag: '<circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/>',
+    plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+    copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
+    trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>',
+    up: '<polyline points="18 15 12 9 6 15"/>',
+    down: '<polyline points="6 9 12 15 18 9"/>',
+    link: '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+    eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+    eyeoff: '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22"/>',
+    menu: '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>',
+    addsec: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+    undo: '<path d="M3 7v6h6"/><path d="M21 17a9 9 0 00-15-6.7L3 13"/>',
+    redo: '<path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0115-6.7L21 13"/>',
+    palette: '<circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2a10 10 0 000 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4A5.6 5.6 0 0022 9.9C22 5.5 17.5 2 12 2z"/>',
+    download: ICONS.download,
+    upload: '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+    more: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+    pen: ICONS.pen
+  };
+  const ui = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${UI[n]}</svg>`;
+
+  /* ── Tipografías ── */
+  const FONTS = {
+    lora:      { name: 'Lora + DM Sans', note: 'cálida', head: "'Lora', Georgia, serif", body: "'DM Sans', system-ui, sans-serif", url: 'family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400' },
+    playfair:  { name: 'Playfair + Inter', note: 'elegante', head: "'Playfair Display', Georgia, serif", body: "'Inter', system-ui, sans-serif", url: 'family=Playfair+Display:wght@400;500&family=Inter:wght@400;500' },
+    fraunces:  { name: 'Fraunces + Work Sans', note: 'editorial', head: "'Fraunces', Georgia, serif", body: "'Work Sans', system-ui, sans-serif", url: 'family=Fraunces:wght@400;500&family=Work+Sans:wght@400;500' },
+    baskerville:{ name: 'Libre Baskerville + Source Sans', note: 'clásica', head: "'Libre Baskerville', Georgia, serif", body: "'Source Sans 3', system-ui, sans-serif", url: 'family=Libre+Baskerville&family=Source+Sans+3:wght@400;500' },
+    grotesk:   { name: 'Space Grotesk + Inter', note: 'moderna', head: "'Space Grotesk', system-ui, sans-serif", body: "'Inter', system-ui, sans-serif", url: 'family=Space+Grotesk:wght@400;500&family=Inter:wght@400;500' },
+    outfit:    { name: 'Outfit', note: 'limpia', head: "'Outfit', system-ui, sans-serif", body: "'Outfit', system-ui, sans-serif", url: 'family=Outfit:wght@400;500' }
+  };
+  const PRESETS = ['#B5623A', '#2F6F62', '#2B5C8A', '#7A4E9C', '#B0475B', '#4A4540'];
+  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto' };
+
+  /* ── Plantillas de elementos y secciones ── */
+  const ITEM_TPL = {
+    service: () => `<div class="service-card" data-item><div class="icon-wrap" data-slot data-icon="star">${svg('star')}</div><h3 data-e>Nuevo servicio</h3><p data-e data-ml>Describí brevemente en qué consiste.</p></div>`,
+    note: () => `<div class="note" data-item><span class="tag" data-e>Tema</span><h3 data-e>Nueva nota</h3><p data-e data-ml>Resumen breve.</p></div>`,
+    job: () => `<div class="t-item" data-item><span class="dates" data-e>2025 – hoy</span><div class="info"><p class="role" data-e>Puesto</p><p class="co" data-e>Empresa</p><p class="desc" data-e data-ml>Responsabilidades y logros.</p></div></div>`,
+    cred: () => `<span class="cred" data-item>${svg('check', 2.5)}<span class="t" data-e>Nueva credencial</span></span>`,
+    contact: () => `<a href="#" class="c-link" data-item><span class="ic" data-slot data-icon="globe">${svg('globe')}</span><span class="t" data-e>Nuevo enlace</span></a>`,
+    para: () => `<div class="para" data-item><p data-e data-ml>Nuevo párrafo.</p></div>`
+  };
+  const shell = (cls, nav, title, desc, inner) =>
+    `<section class="${cls}" data-block data-nav="${nav}"><div class="wrap"><h2 class="s-title" data-e>${title}</h2><p class="s-desc" data-e data-ml>${desc}</p>${inner}</div></section>`;
+  const SEC_TPL = [
+    { label: 'Texto', hint: 'Párrafos libres, ej. «Sobre mí»', html: () => `<section class="text-section" data-block data-nav="Sobre mí"><div class="wrap"><h2 class="s-title" data-e>Sobre mí</h2><div class="text-body" data-list="para">${ITEM_TPL.para().replace('Nuevo párrafo.', 'Contá quién sos, cómo trabajás y qué te diferencia.')}</div></div></section>` },
+    { label: 'Tarjetas con ícono', hint: 'Servicios, beneficios, metodología', html: () => shell('services-section', 'Sección', 'Nueva sección', 'Una frase que introduzca la sección.', `<div class="services-grid" data-list="service">${ITEM_TPL.service()}${ITEM_TPL.service()}</div>`) },
+    { label: 'Notas con etiqueta', hint: 'Apuntes, artículos, recursos', html: () => shell('notes-section', 'Recursos', 'Recursos', 'Una frase que introduzca la sección.', `<div class="notes-grid" data-list="note">${ITEM_TPL.note()}${ITEM_TPL.note()}${ITEM_TPL.note()}</div>`) },
+    { label: 'Línea de tiempo', hint: 'Experiencia, formación, cursos', html: () => shell('exp-section', 'Formación', 'Formación', 'Cursos y certificaciones.', `<div class="timeline" data-list="job">${ITEM_TPL.job()}</div>`) },
+    { label: 'Enlaces de contacto', hint: 'Email, redes, WhatsApp', html: () => shell('contact-section', 'Contacto', 'Contacto', 'Escribime por cualquiera de estos medios.', `<div class="contact-row" data-list="contact">${ITEM_TPL.contact()}</div>`) },
+    { label: 'Destacado', hint: 'Recuadro con una frase importante', html: () => `<section class="text-section" data-block><div class="wrap"><div class="cta-box"><p data-e>Una frase destacada</p><span class="small" data-e>Un detalle que la complemente</span></div></div></section>` }
+  ];
+
+  const PH = [['h1', 'Título principal'], ['h2', 'Título de sección'], ['h3', 'Título'], ['.label,.tag', 'Etiqueta'],
+              ['.dates', 'Fechas'], ['.role', 'Puesto'], ['.co', 'Empresa'], ['.t', 'Texto'], ['.logo', 'Tu nombre']];
+  const phFor = el => (PH.find(([s]) => el.matches(s)) || [, 'Escribí algo…'])[1];
+
+  /* ── Utilidades ── */
+  const frag = html => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+  const mk = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  const hash = s => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+  const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const normLink = v => {
+    v = v.trim(); if (!v) return '#';
+    if (/^(https?:|mailto:|tel:|#)/i.test(v)) return v;
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'mailto:' + v;
+    if (/^\+?[\d\s().-]{8,}$/.test(v)) return 'https://wa.me/' + v.replace(/\D/g, '');
+    return 'https://' + v;
+  };
+
+  function clean(node) {
+    node.querySelectorAll('.ed-x').forEach(n => n.remove());
+    node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
+      n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
+    });
+    node.querySelectorAll('.ed-sel,.ed-dragging').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging'); if (!n.classList.length) n.removeAttribute('class'); });
+  }
+  const serialize = () => { const c = site.cloneNode(true); clean(c); return c.innerHTML; };
+  const cloneClean = n => { const w = mk('div'); w.appendChild(n.cloneNode(true)); clean(w); const c = w.firstElementChild; c.removeAttribute('id'); return c; };
+
+  /* ── Tema ── */
+  const themeEl = document.getElementById('theme-style');
+  const fontLink = document.getElementById('font-link');
+  let theme = Object.assign({}, DEFAULT_THEME, parse(themeEl.dataset.json));
+
+  function themeCSS(t) {
+    const a = t.accent, f = FONTS[t.font] || FONTS.lora;
+    const light = `--accent:${a};--accent-hover:color-mix(in srgb,${a} 82%,#000);--accent-light:color-mix(in srgb,${a} 12%,#fff);--accent-text:color-mix(in srgb,${a} 75%,#000);`;
+    const dark = `--accent:color-mix(in srgb,${a} 72%,#fff);--accent-hover:color-mix(in srgb,${a} 62%,#fff);--accent-light:color-mix(in srgb,${a} 20%,#141210);--accent-text:color-mix(in srgb,${a} 72%,#fff);`;
+    return `:root{${light}--r:${t.radius}px;--font-head:${f.head};--font-body:${f.body}}\n` +
+           `@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){${dark}}}\n` +
+           `:root[data-theme="dark"]{${dark}}`;
+  }
+  function applyTheme() {
+    themeEl.textContent = themeCSS(theme);
+    themeEl.dataset.json = JSON.stringify(theme);
+    const f = FONTS[theme.font] || FONTS.lora;
+    const href = `https://fonts.googleapis.com/css2?${f.url}&display=swap`;
+    if (fontLink.getAttribute('href') !== href) fontLink.setAttribute('href', href);
+    if (theme.mode === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', theme.mode);
+  }
+
+  /* ── Estado, borrador e historial ── */
+  const stateStr = (html = serialize(), th = theme) => html + '\u0000' + JSON.stringify(Object.assign({}, DEFAULT_THEME, th));
+  let baseHash = hash(stateStr());        // huella del archivo tal como se cargó
+  let editing = false, hist = [], fut = [], saveT = 0, pendingDraft = null, textPre = null, themePre = null;
+  const cur = () => ({ html: serialize(), theme: { ...theme } });
+
+  const draft = parse(store.get(KEY));
+  if (draft && typeof draft.html === 'string') {
+    if (draft.base === baseHash) {
+      site.innerHTML = draft.html; theme = Object.assign({}, DEFAULT_THEME, draft.theme); applyTheme();
+    } else {
+      pendingDraft = draft; store.set(KEY + '-prev', JSON.stringify(draft));
+    }
+  }
+
+  function scheduleSave() {
+    clearTimeout(saveT);
+    saveT = setTimeout(() => {
+      const html = serialize();
+      if (hash(stateStr(html)) === baseHash) { if (!pendingDraft) store.del(KEY); setStatus('Sin cambios', false); return; }
+      const ok = store.set(KEY, JSON.stringify({ base: baseHash, html, theme, t: Date.now() }));
+      setStatus(ok ? 'Guardado en este navegador' : 'No se pudo guardar — descargá el HTML', true);
+    }, 350);
+  }
+  function commit() { hist.push(cur()); if (hist.length > 150) hist.shift(); fut = []; }
+  function restore(s) { site.innerHTML = s.html; theme = Object.assign({}, DEFAULT_THEME, s.theme); applyTheme(); syncPanel(); refresh(); }
+  function undo() { if (!hist.length) return toast('No hay nada para deshacer'); fut.push(cur()); restore(hist.pop()); }
+  function redo() { if (!fut.length) return toast('No hay nada para rehacer'); hist.push(cur()); restore(fut.pop()); }
+
+  /* ── Menú de navegación automático ── */
+  function buildNav() {
+    const ul = site.querySelector('nav ul'); if (!ul) return;
+    const used = new Set(); ul.innerHTML = '';
+    site.querySelectorAll('[data-block]').forEach(s => {
+      const n = s.dataset.nav; if (!n || s.hasAttribute('data-hidden')) return;
+      let id = slug(n) || 'seccion', b = id, i = 2; while (used.has(id)) id = b + '-' + i++;
+      used.add(id); s.id = id;
+      const li = mk('li', null, `<a href="#${id}"></a>`); li.firstChild.textContent = n; ul.appendChild(li);
+    });
+  }
+
+  /* ── Decoración del modo edición ── */
+  const btn = (act, icon, title) => `<button type="button" data-act="${act}" title="${title}">${ui(icon)}</button>`;
+  function itemBar(it) {
+    const b = mk('div', 'ed-bar ed-ibar ed-x',
+      btn('drag', 'drag', 'Arrastrar para mover') + btn('up', 'up', 'Mover antes') + btn('down', 'down', 'Mover después') +
+      btn('add', 'plus', 'Agregar uno nuevo debajo') + btn('dup', 'copy', 'Duplicar') +
+      (it.matches('a') ? btn('link', 'link', 'Cambiar enlace') : '') +
+      (it.querySelector('[data-slot]') ? btn('icon', 'icon', 'Cambiar ícono') : '') +
+      btn('del', 'trash', 'Eliminar'));
+    b.contentEditable = 'false'; return b;
+  }
+  function sectionBar(s) {
+    const hidden = s.hasAttribute('data-hidden');
+    const b = mk('div', 'ed-bar ed-sbar ed-x',
+      btn('drag', 'drag', 'Arrastrar sección') + btn('up', 'up', 'Subir sección') + btn('down', 'down', 'Bajar sección') +
+      btn('addsec', 'addsec', 'Agregar sección debajo') +
+      (s.querySelector('[data-list]') ? btn('additem', 'plus', 'Agregar elemento') : '') +
+      btn('nav', 'menu', 'Nombre en el menú') +
+      btn('hide', hidden ? 'eye' : 'eyeoff', hidden ? 'Mostrar a visitantes' : 'Ocultar a visitantes') +
+      btn('dup', 'copy', 'Duplicar sección') + btn('del', 'trash', 'Eliminar sección'));
+    b.contentEditable = 'false'; return b;
+  }
+  function decorate() {
+    site.querySelectorAll('[data-e]').forEach(el => { el.contentEditable = 'true'; el.spellcheck = true; el.setAttribute('data-ph', phFor(el)); });
+    site.querySelectorAll('[data-block]').forEach(s => s.appendChild(sectionBar(s)));
+    site.querySelectorAll('[data-item]').forEach(it => it.appendChild(itemBar(it)));
+    site.querySelectorAll('[data-list]').forEach(l => {
+      if (!l.querySelector(':scope > [data-item]')) l.appendChild(mk('button', 'ed-add ed-x', '+ Agregar elemento')).setAttribute('data-act', 'additem');
+    });
+  }
+  function refresh() { clean(site); buildNav(); if (editing) decorate(); scheduleSave(); }
+
+  function focusFirst(n) {
+    const f = n.matches('[data-e]') ? n : n.querySelector('[data-e]'); if (!f) return;
+    f.focus(); const r = document.createRange(); r.selectNodeContents(f); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  function move(el, dir) {
+    const sel = el.hasAttribute('data-block') ? '[data-block]' : '[data-item]';
+    const sib = dir < 0 ? el.previousElementSibling : el.nextElementSibling;
+    if (!sib || !sib.matches(sel)) return;
+    commit(); dir < 0 ? sib.before(el) : sib.after(el); refresh();
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function act(name, b) {
+    const isSec = !!b.closest('.ed-sbar');
+    const sec = b.closest('[data-block]');
+    const it = isSec ? null : b.closest('[data-item]');
+    const target = isSec ? sec : it;
+    switch (name) {
+      case 'drag': break;
+      case 'up': move(target, -1); break;
+      case 'down': move(target, 1); break;
+      case 'dup': { commit(); const c = cloneClean(target); target.after(c); refresh(); break; }
+      case 'del': { commit(); target.remove(); refresh(); toast(isSec ? 'Sección eliminada' : 'Elemento eliminado', [{ label: 'Deshacer', fn: undo }]); break; }
+      case 'add': {
+        const tpl = ITEM_TPL[it.parentElement.dataset.list]; if (!tpl) return;
+        commit(); const n = frag(tpl()); it.after(n); refresh(); focusFirst(n); break;
+      }
+      case 'additem': {
+        const list = b.closest('[data-list]') || sec.querySelector('[data-list]'); const tpl = list && ITEM_TPL[list.dataset.list]; if (!tpl) return;
+        commit(); const n = frag(tpl()); list.appendChild(n); refresh(); focusFirst(n); break;
+      }
+      case 'hide': { commit(); sec.toggleAttribute('data-hidden'); refresh(); toast(sec.hasAttribute('data-hidden') ? 'Sección oculta para visitantes' : 'Sección visible otra vez'); break; }
+      case 'nav':
+        askText(b, 'Nombre en el menú superior (dejalo vacío para que no aparezca)', sec.dataset.nav || '').then(v => {
+          if (v === null) return; commit(); v = v.trim(); if (v) sec.dataset.nav = v; else delete sec.dataset.nav; refresh();
+        }); break;
+      case 'addsec':
+        showMenu(b, SEC_TPL.map(t => ({ label: t.label, hint: t.hint, fn: () => {
+          commit(); const n = frag(t.html()); sec.after(n); refresh(); n.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => focusFirst(n), 300);
+        } }))); break;
+      case 'link':
+        askText(b, 'Enlace: email, número de WhatsApp o dirección web', it.getAttribute('href') || '').then(v => {
+          if (v === null) return; commit(); const h = normLink(v); it.setAttribute('href', h);
+          if (/^https?:/i.test(h)) { it.target = '_blank'; it.rel = 'noopener'; } else { it.removeAttribute('target'); it.removeAttribute('rel'); }
+          refresh();
+        }); break;
+      case 'icon': iconPicker(b, it.querySelector('[data-slot]')); break;
+    }
+  }
+
+  /* ── Popovers: menú, pregunta de texto, selector de íconos ── */
+  const pop = mk('div', 'ed-pop ed-ui');
+  let popCancel = null;
+  function openPop(anchor) {
+    pop.style.display = 'block';
+    const r = anchor.getBoundingClientRect();
+    let left = r.left + scrollX; const maxL = scrollX + innerWidth - pop.offsetWidth - 8;
+    left = Math.max(scrollX + 8, Math.min(left, maxL));
+    let top = r.bottom + scrollY + 6;
+    if (r.bottom + pop.offsetHeight + 12 > innerHeight && r.top > pop.offsetHeight + 12) top = r.top + scrollY - pop.offsetHeight - 6;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+  }
+  function closePop() { if (pop.style.display !== 'block') return; pop.style.display = 'none'; const c = popCancel; popCancel = null; if (c) c(); }
+  function showMenu(anchor, items) {
+    closePop(); pop.innerHTML = '';
+    items.forEach(i => { const m = mk('button', 'mi'); m.type = 'button'; m.textContent = i.label; if (i.hint) m.appendChild(mk('small')).textContent = i.hint; m.onclick = () => { closePop(); i.fn(); }; pop.appendChild(m); });
+    openPop(anchor);
+  }
+  function askText(anchor, label, value) {
+    closePop();
+    return new Promise(res => {
+      pop.innerHTML = `<label class="ed-lbl"></label><div class="ed-row"><input class="ed-in" type="text"><button type="button" class="ed-btn">Listo</button></div>`;
+      pop.querySelector('.ed-lbl').textContent = label;
+      const inp = pop.querySelector('input'); inp.value = value;
+      let done = false; const fin = v => { if (done) return; done = true; popCancel = null; pop.style.display = 'none'; res(v); };
+      popCancel = () => fin(null);
+      pop.querySelector('.ed-btn').onclick = () => fin(inp.value);
+      inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); fin(inp.value); } if (e.key === 'Escape') { e.stopPropagation(); fin(null); } };
+      openPop(anchor); inp.focus(); inp.select();
+    });
+  }
+  function iconPicker(anchor, slot) {
+    if (!slot) return; closePop();
+    pop.innerHTML = '<label class="ed-lbl">Elegí un ícono</label><div class="ed-icons"></div>';
+    const g = pop.querySelector('.ed-icons');
+    Object.keys(ICONS).forEach(n => { const b = mk('button', null, svg(n)); b.type = 'button'; b.title = n; b.onclick = () => { commit(); slot.innerHTML = svg(n); slot.dataset.icon = n; closePop(); refresh(); }; g.appendChild(b); });
+    openPop(anchor);
+  }
+
+  /* ── Barra de formato de texto ── */
+  const fmt = mk('div', 'ed-fmt ed-ui',
+    '<button type="button" data-f="bold" title="Negrita"><b>N</b></button>' +
+    '<button type="button" data-f="italic" title="Cursiva"><i>K</i></button>' +
+    '<button type="button" data-f="link" title="Enlace">' + ui('link').replace('<svg', '<svg width="14" height="14"') + '</button>' +
+    '<button type="button" data-f="clear" title="Quitar formato">✕</button>');
+  fmt.addEventListener('mousedown', e => e.preventDefault());
+  fmt.addEventListener('click', e => {
+    const b = e.target.closest('[data-f]'); if (!b) return;
+    const f = b.dataset.f, s = getSelection(); if (!s.rangeCount) return;
+    const host = hostOf(s.anchorNode);
+    if (f === 'bold' || f === 'italic') document.execCommand(f);
+    if (f === 'clear') { document.execCommand('removeFormat'); document.execCommand('unlink'); }
+    if (f === 'link') {
+      const range = s.getRangeAt(0).cloneRange();
+      const prev = (s.anchorNode.parentElement && s.anchorNode.parentElement.closest('a')) ? s.anchorNode.parentElement.closest('a').getAttribute('href') : '';
+      askText(b, 'Enlace (vacío para quitarlo)', prev || '').then(v => {
+        if (v === null) return; if (host) host.focus(); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        if (v.trim()) document.execCommand('createLink', false, normLink(v)); else document.execCommand('unlink');
+        scheduleSave();
+      });
+    }
+    scheduleSave();
+  });
+  const hostOf = n => { const el = n && (n.nodeType === 1 ? n : n.parentElement); const h = el && el.closest('[data-e]'); return h && site.contains(h) ? h : null; };
+  document.addEventListener('selectionchange', () => {
+    if (!editing) return;
+    const s = getSelection();
+    if (!s.rangeCount || s.isCollapsed || !hostOf(s.anchorNode)) { if (!pop.contains(document.activeElement)) fmt.style.display = 'none'; return; }
+    const r = s.getRangeAt(0).getBoundingClientRect(); if (!r.width) return;
+    fmt.style.display = 'flex';
+    const left = Math.max(scrollX + 8, Math.min(r.left + scrollX + r.width / 2 - fmt.offsetWidth / 2, scrollX + innerWidth - fmt.offsetWidth - 8));
+    fmt.style.left = left + 'px'; fmt.style.top = (r.top + scrollY - fmt.offsetHeight - 8) + 'px';
+  });
+
+  /* ── Barra inferior, panel de diseño, avisos ── */
+  const toolbar = mk('div', 'ed-toolbar ed-ui',
+    '<span class="ed-status">Sin cambios</span><span class="ed-sep"></span>' +
+    `<button type="button" data-t="undo" title="Deshacer (Ctrl+Z)">${ui('undo')}</button>` +
+    `<button type="button" data-t="redo" title="Rehacer (Ctrl+Shift+Z)">${ui('redo')}</button>` +
+    `<button type="button" data-t="design">${ui('palette')}<span class="lbl">Diseño</span></button>` +
+    `<button type="button" data-t="view">${ui('eye')}<span class="lbl">Ver como visitante</span></button>` +
+    `<button type="button" data-t="publish" class="primary" title="Publicar en GitHub Pages">${ui('upload')}<span class="lbl">Publicar</span></button>` +
+    `<button type="button" data-t="more" title="Más opciones">${ui('more')}</button>`);
+  const statusEl = toolbar.querySelector('.ed-status');
+  function setStatus(t, dirty) { statusEl.textContent = t; statusEl.classList.toggle('dirty', !!dirty); }
+  toolbar.addEventListener('click', e => {
+    const b = e.target.closest('[data-t]'); if (!b) return;
+    ({ undo, redo, publish, view: exitEdit,
+       design: () => panel.classList.toggle('open'),
+       more: () => showMenu(b, [
+         { label: 'Conexión con GitHub', hint: gh ? `${gh.owner}/${gh.repo} · ${gh.branch}` : 'Todavía no está configurada', fn: openSetup },
+         { label: 'Descargar HTML', hint: 'Copia de respaldo en tu computadora', fn: exportHTML },
+         { label: 'Descartar cambios no descargados', hint: 'Vuelve a la versión del archivo', fn: discard },
+         ...(store.get(KEY + '-prev') ? [{ label: 'Recuperar borrador anterior', hint: 'El último que no coincidía con el archivo', fn: recoverPrev }] : []),
+         { label: 'Ocultar el botón «Editar» en este navegador', hint: 'Seguís pudiendo entrar con ?editar', fn: () => { store.del(OWNER); toast('Listo. Entrá con ?editar cuando quieras.'); } },
+         { label: 'Cómo funciona', fn: () => { panel.classList.add('open'); panel.querySelector('.ed-hint').scrollIntoView(); } }
+       ]) })[b.dataset.t]();
+  });
+
+  const fab = mk('button', 'ed-fab ed-ui', ui('pen') + 'Editar página');
+  fab.type = 'button'; fab.onclick = () => enterEdit();
+
+  const toastEl = mk('div', 'ed-toast ed-ui'); let toastT = 0;
+  function toast(msg, actions = [], ms = 3500) {
+    toastEl.innerHTML = ''; toastEl.appendChild(mk('span')).textContent = msg;
+    actions.forEach(a => { const b = mk('button'); b.type = 'button'; b.textContent = a.label; b.onclick = () => { toastEl.classList.remove('show'); a.fn(); }; toastEl.appendChild(b); });
+    toastEl.classList.add('show'); clearTimeout(toastT); if (ms) toastT = setTimeout(() => toastEl.classList.remove('show'), ms);
+  }
+
+  const panel = mk('div', 'ed-panel ed-ui');
+  panel.innerHTML =
+    '<h3>Diseño <button type="button" data-close title="Cerrar">×</button></h3>' +
+    '<div class="grp"><span class="gl">Color principal</span><div class="ed-sw">' +
+      PRESETS.map(c => `<button type="button" data-c="${c}" style="background:${c}" title="${c}"></button>`).join('') +
+      '<input type="color" title="Elegir otro color"></div></div>' +
+    '<div class="grp"><span class="gl">Tipografía</span><div class="ed-opts" data-g="font">' +
+      Object.entries(FONTS).map(([k, f]) => `<button type="button" data-v="${k}">${f.name}<small>${f.note}</small></button>`).join('') + '</div></div>' +
+    '<div class="grp"><span class="gl">Bordes redondeados</span><input type="range" min="0" max="24" step="1"></div>' +
+    '<div class="grp"><span class="gl">Modo para visitantes</span><div class="ed-seg" data-g="mode">' +
+      '<button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>' +
+    '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Pasá el mouse sobre una tarjeta o sección para moverla, duplicarla, ocultarla o borrarla. Arrastrá desde <b>⋮⋮</b> para reordenar.</div>' +
+    '<div class="ed-hint"><b>Guardar y publicar.</b> Mientras editás, todo se guarda solo en este navegador. Para que lo vean los demás, tocá <b>Publicar</b>: se guarda en tu repositorio de GitHub y la página se actualiza en 1 o 2 minutos.</div>' +
+    '<div class="ed-hint"><b>Volver a editar.</b> Agregá <b>?editar</b> al final de la dirección de tu página, o usá Ctrl/Cmd + Shift + E. Los visitantes nunca ven estas herramientas.</div>';
+  const colorIn = panel.querySelector('input[type=color]'), radiusIn = panel.querySelector('input[type=range]');
+  function syncPanel() {
+    panel.querySelectorAll('[data-c]').forEach(b => b.classList.toggle('on', b.dataset.c.toLowerCase() === theme.accent.toLowerCase()));
+    colorIn.value = theme.accent; radiusIn.value = theme.radius;
+    panel.querySelectorAll('[data-g="font"] [data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === theme.font));
+    panel.querySelectorAll('[data-g="mode"] [data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === theme.mode));
+  }
+  function themeEdit(mut, final = true) {
+    if (!themePre) themePre = cur();
+    mut(); applyTheme(); syncPanel(); scheduleSave();
+    if (final) { hist.push(themePre); fut = []; themePre = null; }
+  }
+  panel.addEventListener('click', e => {
+    if (e.target.closest('[data-close]')) return panel.classList.remove('open');
+    const c = e.target.closest('[data-c]'); if (c) return themeEdit(() => theme.accent = c.dataset.c);
+    const o = e.target.closest('[data-v]'); if (o) { const g = o.parentElement.dataset.g; themeEdit(() => theme[g] = o.dataset.v); }
+  });
+  colorIn.addEventListener('input', () => themeEdit(() => theme.accent = colorIn.value, false));
+  colorIn.addEventListener('change', () => themeEdit(() => theme.accent = colorIn.value, true));
+  radiusIn.addEventListener('input', () => themeEdit(() => theme.radius = +radiusIn.value, false));
+  radiusIn.addEventListener('change', () => themeEdit(() => theme.radius = +radiusIn.value, true));
+
+  let uiBuilt = false;
+  function buildUI() { if (uiBuilt) return; uiBuilt = true; [toolbar, panel, pop, fmt, toastEl, modal].forEach(n => body.appendChild(n)); syncPanel(); }
+
+  /* ── Entrar / salir / exportar ── */
+  function enterEdit() {
+    store.set(OWNER, '1'); buildUI(); editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
+    if (gh) syncFromGitHub().then(showPending); else showPending();
+  }
+  function showPending() {
+    if (!pendingDraft || !editing) return;
+    toast('Hay cambios sin publicar guardados en este navegador, hechos sobre una versión anterior.', [
+      { label: 'Recuperarlos', fn: () => { commit(); restore({ html: pendingDraft.html, theme: pendingDraft.theme }); pendingDraft = null; } },
+      { label: 'Ignorar', fn: () => { pendingDraft = null; scheduleSave(); } }
+    ], 0);
+  }
+
+  /* ── GitHub Pages: publicar directo al repositorio ──
+     El token se guarda SOLO en este navegador (localStorage) y nunca va dentro de la página. */
+  const GH_KEY = 'site-gh';
+  let gh = parse(store.get(GH_KEY)), publishing = false;
+  function guessRepo() {
+    const m = location.hostname.match(/^([^.]+)\.github\.io$/i); if (!m) return {};
+    const seg = location.pathname.split('/').filter(Boolean)[0];
+    return { owner: m[1], repo: seg && !seg.includes('.') ? seg : `${m[1]}.github.io` };
+  }
+  const apiBase = c => `https://api.github.com/repos/${encodeURIComponent(c.owner)}/${encodeURIComponent(c.repo)}`;
+  const apiFile = c => `${apiBase(c)}/contents/${c.path.split('/').map(encodeURIComponent).join('/')}`;
+  function ghMsg(status, data) {
+    const m = data && data.message ? ` (${data.message})` : '';
+    if (status === 401) return 'GitHub no aceptó el token: puede estar mal copiado o vencido.';
+    if (status === 403) return 'El token no tiene permiso para escribir en este repositorio. Necesita «Contents: Read and write».' + m;
+    if (status === 404) return 'No encontré el repositorio o la rama. Revisá usuario, repositorio y rama, y que el token tenga acceso a ese repositorio.';
+    if (status === 409 || status === 422) return 'GitHub rechazó el cambio porque la versión publicada cambió recién. Probá publicar de nuevo.' + m;
+    return `GitHub respondió con un error ${status}.${m}`;
+  }
+  async function ghFetch(c, url, method = 'GET', bodyObj) {
+    let r;
+    try {
+      r = await fetch(url, { method, cache: 'no-store', headers: Object.assign({
+        Authorization: 'Bearer ' + c.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'
+      }, bodyObj ? { 'Content-Type': 'application/json' } : {}), body: bodyObj ? JSON.stringify(bodyObj) : undefined });
+    } catch (e) { const err = new Error('No pude conectarme con GitHub. Revisá tu conexión a internet.'); err.status = 0; throw err; }
+    let data = null; try { data = await r.json(); } catch (e) {}
+    if (!r.ok) { const err = new Error(ghMsg(r.status, data)); err.status = r.status; throw err; }
+    return data;
+  }
+  const b64enc = str => { const by = new TextEncoder().encode(str); let s = ''; for (let i = 0; i < by.length; i += 0x8000) s += String.fromCharCode.apply(null, by.subarray(i, i + 0x8000)); return btoa(s); };
+  const b64dec = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, '')), ch => ch.charCodeAt(0)));
+  async function getRemote(c) {   // devuelve {sha, html, theme, hash} o null si el archivo todavía no existe
+    let d;
+    try { d = await ghFetch(c, `${apiFile(c)}?ref=${encodeURIComponent(c.branch)}`); }
+    catch (e) { if (e.status === 404) { await ghFetch(c, apiBase(c)); return null; } throw e; }
+    const doc = new DOMParser().parseFromString(b64dec(d.content || ''), 'text/html');
+    const s = doc.getElementById('site'); if (!s) return { sha: d.sha, html: null };
+    const te = doc.getElementById('theme-style');
+    const th = Object.assign({}, DEFAULT_THEME, parse(te && te.getAttribute('data-json')));
+    return { sha: d.sha, html: s.innerHTML, theme: th, hash: hash(stateStr(s.innerHTML, th)) };
+  }
+
+  async function syncFromGitHub() {
+    setStatus('Buscando la última versión…', false);
+    let rem;
+    try { rem = await getRemote(gh); } catch (e) { setStatus('Sin conexión con GitHub', true); toast(e.message, [{ label: 'Revisar', fn: openSetup }], 8000); return; }
+    if (!editing) return;
+    if (!rem || !rem.html || rem.hash === baseHash) { scheduleSave(); return; }
+    // La página cargada no es la última publicada (caché de GitHub Pages u otro dispositivo).
+    const d = parse(store.get(KEY));
+    const mine = d && d.base === rem.hash;           // cambios sin publicar hechos sobre la última versión
+    if (d && !mine && d.html !== rem.html) { pendingDraft = d; store.set(KEY + '-prev', JSON.stringify(d)); }
+    else pendingDraft = null;
+    baseHash = rem.hash;
+    const src = mine ? d : rem;
+    hist.push(cur()); fut = [];
+    site.innerHTML = src.html; theme = Object.assign({}, DEFAULT_THEME, src.theme); applyTheme(); syncPanel(); refresh();
+    if (mine) pendingDraft = null;
+    toast(mine ? 'Retomé tus cambios sin publicar.' : 'Cargué la última versión publicada.', [], 4000);
+  }
+
+  async function publish() {
+    if (!gh) return openSetup(true);
+    if (publishing) return;
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    const pubBtn = toolbar.querySelector('[data-t="publish"]');
+    publishing = true; pubBtn.disabled = true; clearTimeout(saveT); setStatus('Publicando…', true);
+    try {
+      const html = serialize(), th = Object.assign({}, theme), mineHash = hash(stateStr(html, th));
+      const rem = await getRemote(gh);
+      if (rem && rem.hash && rem.hash !== baseHash && rem.hash !== mineHash &&
+          !confirm('La versión publicada cambió desde que abriste el editor (quizás la editaste desde otro dispositivo). ¿Reemplazarla con esta?')) {
+        setStatus('Publicación cancelada', true); return;
+      }
+      if (rem && rem.hash === mineHash) { baseHash = mineHash; scheduleSave(); toast('Ya está publicado: no hay cambios nuevos.'); return; }
+      await ghFetch(gh, apiFile(gh), 'PUT', Object.assign({
+        message: 'Actualizar la página desde el editor', content: b64enc(buildHTML(html)), branch: gh.branch
+      }, rem ? { sha: rem.sha } : {}));
+      baseHash = mineHash; pendingDraft = null; store.del(KEY);
+      setStatus('Publicado', false);
+      toast('¡Publicado! GitHub Pages tarda 1 o 2 minutos en mostrar los cambios a los visitantes.', [], 7000);
+    } catch (e) {
+      setStatus('No se pudo publicar', true);
+      toast(e.message, [{ label: 'Revisar conexión', fn: openSetup }], 0);
+    } finally { publishing = false; pubBtn.disabled = false; }
+  }
+
+  const modal = mk('div', 'ed-modal ed-ui');
+  modal.innerHTML = `<div class="ed-dialog" role="dialog" aria-label="Conectar con GitHub">
+    <h3>Publicar en GitHub Pages <button type="button" data-close title="Cerrar">×</button></h3>
+    <p class="ed-mtext">Con esta conexión, el botón <b>Publicar</b> guarda tus cambios directo en tu repositorio. Se configura una sola vez en cada navegador o dispositivo.</p>
+    <div class="ed-two"><label>Usuario de GitHub<input class="ed-in" name="owner" autocomplete="off" spellcheck="false"></label>
+    <label>Repositorio<input class="ed-in" name="repo" autocomplete="off" spellcheck="false"></label></div>
+    <div class="ed-two"><label>Rama<input class="ed-in" name="branch" autocomplete="off" spellcheck="false"></label>
+    <label>Archivo<input class="ed-in" name="path" autocomplete="off" spellcheck="false"></label></div>
+    <label>Token de acceso <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">crear uno</a>
+      <input class="ed-in" name="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
+    <details class="ed-hint"><summary>Cómo crear el token (2 minutos)</summary><ol>
+      <li>Tocá <b>crear uno</b> (arriba). Es la página de GitHub <i>Fine-grained personal access tokens</i>.</li>
+      <li><b>Token name:</b> «Editor de mi web». <b>Expiration:</b> lo que prefieras (por ejemplo, 1 año).</li>
+      <li><b>Repository access:</b> «Only select repositories» y elegí el repositorio de tu web.</li>
+      <li><b>Permissions → Repository permissions → Contents:</b> «Read and write».</li>
+      <li>Tocá <b>Generate token</b>, copialo y pegalo acá.</li>
+    </ol></details>
+    <p class="ed-mtext" style="font-size:12.5px">El token queda guardado solo en este navegador y nunca se incluye en la página publicada. Como solo tiene acceso a este repositorio, si algún día lo perdés, borralo en GitHub y creá otro.</p>
+    <p class="ed-merr"></p>
+    <div class="ed-mactions"><button type="button" class="ed-linkbtn" data-forget>Desconectar</button><button type="button" class="ed-btn" data-save>Probar y guardar</button></div>
+  </div>`;
+  const mf = n => modal.querySelector(`[name="${n}"]`), merr = modal.querySelector('.ed-merr');
+  let publishAfterSetup = false;
+  function openSetup(thenPublish) {
+    buildUI(); closePop();
+    const g = Object.assign({ branch: 'main', path: 'index.html' }, guessRepo(), gh || {});
+    ['owner', 'repo', 'branch', 'path'].forEach(n => mf(n).value = g[n] || '');
+    mf('token').value = ''; mf('token').placeholder = gh && gh.token ? 'Guardado (dejalo vacío para mantenerlo)' : 'github_pat_…';
+    modal.querySelector('[data-forget]').style.visibility = gh ? 'visible' : 'hidden';
+    merr.textContent = ''; merr.classList.remove('ok');
+    publishAfterSetup = thenPublish === true;
+    modal.classList.add('open'); (mf('owner').value ? mf('token') : mf('owner')).focus();
+  }
+  const closeSetup = () => modal.classList.remove('open');
+  modal.addEventListener('click', async e => {
+    if (e.target === modal || e.target.closest('[data-close]')) return closeSetup();
+    if (e.target.closest('[data-forget]')) {
+      if (!confirm('¿Desconectar GitHub en este navegador? Se borra el token guardado acá.')) return;
+      store.del(GH_KEY); gh = null; closeSetup(); toast('GitHub desconectado en este navegador.'); return;
+    }
+    const sv = e.target.closest('[data-save]'); if (!sv) return;
+    const c = {
+      owner: mf('owner').value.trim(), repo: mf('repo').value.trim().replace(/\.git$/, ''),
+      branch: mf('branch').value.trim() || 'main', path: mf('path').value.trim().replace(/^\/+/, '') || 'index.html',
+      token: mf('token').value.trim() || (gh && gh.token) || ''
+    };
+    if (!c.owner || !c.repo || !c.token) { merr.textContent = 'Completá usuario, repositorio y token.'; return; }
+    sv.disabled = true; merr.classList.remove('ok'); merr.textContent = 'Probando la conexión…';
+    try {
+      const repo = await ghFetch(c, apiBase(c));
+      if (repo && repo.permissions && repo.permissions.push === false) throw new Error('Tu usuario no tiene permiso de escritura en ese repositorio.');
+      await getRemote(c);   // verifica la rama y que el archivo se pueda leer
+      gh = c; store.set(GH_KEY, JSON.stringify(c));
+      merr.classList.add('ok'); merr.textContent = 'Conectado ✓';
+      setTimeout(() => { closeSetup(); if (publishAfterSetup) publish(); else if (editing) syncFromGitHub(); }, 500);
+    } catch (err) { merr.textContent = err.message; }
+    finally { sv.disabled = false; }
+  });
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); modal.querySelector('[data-save]').click(); }
+    if (e.key === 'Escape') { e.stopPropagation(); closeSetup(); }
+  });
+  function exitEdit() {
+    editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open');
+    fmt.style.display = 'none'; toastEl.classList.remove('show'); clean(site); fab.classList.add('show');
+    if (document.activeElement) document.activeElement.blur();
+  }
+  function buildHTML(html) {
+    const doc = root.cloneNode(true);
+    doc.querySelector('#site').innerHTML = html;
+    doc.querySelectorAll('.ed-ui').forEach(n => n.remove());
+    const b = doc.querySelector('body'); b.classList.remove('editing'); if (!b.classList.length) b.removeAttribute('class');
+    return '<!DOCTYPE html>\n' + doc.outerHTML + '\n';
+  }
+  function exportHTML() {
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    const html = serialize();
+    const out = buildHTML(html);
+    const a = mk('a'); a.href = URL.createObjectURL(new Blob([out], { type: 'text/html' })); a.download = 'index.html';
+    body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast('Se descargó una copia de index.html. Para publicar, usá el botón Publicar.', [], 5000);
+  }
+  function discard() {
+    if (!confirm('¿Descartar todos los cambios que no descargaste? Se vuelve a la versión del archivo.')) return;
+    store.del(KEY); location.reload();
+  }
+  function recoverPrev() { const d = parse(store.get(KEY + '-prev')); if (!d) return; commit(); restore({ html: d.html, theme: d.theme }); toast('Borrador anterior recuperado', [{ label: 'Deshacer', fn: undo }]); }
+
+  /* ── Eventos globales ── */
+  document.addEventListener('click', e => {
+    if (!editing) return;
+    const b = e.target.closest('[data-act]');
+    if (b && site.contains(b)) { e.preventDefault(); e.stopPropagation(); act(b.dataset.act, b); return; }
+    const slot = e.target.closest('[data-slot]');
+    if (slot && site.contains(slot)) { e.preventDefault(); iconPicker(slot, slot); return; }
+    const a = e.target.closest('#site a');
+    if (a) { const h = a.getAttribute('href') || ''; if (!h.startsWith('#') || h === '#' || a.matches('[data-item], .logo')) e.preventDefault(); }
+    if (site.contains(e.target)) {
+      site.querySelectorAll('.ed-sel').forEach(n => n.classList.remove('ed-sel'));
+      const it = e.target.closest('[data-item]'); if (it) it.classList.add('ed-sel');
+      const s = e.target.closest('[data-block]'); if (s) s.classList.add('ed-sel');
+    }
+  }, true);
+  document.addEventListener('mousedown', e => {
+    if (pop.style.display === 'block' && !pop.contains(e.target) && !fmt.contains(e.target)) closePop();
+  });
+  document.addEventListener('keydown', e => {
+    const mod = e.metaKey || e.ctrlKey, k = e.key.toLowerCase();
+    if (mod && e.shiftKey && k === 'e') { e.preventDefault(); editing ? exitEdit() : enterEdit(); return; }
+    if (!editing) return;
+    const field = e.target.closest && e.target.closest('#site [data-e]');
+    if (mod && k === 's') { e.preventDefault(); toast('Tus cambios se guardan solos. Cuando quieras que los vean los demás, tocá Publicar.'); return; }
+    if (!field && mod && k === 'z') { if (e.target.closest && e.target.closest('input')) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+    if (!field && mod && k === 'y') { e.preventDefault(); redo(); return; }
+    if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); if (field) field.blur(); }
+    if (field && e.key === 'Enter') {
+      e.preventDefault();
+      if (field.hasAttribute('data-ml') && e.shiftKey) document.execCommand('insertLineBreak');
+      else if (field.hasAttribute('data-ml') && field.closest('.para')) { const it = field.closest('[data-item]'); commit(); const n = frag(ITEM_TPL.para()); n.querySelector('p').textContent = ''; it.after(n); refresh(); n.querySelector('[data-e]').focus(); }
+      else if (field.hasAttribute('data-ml')) document.execCommand('insertLineBreak');
+      else field.blur();
+    }
+  });
+  site.addEventListener('focusin', e => { if (editing && e.target.closest('[data-e]')) textPre = cur(); });
+  site.addEventListener('focusout', e => {
+    if (!editing || !textPre || !e.target.closest('[data-e]')) return;
+    if (serialize() !== textPre.html) { hist.push(textPre); fut = []; }
+    textPre = null;
+  });
+  site.addEventListener('input', e => {
+    const f = e.target.closest && e.target.closest('[data-e]');
+    if (f && !f.textContent.trim() && !f.querySelector('img')) f.innerHTML = '';
+    scheduleSave();
+  });
+  site.addEventListener('paste', e => {
+    if (!editing || !e.target.closest('[data-e]')) return;
+    e.preventDefault();
+    const t = (e.clipboardData || window.clipboardData).getData('text/plain');
+    document.execCommand('insertText', false, t);
+  });
+
+  /* Arrastrar y soltar */
+  let dragEl = null, dragSel = '';
+  site.addEventListener('mousedown', e => {
+    const h = e.target.closest('[data-act="drag"]'); if (!h || !editing) return;
+    const t = h.closest('.ed-sbar') ? h.closest('[data-block]') : h.closest('[data-item]');
+    if (t) t.draggable = true;
+  });
+  document.addEventListener('mouseup', () => { if (!dragEl) site.querySelectorAll('[draggable="true"]').forEach(n => n.removeAttribute('draggable')); });
+  site.addEventListener('dragstart', e => {
+    const t = e.target; if (!(t instanceof Element) || t.getAttribute('draggable') !== 'true') return;
+    dragEl = t; dragSel = t.hasAttribute('data-block') ? '[data-block]' : '[data-item]'; commit();
+    e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', ''); } catch (err) {}
+    requestAnimationFrame(() => t.classList.add('ed-dragging'));
+  });
+  site.addEventListener('dragover', e => {
+    if (!dragEl) return; e.preventDefault();
+    const over = e.target.closest && e.target.closest(dragSel);
+    if (!over || over === dragEl || over.parentElement !== dragEl.parentElement) return;
+    const r = over.getBoundingClientRect(), pr = over.parentElement.getBoundingClientRect();
+    const horiz = r.width < pr.width * 0.8;
+    const after = horiz ? e.clientX > r.left + r.width / 2 : e.clientY > r.top + r.height / 2;
+    if (after && over.nextElementSibling !== dragEl) over.after(dragEl);
+    else if (!after && over.previousElementSibling !== dragEl) over.before(dragEl);
+  });
+  site.addEventListener('drop', e => { if (dragEl) e.preventDefault(); });
+  site.addEventListener('dragend', () => { if (!dragEl) return; dragEl.removeAttribute('draggable'); dragEl.classList.remove('ed-dragging'); dragEl = null; refresh(); });
+
+  /* ── Arranque ── */
+  body.appendChild(fab);
+  if (new URLSearchParams(location.search).has('editar')) enterEdit();
+  else if (store.get(OWNER)) fab.classList.add('show');
+})();
+</script>
 </body>
 </html>
