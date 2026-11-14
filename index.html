@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abril Romero — ISO 9001</title>
-<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&amp;family=DM+Sans:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Professional warmth — earthy, trustworthy */
@@ -453,6 +454,58 @@ footer {
 @media (max-width: 620px) { .circ-wrap { flex-direction: column; align-items: flex-start; } .circ-wrap > [data-fx="circular"] { zoom: .8; } }
 .circ-text { flex: 1; min-width: 0; }
 .circ-text .s-desc { margin-bottom: 0; }
+.branch-section, .folder-section { padding-top: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+
+/* Fondos y capas de efecto dentro de una sección */
+:root { --text-base: var(--text); --text-mid-base: var(--text-mid); --text-soft-base: var(--text-soft); }
+[data-block]:has(> .fx-bg, > .fx-overlay) { position: relative; isolation: isolate; overflow: hidden; }
+[data-block]:has(> .fx-bg, > .fx-overlay) > :not(.fx-bg, .fx-overlay, .ed-bar) { position: relative; z-index: 1; }
+.fx-bg, .fx-overlay { position: absolute; inset: 0; pointer-events: none; }
+.fx-bg { z-index: 0; }
+.fx-overlay { z-index: 3; }
+.fx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fxdark { --text: #F7F1EA; --text-mid: rgba(247,241,234,.84); --text-soft: rgba(247,241,234,.68); color: var(--text); }
+.fxlight { --text: #1E1B18; --text-mid: #4A433C; --text-soft: #6A6158; color: var(--text); }
+:is(.fxdark, .fxlight) :is(.service-card, .note, .t-item .info, .c-link, .cta-box) { --text: var(--text-base); --text-mid: var(--text-mid-base); --text-soft: var(--text-soft-base); }
+:is(.fxdark, .fxlight) { border-bottom-color: transparent; }
+
+/* Menú ramificado */
+.bm { max-width: 100%; color: var(--bm-c); font-family: var(--font-body); }
+.bm button { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 10px; height: var(--bm-rh); border-radius: var(--bm-r); padding: 0 10px; color: var(--bm-c); transition: background .2s, color .2s, opacity .2s; }
+.bm .bm-head { width: 100%; font-weight: 500; }
+.bm .bm-item { margin-left: var(--bm-in); width: calc(100% - var(--bm-in)); opacity: .8; }
+.bm button:hover { background: color-mix(in srgb, var(--bm-c) 8%, transparent); opacity: 1; }
+.bm .bm-item.on, .bm .bm-head.on { color: var(--bm-a); opacity: 1; background: color-mix(in srgb, var(--bm-a) 13%, transparent); }
+.bm-chev, .bm-ic { display: inline-flex; width: 14px; justify-content: center; flex: none; }
+.bm-chev svg { width: 14px; height: 14px; transition: transform var(--bm-fold) cubic-bezier(.2,.7,.2,1); }
+.bm-g.open .bm-chev svg { transform: rotate(90deg); }
+.bm button svg:not(.bm-chev svg) { width: 16px; height: 16px; flex: none; }
+.bm-kids { position: relative; overflow: hidden; height: 0; transition: height var(--bm-fold) cubic-bezier(.2,.7,.2,1); }
+.bm-lines { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.bm-lines path { fill: none; stroke: var(--bm-l); stroke-width: var(--bm-lw); stroke-linecap: round; }
+.bm-t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Carpeta flotante */
+.ff { display: flex; justify-content: center; user-select: none; -webkit-user-select: none; }
+.ff-stage { position: relative; width: var(--ff-w); height: var(--ff-h); cursor: pointer; outline: none; }
+.ff-back { position: absolute; inset: 0; background: var(--ff-back); border-radius: var(--ff-r); }
+.ff-tab { position: absolute; left: 0; top: -14px; width: 42%; height: 26px; background: var(--ff-back); border-radius: var(--ff-r) var(--ff-r) 0 0; }
+.ff-papers i { position: absolute; left: 10%; right: 10%; top: 10px; height: 70%; background: var(--ff-paper); border-radius: calc(var(--ff-r) * .6); transition: transform var(--ff-dur) var(--ff-ease); }
+.ff-papers i:nth-child(2) { left: 15%; right: 6%; top: 16px; opacity: .85; transform: rotate(3deg); }
+.ff.open .ff-papers i:nth-child(1) { transform: translateY(-12px) rotate(-2deg); }
+.ff.open .ff-papers i:nth-child(2) { transform: translateY(-8px) rotate(6deg); }
+.ff-items { position: absolute; left: 50%; bottom: 34%; width: 0; height: 0; z-index: 3; }
+.ff-item { all: unset; position: absolute; left: 0; bottom: 0; cursor: pointer; opacity: 0; pointer-events: none; transform: translate(-50%, 24px) scale(.55);
+  transition: transform var(--ff-dur) var(--ff-ease), opacity calc(var(--ff-dur) * .5) ease; }
+.ff-item > span { display: block; width: max-content; max-width: calc(var(--ff-w) * 1.1); padding: 9px 14px; background: var(--ff-item); color: var(--ff-itext); border-radius: 10px; font: 500 13px/1.35 var(--font-body); box-shadow: 0 10px 24px -8px rgba(0,0,0,.35); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ff-item:hover > span, .ff-item:focus-visible > span { outline: 2px solid color-mix(in srgb, var(--ff-front) 60%, transparent); }
+.ff.open .ff-item { opacity: 1; pointer-events: auto; transform: translate(calc(-50% + var(--x)), var(--y)) rotate(var(--r)); transition-delay: var(--d); }
+.ff-front { position: absolute; left: 0; right: 0; bottom: 0; height: 78%; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px 16px; color: var(--ff-label); background: var(--ff-front); border-radius: var(--ff-r); transform-origin: 50% 100%;
+  transform: perspective(700px) rotateX(calc(var(--rest) * -1deg)); transition: transform var(--ff-dur) var(--ff-ease); box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+.ff.open .ff-front { transform: perspective(700px) rotateX(calc(var(--flap) * -1deg)); }
+.ff-front b { font: 600 14px/1.3 var(--font-body); }
+.ff-front small { font-size: 12px; opacity: .72; }
+
 
 @media (prefers-reduced-motion: reduce) {
   .st-c { animation: none !important; }
@@ -608,6 +661,7 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-f { display: block; margin-bottom: 13px; font-size: 13px; }
 .ed-f > span { display: flex; justify-content: space-between; color: var(--text-mid); margin-bottom: 5px; font-weight: 500; }
 .ed-f > span b { font-weight: 500; color: var(--text); font-variant-numeric: tabular-nums; }
+.ed-f textarea { width: 100%; resize: vertical; min-height: 120px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 8px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
 .ed-f select, .ed-f input[type=text] { width: 100%; font: 14px system-ui, sans-serif; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
 .ed-f input[type=range] { width: 100%; accent-color: var(--accent); }
 .ed-f .ed-crow { display: flex; gap: 8px; align-items: center; }
@@ -655,117 +709,161 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json="{&quot;accent&quot;:&quot;#B5623A&quot;,&quot;font&quot;:&quot;lora&quot;,&quot;radius&quot;:12,&quot;mode&quot;:&quot;auto&quot;}">:root{--accent:#B5623A;--accent-hover:color-mix(in srgb,#B5623A 82%,#000);--accent-light:color-mix(in srgb,#B5623A 12%,#fff);--accent-text:color-mix(in srgb,#B5623A 75%,#000);--r:12px;--font-head:'Lora', Georgia, serif;--font-body:'DM Sans', system-ui, sans-serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}}
-:root[data-theme="dark"]{--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}</style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
 </head>
 <body>
 <div id="site">
 
 <nav>
   <div class="inner">
-    <a href="#" class="logo" data-e="">¡Hola!</a>
-    <ul><li><a href="#inicio">Inicio</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li><li class="corner" data-vis="owner"><a href="#notas" title="Notas" aria-label="Notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg></a></li></ul>
+    <a href="#" class="logo" data-e>Abril Romero</a>
+    <ul><li><a href="#servicios">Servicios</a></li><li><a href="#notas">Notas</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li></ul>
   </div>
 </nav>
 
-<section class="hero" data-block="">
+<section class="hero" data-block>
   <div class="wrap hero-wrap">
   <div class="hero-text">
-    <span class="label" data-e="">Auditora interna Jr. ISO 9001</span>
-    <h1 data-e="">Ayudo a las PyMEs a construir sistemas de calidad&nbsp;</h1>
-    <p class="sub" data-e="" data-ml="">Auditorias internas, preparación para certificaciones y documentación de SGC. Un enfoque real.&nbsp;</p>
+    <span class="label" data-e>ISO 9001 internal auditor</span>
+    <h1 data-e data-fx="split" data-fx-cfg="{&quot;effect&quot;: &quot;rise&quot;, &quot;splitType&quot;: &quot;chars&quot;, &quot;delay&quot;: 50, &quot;duration&quot;: 1.25, &quot;staggerFrom&quot;: &quot;start&quot;, &quot;trigger&quot;: &quot;view&quot;, &quot;hoverEffect&quot;: &quot;lift&quot;, &quot;loop&quot;: false, &quot;loopDelay&quot;: 1.5, &quot;mask&quot;: false, &quot;threshold&quot;: 0.1, &quot;rootMargin&quot;: -100}">Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <p class="sub" data-e data-ml>Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
     <div class="creds" data-list="cred">
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 9001</span></span>
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 19011</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Auditora interna ISO 9001</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Introduccion a ISO 9001:2015</span></span>
     </div>
   </div>
-    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;:&quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;,&quot;onHover&quot;:&quot;speedUp&quot;,&quot;direction&quot;:&quot;clockwise&quot;,&quot;spinDuration&quot;:20,&quot;size&quot;:200,&quot;fontSize&quot;:24,&quot;draggable&quot;:true,&quot;hoverTilt&quot;:20,&quot;tilt&quot;:0,&quot;fontWeight&quot;:900,&quot;letterSpacing&quot;:0,&quot;startAngle&quot;:0,&quot;repeat&quot;:1,&quot;fill&quot;:true,&quot;ring&quot;:false,&quot;center&quot;:&quot;IRAM&quot;,&quot;color&quot;:&quot;&quot;}"></div>
+    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;: &quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;, &quot;onHover&quot;: &quot;speedUp&quot;, &quot;direction&quot;: &quot;clockwise&quot;, &quot;spinDuration&quot;: 20, &quot;size&quot;: 200, &quot;fontSize&quot;: 24, &quot;draggable&quot;: true, &quot;hoverTilt&quot;: 20, &quot;tilt&quot;: 0, &quot;fontWeight&quot;: 900, &quot;letterSpacing&quot;: 0, &quot;startAngle&quot;: 0, &quot;repeat&quot;: 1, &quot;fill&quot;: true, &quot;ring&quot;: false, &quot;center&quot;: &quot;&quot;, &quot;color&quot;: &quot;&quot;}"></div>
   </div>
-</section><section class="text-section" data-block=""><div class="wrap"><div class="cta-box"><p data-e="">Existe una forma de ver que es también una forma de pensar: el visualizar las conexiones.</p><span class="small" data-e="">Ray Monk</span></div></div></section>
+</section>
 
+<section class="curve-section" data-block>
+  <div class="curve" data-fx="curved" data-fx-cfg="{&quot;text&quot;: &quot;Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦&quot;, &quot;shape&quot;: &quot;arc&quot;, &quot;speed&quot;: 2, &quot;curveAmount&quot;: 400, &quot;direction&quot;: &quot;left&quot;, &quot;fontSize&quot;: 96, &quot;fontWeight&quot;: 700, &quot;letterSpacing&quot;: 0, &quot;separator&quot;: &quot;&quot;, &quot;outline&quot;: false, &quot;scrollBoost&quot;: 0, &quot;edgeFade&quot;: 0, &quot;interactive&quot;: true, &quot;pauseOnHover&quot;: false, &quot;color&quot;: &quot;&quot;}"></div>
+</section>
 
-
-<section class="services-section" id="servicios" data-block="" data-nav="Servicios">
+<section class="services-section" id="servicios" data-block data-nav="Servicios">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Servicios</h2>
-    <p class="s-desc" data-e="" data-ml="">Lo que puedo hacer por tu organizacion.</p>
+    <h2 class="s-title" data-e>Servicios</h2>
+    <p class="s-desc" data-e data-ml>Lo que puedo hacer por tu organizacion.</p>
     <div class="services-grid" data-list="service">
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="M9 14l2 2 4-4"></path></svg></div>
-        <h3 data-e="">Auditorias internas</h3>
-        <p data-e="" data-ml="">Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg></div>
+        <h3 data-e>Auditorias internas</h3>
+        <p data-e data-ml>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
-        <h3 data-e="">Preparacion para certificacion</h3>
-        <p data-e="" data-ml="">Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3 data-e>Preparacion para certificacion</h3>
+        <p data-e data-ml>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
-        <h3 data-e="">Documentacion del SGC</h3>
-        <p data-e="" data-ml="">Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 data-e>Documentacion del SGC</h3>
+        <p data-e data-ml>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg></div>
-        <h3 data-e="">Capacitacion</h3>
-        <p data-e="" data-ml="">Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3 data-e>Capacitacion</h3>
+        <p data-e data-ml>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="notes-section" id="notas" data-block="" data-nav="Notas" data-corner="" data-vis="owner">
+<section class="notes-section" id="notas" data-block data-nav="Notas" data-corner data-vis="owner">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Notas de estudio</h2>
-    <p class="s-desc" data-e="" data-ml="">Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
-    <div class="notes-grid" data-list="note" data-gid="gnotas"></div>
+    <h2 class="s-title" data-e>Notas de estudio</h2>
+    <p class="s-desc" data-e data-ml>Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
+    <div class="notes-grid" data-list="note" data-gid="gnotas">
+      <div class="note" data-item data-nid="n01" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>Los 7 principios de calidad</h3>
+        <p data-e data-ml>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n02" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Planificacion de auditorias</h3>
+        <p data-e data-ml>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n03" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>No conformidades y acciones correctivas</h3>
+        <p data-e data-ml>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n04" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Tecnicas de entrevista</h3>
+        <p data-e data-ml>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n05" data-private>
+        <span class="tag" data-e>Calidad</span>
+        <h3 data-e>Mapeo de procesos</h3>
+        <p data-e data-ml>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n06" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Informes y seguimiento</h3>
+        <p data-e data-ml>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="exp-section" id="experiencia" data-block="" data-nav="Experiencia">
+<section class="exp-section" id="experiencia" data-block data-nav="Experiencia">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Experiencia</h2>
-    <p class="s-desc" data-e="" data-ml="">Mi recorrido profesional.</p>
+    <h2 class="s-title" data-e>Experiencia</h2>
+    <p class="s-desc" data-e data-ml>Mi recorrido profesional.</p>
     <div class="timeline" data-list="job">
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2024 – hoy</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2024 – hoy</span>
         <div class="info">
-          <p class="role" data-e="">Auditora interna</p>
-          <p class="co" data-e="">VTI S.A.</p>
-          <p class="desc" data-e="" data-ml="">Apoyo en auditorias del sistema de gestión de calidad</p>
+          <p class="role" data-e>Auditora interna (intern)</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
         </div>
       </div>
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2023 – 2024</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2023 – 2024</span>
         <div class="info">
-          <p class="role" data-e="">Auditora líder</p>
-          <p class="co" data-e="">RTO Bomberos</p>
-          <p class="desc" data-e="" data-ml="">Agregar una breve descripción de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Tu rol anterior]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
-      
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2022 – 2023</span>
+        <div class="info">
+          <p class="role" data-e>[Otro rol]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="contact-section" id="contacto" data-block="" data-nav="Contacto">
+<section class="contact-section" id="contacto" data-block data-nav="Contacto">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Contacto</h2>
-    <p class="contact-intro" data-e="" data-ml="">Si necesitas ayuda con tu sistema de gestión de calidad o querés prepararte para una certificación, escribime.</p>
+    <h2 class="s-title" data-e>Contacto</h2>
+    <p class="contact-intro" data-e data-ml>Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.</p>
     <div class="contact-row" data-list="contact">
-      <a href="mailto:tu@email.com" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 7l-10 6L2 7"></path></svg></span><span class="t" data-e="">romeroabril2019@gmail.com</span></a>
-      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></span><span class="t" data-e="">LinkedIn</span></a>
-      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg></span><span class="t" data-e="">WhatsApp</span></a>
+      <a href="mailto:tu@email.com" class="c-link" data-item><span class="ic" data-slot data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span><span class="t" data-e>tu@email.com</span></a>
+      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item><span class="ic" data-slot data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span><span class="t" data-e>LinkedIn</span></a>
+      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item><span class="ic" data-slot data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="t" data-e>WhatsApp</span></a>
     </div>
     <div class="cta-box">
-      <p data-e="" data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultas sin compromiso</p>
-      <span class="small" data-e="">Respondo en menos de 24 horas</span>
+      <p data-e data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultame sin compromiso</p>
+      <span class="small" data-e>Respondo en menos de 24 horas</span>
     </div>
   </div>
 </section>
 
-<footer><span data-e="">Abril Romero · 2026</span></footer>
+<footer><span data-e>Abril Romero · 2026</span></footer>
 
 </div>
 
@@ -801,6 +899,8 @@ body.ed-typing .ed-bar { display: none !important; }
     award: '<circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>',
     star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
     book: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+    rocket: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+    settings: '<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
     bulb: '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z"/>',
     calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
     pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>',
@@ -859,7 +959,15 @@ body.ed-typing .ed-bar { display: none !important; }
     circular: { text: 'AUDITORA INTERNA ✦ ISO 9001 ✦ ', onHover: 'speedUp', direction: 'clockwise', spinDuration: 20, size: 200, fontSize: 24, draggable: true, hoverTilt: 20, tilt: 0, fontWeight: 900, letterSpacing: 0, startAngle: 0, repeat: 1, fill: true, ring: false, center: '', color: '' },
     curved: { text: 'Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦', shape: 'arc', speed: 2, curveAmount: 400, direction: 'left', fontSize: 96, fontWeight: 700, letterSpacing: 0, separator: '', outline: false, scrollBoost: 0, edgeFade: 0, interactive: true, pauseOnHover: false, color: '' }
   };
+  FX_DEF.grainient = { palette: 'theme', count: 5, c1: '#120f17', c2: '#2a0f0a', c3: '#9a3412', c4: '#f97316', c5: '#fed7aa', angle: 55, flow: 0.8, silk: 0.35, grainAmount: 0.08, type: 'linear', bands: 1, softness: 1, scale: 1, speed: 1, grainSize: 1.2, grainAnimated: true, contrast: 1, saturation: 1, variation: 0, interactive: true, stir: 1, clickSwirl: true, intro: true, lightMode: false, textMode: 'auto' };
+  FX_DEF.glow = { color: '', intensity: 1.3, trailWidth: 3, linger: 1.4, glow: 1.2, clickBurst: true, theme: 'auto' };
+  FX_DEF.branch = { tree: 'Para empezar\n  Inicio | #inicio | star\n  Servicios | #servicios | rocket\n  Contacto | #contacto | mail\nMi recorrido\n  Experiencia | #experiencia | award', defaultOpen: '1', defaultActive: '', color: '', accentColor: '', lineColor: '', width: 240, rowHeight: 36, indent: 40, trunk: 14, radius: 10, lineWidth: 1.5, fontSize: 14, drawDuration: 400, foldDuration: 300 };
+  FX_DEF.folder = { items: 'Auditorías internas | #servicios\nPreparación para certificación | #servicios\nDocumentación del SGC | #servicios\nCapacitación | #servicios', label: 'Servicios', sublabel: '', trigger: 'hover', closeOnSelect: true, physics: true, drift: 0.5, palette: 'theme', folderColor: '#3f3f46', frontColor: '#52525b', paperColor: '#f5f5f5', itemColor: '#f5f5f5', itemTextColor: '#18181b', labelColor: '#f5f5f5', width: 200, height: 148, radius: 14, spread: 180, lift: 26, tilt: 8, flapAngle: 34, restAngle: 16, openDuration: 520, stagger: 45, bounce: 0.3 };
   const FX_INFO = {
+    grainient: { name: 'Fondo Grainient', kind: 'bg', desc: 'Degradado animado con grano. Se mueve con el mouse y hace un remolino al hacer clic.' },
+    glow: { name: 'Cursor luminoso', kind: 'overlay', still: true, desc: 'Una estela de luz sigue al mouse en esta sección. Mientras editás solo se ve con el panel abierto.' },
+    branch: { name: 'Menú ramificado', desc: 'Un índice en forma de árbol que se despliega con líneas animadas.' },
+    folder: { name: 'Carpeta flotante', desc: 'Una carpeta que se abre y deja salir tarjetas. Cada tarjeta puede llevar a una pestaña o a una dirección.' },
     split: { name: 'Split Text', text: true, desc: 'Las letras o palabras aparecen una por una.' },
     focus: { name: 'True Focus', text: true, desc: 'Un marco recorre la frase y enfoca una palabra a la vez.' },
     circular: { name: 'Texto circular', desc: 'Texto que gira en círculo. Los visitantes pueden arrastrarlo para girarlo.' },
@@ -886,6 +994,8 @@ body.ed-typing .ed-bar { display: none !important; }
     { label: 'Enlaces de contacto', hint: 'Email, redes, WhatsApp', html: () => shell('contact-section', 'Contacto', 'Contacto', 'Escribime por cualquiera de estos medios.', `<div class="contact-row" data-list="contact">${ITEM_TPL.contact()}</div>`) },
     { label: 'Texto en curva', hint: 'Una frase que se desliza sobre una curva', html: () => `<section class="curve-section" data-block><div class="curve" data-fx="curved" data-fx-cfg="${fxAttr('curved')}"></div></section>` },
     { label: 'Texto circular', hint: 'Un círculo de texto que gira, con un texto al lado', html: () => `<section class="circ-section" data-block data-nav="Sobre mí"><div class="wrap circ-wrap"><div class="circ" data-fx="circular" data-fx-cfg="${fxAttr('circular')}"></div><div class="circ-text"><h2 class="s-title" data-e>Sobre mí</h2><p class="s-desc" data-e data-ml>Contá quién sos, cómo trabajás y qué te diferencia.</p></div></div></section>` },
+    { label: 'Menú ramificado', hint: 'Un índice en forma de árbol', html: () => `<section class="branch-section" data-block data-nav="Índice"><div class="wrap"><h2 class="s-title" data-e>Índice</h2><p class="s-desc" data-e data-ml>Encontrá rápido lo que buscás.</p><div class="branch" data-fx="branch" data-fx-cfg="${fxAttr('branch')}"></div></div></section>` },
+    { label: 'Carpeta flotante', hint: 'Una carpeta que se abre y muestra tarjetas', html: () => `<section class="folder-section" data-block><div class="wrap"><h2 class="s-title" data-e>De un vistazo</h2><p class="s-desc" data-e data-ml>Pasá el mouse por la carpeta.</p><div class="folder" data-fx="folder" data-fx-cfg="${fxAttr('folder')}"></div></div></section>` },
     { label: 'Destacado', hint: 'Recuadro con una frase importante', html: () => `<section class="text-section" data-block><div class="wrap"><div class="cta-box"><p data-e>Una frase destacada</p><span class="small" data-e>Un detalle que la complemente</span></div></div></section>` }
   ];
 
@@ -914,7 +1024,7 @@ body.ed-typing .ed-bar { display: none !important; }
     node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
       n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
     });
-    node.querySelectorAll('.ed-sel,.ed-dragging,.tab-off,.note-open-item,.has-open-note').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note'); if (!n.classList.length) n.removeAttribute('class'); });
+    node.querySelectorAll('.ed-sel,.ed-dragging,.tab-off,.note-open-item,.has-open-note,.fxdark,.fxlight').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note', 'fxdark', 'fxlight'); if (!n.classList.length) n.removeAttribute('class'); });
   }
   function rid() { return Math.random().toString(36).slice(2, 9); }
   function normGrids(rootEl) {   // sin espacios sueltos entre notas: así la página pública y la privada se comparan bien
@@ -959,6 +1069,7 @@ body.ed-typing .ed-bar { display: none !important; }
   const fxLive = new Map();
   let fxReady = false, fxUid = 0;
   const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const stillFx = type => !!(FX_INFO[type] && (FX_INFO[type].text || FX_INFO[type].still));
   const fxCfg = el => Object.assign({}, FX_DEF[el.dataset.fx] || {}, parse(el.getAttribute('data-fx-cfg')) || {});
   const FX_CLASSES = ['fx-prev', 'st', 'tf', 'st-hv-lift', 'st-hv-scale', 'st-hv-color', 'st-hv-rotate'];
 
@@ -973,11 +1084,11 @@ body.ed-typing .ed-bar { display: none !important; }
     const list = only ? [only] : [...site.querySelectorAll('[data-fx]')];
     list.forEach(el => {
       const type = el.dataset.fx; if (!FX_DEF[type]) return;
-      if (editing && FX_INFO[type].text && !el.classList.contains('fx-prev')) return;   // al editar, el texto queda quieto
+      if (editing && stillFx(type) && !el.classList.contains('fx-prev')) return;   // al editar, quedan quietos
       if (fxLive.has(el) || el.hasAttribute('data-fx-src')) unrender(el);
       if (el.dataset.fx !== type) return;
       try {
-        const t = { split: renderSplit, focus: renderFocus, circular: renderCircular, curved: renderCurved }[type](el, fxCfg(el));
+        const t = { split: renderSplit, focus: renderFocus, circular: renderCircular, curved: renderCurved, grainient: renderGrainient, glow: renderGlow, branch: renderBranch, folder: renderFolder }[type](el, fxCfg(el));
         fxLive.set(el, t || (() => {}));
       } catch (err) { console.error('Efecto', type, err); restoreFx(el); }
     });
@@ -1192,6 +1303,319 @@ body.ed-typing .ed-bar { display: none !important; }
     return () => { alive = false; cancelAnimationFrame(raf); removeEventListener('scroll', onScroll); };
   }
 
+
+  /* Grainient: degradado animado con grano (WebGL) */
+  const GRAIN_FRAG = `precision highp float;
+uniform vec2 uRes; uniform float uTime; uniform vec3 uC[5]; uniform float uN;
+uniform float uAngle, uFlow, uSilk, uGrain, uType, uBands, uSoft, uScale, uGSize, uGTime, uContrast, uSat, uVar, uIntro, uLight, uStir;
+uniform vec3 uMouse; uniform vec3 uSwirl; uniform vec3 uBg;
+float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
+float noise(vec2 p){ vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }
+float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++) { v += a * noise(p); p = p * 2.02 + vec2(3.1, 1.7); a *= 0.5; } return v; }
+vec2 toP(vec2 uv){ return (uv * uRes - 0.5 * uRes) / min(uRes.x, uRes.y) / uScale; }
+vec2 rot(vec2 v, float a){ float s = sin(a), c = cos(a); return vec2(c * v.x - s * v.y, s * v.x + c * v.y); }
+vec3 pal(float t){
+  t = clamp(t, 0.0, 1.0) * (uN - 1.0); vec3 c = uC[0];
+  for (int i = 1; i < 5; i++) { if (float(i) > uN - 0.5) break;
+    float k = clamp(t - float(i - 1), 0.0, 1.0);
+    k = uSoft < 0.01 ? step(0.5, k) : smoothstep(0.5 - 0.5 * uSoft, 0.5 + 0.5 * uSoft, k);
+    c = mix(c, uC[i], k); }
+  return c; }
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes; vec2 p = toP(uv); float t = uTime;
+  p *= mix(1.25, 1.0, uIntro);
+  vec2 m = toP(uMouse.xy); float dm = length(p - m); p = m + rot(p - m, uStir * uMouse.z * 1.2 * exp(-dm * dm * 5.0));
+  vec2 s = toP(uSwirl.xy); float ds = length(p - s); p = s + rot(p - s, uSwirl.z * 3.0 * exp(-ds * ds * 3.0));
+  vec2 q = vec2(fbm(p * 1.2 + vec2(0.0, t * 0.12)), fbm(p * 1.2 + vec2(5.2, 1.3) - vec2(t * 0.1, 0.0)));
+  p += (q - 0.5) * uFlow * 1.4;
+  p += uSilk * 0.18 * vec2(sin(p.y * 5.0 + t * 0.7), cos(p.x * 4.0 - t * 0.5));
+  float g;
+  if (uType < 0.5) g = dot(p, vec2(cos(uAngle), sin(uAngle))) * 0.75 + 0.5;
+  else if (uType < 1.5) g = length(p) * 0.95;
+  else g = fract(atan(p.y, p.x) / 6.2831853 + 0.5 + uAngle / 6.2831853);
+  g += (fbm(p * 2.3 + t * 0.07) - 0.5) * uVar;
+  if (uBands > 1.01) g = 1.0 - abs(1.0 - 2.0 * fract(g * uBands * 0.5));
+  vec3 col = pal(g);
+  col = (col - 0.5) * uContrast + 0.5;
+  float l = dot(col, vec3(0.299, 0.587, 0.114)); col = mix(vec3(l), col, uSat);
+  col = mix(col, vec3(1.0), uLight * 0.42);
+  col += (hash(floor(gl_FragCoord.xy / uGSize) + uGTime) - 0.5) * uGrain * 1.6;
+  col = mix(uBg, col, uIntro);
+  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}`;
+  const hex3 = h => { const m = /^#?([0-9a-f]{6})$/i.exec(h || ''); const n = m ? parseInt(m[1], 16) : 0; return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; };
+  const rgb3 = str => { const m = String(str).match(/[\d.]+/g) || [255, 255, 255]; return [m[0] / 255, m[1] / 255, m[2] / 255]; };
+  const lum3 = c => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  function grainCols(c) {
+    if (c.palette === 'theme') return themePalette();
+    if (c.palette === 'sunset') return SUNSET.slice();
+    return [c.c1, c.c2, c.c3, c.c4, c.c5].slice(0, Math.max(2, Math.min(5, Math.round(c.count) || 5)));
+  }
+  function renderGrainient(el, c) {
+    fxSrc(el);
+    const sec = el.parentElement, cols = grainCols(c), rgb = cols.map(hex3);
+    let mode = c.textMode;
+    if (mode === 'auto') { const L = rgb.reduce((a, x) => a + lum3(x), 0) / rgb.length; mode = (c.lightMode ? L * 0.58 + 0.42 : L) < 0.45 ? 'light' : 'dark'; }
+    const cls = mode === 'light' ? 'fxdark' : 'fxlight';   // fondo oscuro → texto claro
+    if (sec) sec.classList.add(cls);
+    const cv = mk('canvas', 'fx-canvas'); el.appendChild(cv);
+    const gl = cv.getContext('webgl', { antialias: false, premultipliedAlpha: false, preserveDrawingBuffer: false });
+    if (!gl) {   // sin WebGL: degradado común
+      cv.remove(); const f = mk('div', 'fx-canvas'); f.style.background = `linear-gradient(${90 - c.angle}deg, ${cols.join(', ')})`; el.appendChild(f);
+      return () => { if (sec) sec.classList.remove(cls); };
+    }
+    const sh = (type, src) => { const x = gl.createShader(type); gl.shaderSource(x, src); gl.compileShader(x); if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; };
+    const pr = gl.createProgram();
+    gl.attachShader(pr, sh(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}'));
+    gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, GRAIN_FRAG)); gl.linkProgram(pr); gl.useProgram(pr);
+    const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const U = n => gl.getUniformLocation(pr, n);
+    const flat = []; for (let i = 0; i < 5; i++) flat.push(...(rgb[i] || rgb[rgb.length - 1]));
+    gl.uniform3fv(U('uC'), new Float32Array(flat)); gl.uniform1f(U('uN'), rgb.length);
+    gl.uniform1f(U('uAngle'), (+c.angle || 0) * Math.PI / 180); gl.uniform1f(U('uFlow'), +c.flow); gl.uniform1f(U('uSilk'), +c.silk);
+    gl.uniform1f(U('uGrain'), +c.grainAmount); gl.uniform1f(U('uType'), { linear: 0, radial: 1, conic: 2 }[c.type] ?? 0);
+    gl.uniform1f(U('uBands'), Math.max(1, +c.bands || 1)); gl.uniform1f(U('uSoft'), +c.softness); gl.uniform1f(U('uScale'), Math.max(0.05, +c.scale || 1));
+    gl.uniform1f(U('uContrast'), +c.contrast); gl.uniform1f(U('uSat'), +c.saturation); gl.uniform1f(U('uVar'), +c.variation);
+    gl.uniform1f(U('uLight'), c.lightMode ? 1 : 0); gl.uniform1f(U('uStir'), c.interactive ? +c.stir : 0);
+    gl.uniform3fv(U('uBg'), new Float32Array(rgb3(getComputedStyle(body).backgroundColor)));
+    const uRes = U('uRes'), uTime = U('uTime'), uGT = U('uGTime'), uGS = U('uGSize'), uIntro = U('uIntro'), uMouse = U('uMouse'), uSwirl = U('uSwirl');
+    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    let alive = true, raf = 0, visible = false, last = performance.now(), time = 0, intro = c.intro ? 0 : 1;
+    let mouse = [0.5, 0.5], target = [0.5, 0.5], hov = 0, hovT = 0, swirl = [0.5, 0.5], swirlS = 0;
+    const still = reduceMotion();
+    const resize = () => {
+      const r = el.getBoundingClientRect(), w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+      if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+      gl.viewport(0, 0, w, h); gl.uniform2f(uRes, w, h); gl.uniform1f(uGS, Math.max(0.5, +c.grainSize || 1) * dpr);
+    };
+    const frame = now => {
+      raf = 0; if (!alive || !visible) return;
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      if (!still) time += dt * (+c.speed || 0);
+      if (intro < 1) intro = Math.min(1, intro + dt / 1.4);
+      hov += (hovT - hov) * Math.min(1, dt * 4); mouse[0] += (target[0] - mouse[0]) * Math.min(1, dt * 6); mouse[1] += (target[1] - mouse[1]) * Math.min(1, dt * 6);
+      swirlS *= Math.exp(-dt * 1.6);
+      if (!cv.width || cv.width < 2) resize();
+      gl.uniform1f(uTime, time); gl.uniform1f(uGT, c.grainAnimated && !still ? Math.floor(now / 42) % 997 : 0);
+      gl.uniform1f(uIntro, 1 - Math.pow(1 - intro, 3)); gl.uniform3f(uMouse, mouse[0], mouse[1], hov); gl.uniform3f(uSwirl, swirl[0], swirl[1], swirlS);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      raf = requestAnimationFrame(frame);
+    };
+    const kick = () => { if (!raf && alive && visible) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+    const ro = new ResizeObserver(() => { resize(); kick(); }); ro.observe(el);
+    const io = new IntersectionObserver(es => { visible = es.some(e => e.isIntersecting); kick(); }); io.observe(el);
+    const pos = e => { const r = el.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height]; };
+    const onMove = e => { if (!c.interactive || e.pointerType === 'touch') return; target = pos(e); hovT = 1; };
+    const onLeave = () => { hovT = 0; };
+    const onDown = e => { if (!c.clickSwirl || editing || e.target.closest('a, button, input, [data-e]')) return; swirl = pos(e); swirlS = 1; };
+    if (sec) { sec.addEventListener('pointermove', onMove); sec.addEventListener('pointerleave', onLeave); sec.addEventListener('pointerdown', onDown); }
+    resize();
+    return () => {
+      alive = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect();
+      if (sec) { sec.removeEventListener('pointermove', onMove); sec.removeEventListener('pointerleave', onLeave); sec.removeEventListener('pointerdown', onDown); sec.classList.remove(cls); }
+      const lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+    };
+  }
+
+  /* Cursor luminoso (GlowCursor) */
+  function renderGlow(el, c) {
+    fxSrc(el);
+    const sec = el.parentElement; if (!sec || reduceMotion()) return;
+    const cv = mk('canvas', 'fx-canvas'); el.appendChild(cv);
+    const ctx = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+    let theme = c.theme;
+    if (theme === 'auto') theme = sec.classList.contains('fxdark') || lum3(rgb3(getComputedStyle(sec).backgroundColor)) < 0.4 || (getComputedStyle(sec).backgroundColor === 'rgba(0, 0, 0, 0)' && lum3(rgb3(getComputedStyle(body).backgroundColor)) < 0.4) ? 'dark' : 'light';
+    cv.style.mixBlendMode = theme === 'dark' ? 'screen' : 'normal';
+    cv.style.color = c.color || 'var(--accent)'; const col = rgb3(getComputedStyle(cv).color).map(v => Math.round(v * 255)); cv.style.color = '';
+    const rgba = a => `rgba(${col[0]},${col[1]},${col[2]},${Math.max(0, Math.min(1, a))})`;
+    const pts = [], bursts = [], life = Math.max(0.1, +c.linger) * 1000;
+    let raf = 0, alive = true;
+    const resize = () => { const r = el.getBoundingClientRect(); cv.width = Math.max(1, Math.round(r.width * dpr)); cv.height = Math.max(1, Math.round(r.height * dpr)); };
+    const ro = new ResizeObserver(resize); ro.observe(el); resize();
+    const at = e => { const r = el.getBoundingClientRect(); return { x: (e.clientX - r.left) * dpr, y: (e.clientY - r.top) * dpr, t: performance.now() }; };
+    const draw = () => {
+      raf = 0; if (!alive) return;
+      const now = performance.now();
+      while (pts.length && now - pts[0].t > life) pts.shift();
+      while (bursts.length && now - bursts[0].t > 800) bursts.shift();
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.globalCompositeOperation = theme === 'dark' ? 'lighter' : 'source-over';
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.shadowColor = rgba(1);
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1], b = pts[i], age = (now - b.t) / life;
+        ctx.strokeStyle = rgba((1 - age) * 0.75 * c.intensity); ctx.lineWidth = Math.max(0.5, c.trailWidth * (1 - age * 0.7)) * dpr;
+        ctx.shadowBlur = 16 * c.glow * dpr * (1 - age * 0.5);
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
+      const head = pts[pts.length - 1];
+      if (head) {
+        const age = (now - head.t) / life, R = 46 * c.glow * dpr;
+        const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, R);
+        g.addColorStop(0, rgba(0.38 * c.intensity * (1 - age))); g.addColorStop(1, rgba(0));
+        ctx.shadowBlur = 0; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(head.x, head.y, R, 0, Math.PI * 2); ctx.fill();
+      }
+      bursts.forEach(b => {
+        const k = (now - b.t) / 800, e = 1 - Math.pow(1 - k, 3);
+        ctx.shadowBlur = 14 * c.glow * dpr; ctx.strokeStyle = rgba((1 - k) * c.intensity); ctx.lineWidth = 2 * dpr * (1 - k);
+        ctx.beginPath(); ctx.arc(b.x, b.y, (8 + 54 * e) * dpr, 0, Math.PI * 2); ctx.stroke();
+        for (let i = 0; i < 10; i++) {
+          const an = i / 10 * Math.PI * 2 + b.seed, r1 = (10 + 30 * e) * dpr, r2 = (16 + 62 * e) * dpr;
+          ctx.beginPath(); ctx.moveTo(b.x + Math.cos(an) * r1, b.y + Math.sin(an) * r1); ctx.lineTo(b.x + Math.cos(an) * r2, b.y + Math.sin(an) * r2); ctx.stroke();
+        }
+      });
+      if (pts.length || bursts.length) raf = requestAnimationFrame(draw);
+    };
+    const wake = () => { if (!raf) raf = requestAnimationFrame(draw); };
+    const onMove = e => { if (e.pointerType === 'touch') return; pts.push(at(e)); if (pts.length > 120) pts.shift(); wake(); };
+    const onDown = e => { if (!c.clickBurst || e.pointerType === 'touch') return; const p = at(e); p.seed = Math.random() * 6; bursts.push(p); wake(); };
+    sec.addEventListener('pointermove', onMove); sec.addEventListener('pointerdown', onDown);
+    return () => { alive = false; cancelAnimationFrame(raf); ro.disconnect(); sec.removeEventListener('pointermove', onMove); sec.removeEventListener('pointerdown', onDown); };
+  }
+
+  /* Menú ramificado (BranchedMenu) */
+  function parseTree(txt) {
+    const groups = [];
+    String(txt || '').split('\n').forEach(raw => {
+      if (!raw.trim()) return;
+      const child = /^(\s+|[-•])/.test(raw) && groups.length;
+      const [label, link = '', icon = ''] = raw.replace(/^\s*[-•]?\s*/, '').split('|').map(x => x.trim());
+      const node = { label, link, icon };
+      if (child) groups[groups.length - 1].children.push(node); else groups.push(Object.assign(node, { children: [] }));
+    });
+    return groups;
+  }
+  function goLink(link) {
+    if (!link) return;
+    if (link.startsWith('#')) { location.hash = link; return; }
+    const url = normLink(link);
+    if (/^https?:/i.test(url)) window.open(url, '_blank', 'noopener'); else location.href = url;
+  }
+  const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>';
+  function renderBranch(el, c) {
+    fxSrc(el);
+    const groups = parseTree(c.tree), rh = +c.rowHeight || 36, ind = +c.indent || 40, tr = +c.trunk || 14, rad = Math.min(+c.radius || 0, rh / 2);
+    const opened = new Set(String(c.defaultOpen || '').split(/[\s,]+/).filter(Boolean).map(x => parseInt(x, 10) - 1));
+    const nav = mk('div', 'bm'); nav.setAttribute('role', 'navigation'); nav.setAttribute('aria-label', 'Menú');
+    nav.style.cssText = `width:${c.width}px;font-size:${c.fontSize}px;--bm-c:${c.color || 'var(--text)'};--bm-a:${c.accentColor || 'var(--accent)'};--bm-l:${c.lineColor || 'var(--border)'};--bm-rh:${rh}px;--bm-in:${ind}px;--bm-r:${c.radius}px;--bm-lw:${c.lineWidth};--bm-fold:${c.foldDuration}ms`;
+    const items = [];
+    const setActive = val => items.forEach(b => b.classList.toggle('on', !!val && (b.dataset.v === val)));
+    groups.forEach((g, gi) => {
+      const grp = mk('div', 'bm-g'), head = mk('button', 'bm-head');
+      head.type = 'button';
+      head.innerHTML = (g.children.length ? `<span class="bm-chev">${CHEV}</span>` : `<span class="bm-ic">${g.icon && ICONS[g.icon] ? svg(g.icon) : ''}</span>`) + '<span class="bm-t"></span>';
+      head.querySelector('.bm-t').textContent = g.label;
+      grp.appendChild(head); nav.appendChild(grp);
+      if (!g.children.length) { head.dataset.v = g.link || g.label; items.push(head); head.addEventListener('click', () => { if (editing) return; setActive(head.dataset.v); goLink(g.link); }); return; }
+      const kids = mk('div', 'bm-kids'), H = g.children.length * rh;
+      const NS = 'http://www.w3.org/2000/svg', lines = document.createElementNS(NS, 'svg');
+      lines.setAttribute('class', 'bm-lines'); lines.setAttribute('width', ind); lines.setAttribute('height', H); lines.setAttribute('aria-hidden', 'true');
+      const paths = g.children.map((ch, i) => {
+        const y = i * rh + rh / 2, pth = document.createElementNS(NS, 'path');
+        pth.setAttribute('d', `M ${tr} 0 V ${y - rad} Q ${tr} ${y} ${tr + rad} ${y} H ${ind - 4}`); lines.appendChild(pth); return pth;
+      });
+      kids.appendChild(lines);
+      g.children.forEach(ch => {
+        const b = mk('button', 'bm-item'); b.type = 'button'; b.dataset.v = ch.link || ch.label;
+        b.innerHTML = (ch.icon && ICONS[ch.icon] ? svg(ch.icon) : '') + '<span class="bm-t"></span>'; b.querySelector('.bm-t').textContent = ch.label;
+        b.addEventListener('click', () => { if (editing) return; setActive(b.dataset.v); goLink(ch.link); });
+        items.push(b); kids.appendChild(b);
+      });
+      grp.appendChild(kids);
+      const draw = () => paths.forEach((pth, i) => {
+        const L = pth.getTotalLength(); pth.style.transition = 'none'; pth.style.strokeDasharray = L; pth.style.strokeDashoffset = L;
+        void pth.getBoundingClientRect();
+        pth.style.transition = `stroke-dashoffset ${c.drawDuration}ms cubic-bezier(.4,0,.2,1) ${i * 45}ms`; pth.style.strokeDashoffset = 0;
+      });
+      const set = (open, anim) => {
+        grp.classList.toggle('open', open); head.setAttribute('aria-expanded', open);
+        kids.style.height = open ? H + 'px' : '0px';
+        if (open && anim && !reduceMotion()) draw();
+      };
+      set(opened.has(gi), false);
+      head.addEventListener('click', () => set(!grp.classList.contains('open'), true));
+    });
+    el.appendChild(nav);
+    const sync = () => { const h = location.hash; const hit = items.find(b => b.dataset.v === h); setActive(hit ? h : c.defaultActive); };
+    sync(); addEventListener('hashchange', sync);
+    return () => removeEventListener('hashchange', sync);
+  }
+
+  /* Carpeta flotante (FolderFloat) */
+  function renderFolder(el, c) {
+    fxSrc(el);
+    const items = String(c.items || '').split('\n').map(l => l.trim()).filter(Boolean).map(l => { const [t, link = ''] = l.split('|').map(x => x.trim()); return { t, link }; });
+    const n = items.length, ease = `cubic-bezier(.34,${(1 + (+c.bounce || 0) * 1.9).toFixed(2)},.64,1)`;
+    if (c.palette === 'theme') c = Object.assign({}, c, { folderColor: 'color-mix(in srgb, var(--accent) 72%, #120b08)', frontColor: 'var(--accent)', paperColor: 'var(--bg)', itemColor: 'var(--card)', itemTextColor: 'var(--text)', labelColor: '#fff' });
+    const ff = mk('div', 'ff');
+    ff.style.cssText = `--ff-w:${c.width}px;--ff-h:${c.height}px;--ff-r:${c.radius}px;--ff-back:${c.folderColor};--ff-front:${c.frontColor};--ff-paper:${c.paperColor};--ff-item:${c.itemColor};--ff-itext:${c.itemTextColor};--ff-label:${c.labelColor};--ff-dur:${c.openDuration}ms;--ff-ease:${ease};--rest:${c.restAngle};--flap:${c.flapAngle};padding-top:${Math.round(+c.lift + 30 + n * 40)}px`;
+    ff.innerHTML = '<div class="ff-stage" role="button" tabindex="0"><div class="ff-back"><span class="ff-tab"></span></div><div class="ff-papers"><i></i><i></i></div><div class="ff-items"></div><div class="ff-front"><b></b><small></small></div></div>';
+    const stage = ff.querySelector('.ff-stage'), box = ff.querySelector('.ff-items');
+    ff.querySelector('.ff-front b').textContent = c.label;
+    ff.querySelector('.ff-front small').textContent = c.sublabel || `${n} ${n === 1 ? 'elemento' : 'elementos'}`;
+    stage.setAttribute('aria-label', c.label);
+    const btns = items.map((it, i) => {
+      const f = n > 1 ? i / (n - 1) : 0.5, x = (f - 0.5) * c.spread, y = -(+c.lift + c.height * 0.3 + (n - 1 - i) * 40), r = (f - 0.5) * 2 * c.tilt;
+      const b = mk('button', 'ff-item'); b.type = 'button'; b.style.cssText = `--x:${x}px;--y:${y}px;--r:${r}deg;--d:${i * c.stagger}ms`;
+      const s = mk('span'); s.textContent = it.t; b.appendChild(s); box.appendChild(b);
+      b.addEventListener('click', ev => { ev.stopPropagation(); if (editing) return; if (c.closeOnSelect) setOpen(false); goLink(it.link); });
+      return b;
+    });
+    el.appendChild(ff);
+    let open = false, raf = 0, t0 = 0, closeT = 0, pointer = null, alive = true;
+    const physicsOn = c.physics && !reduceMotion();
+    const tick = now => {
+      raf = 0; if (!alive || !open) return;
+      const t = (now - t0) / 1000;
+      btns.forEach((b, i) => {
+        let dx = Math.cos(t * 0.9 + i * 1.7) * 4 * c.drift, dy = Math.sin(t * 1.1 + i * 2.3) * 6 * c.drift, dr = Math.sin(t * 0.7 + i) * 2 * c.drift;
+        if (pointer) {
+          const r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, vx = cx - pointer[0], vy = cy - pointer[1], d = Math.hypot(vx, vy);
+          if (d < 90 && d > 0.1) { const k = (90 - d) / 90 * 10; dx += vx / d * k; dy += vy / d * k; }
+        }
+        b.firstChild.style.transform = `translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) rotate(${dr.toFixed(2)}deg)`;
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    const setOpen = v => {
+      clearTimeout(closeT); if (v === open) return; open = v; ff.classList.toggle('open', v); stage.setAttribute('aria-expanded', v);
+      if (v && physicsOn) { t0 = performance.now(); if (!raf) raf = requestAnimationFrame(tick); }
+    };
+    if (c.trigger === 'hover') {
+      ff.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') setOpen(true); });
+      ff.addEventListener('pointerleave', () => { closeT = setTimeout(() => setOpen(false), 160); });
+    }
+    stage.addEventListener('click', () => { if (!editing) setOpen(!open); });
+    stage.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } });
+    ff.addEventListener('pointermove', e => { pointer = [e.clientX, e.clientY]; });
+    ff.addEventListener('pointerleave', () => { pointer = null; });
+    return () => { alive = false; cancelAnimationFrame(raf); clearTimeout(closeT); };
+  }
+
+  /* Paletas «los de mi web» */
+  const SUNSET = ['#120f17', '#2a0f0a', '#9a3412', '#f97316', '#fed7aa'];
+  const toHex = c => '#' + c.map(v => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, '0')).join('');
+  const mix3 = (a, b, t) => a.map((v, i) => v * (1 - t) + b[i] * t);
+  function themePalette() {   // crema → durazno → color principal → tono profundo → durazno claro
+    const acc = hex3(theme.accent), bg = rgb3(getComputedStyle(body).backgroundColor);
+    if (lum3(bg) < 0.4) return [mix3(bg, acc, 0.1), mix3(bg, acc, 0.4), acc, mix3(acc, [1, 0.93, 0.86], 0.45), mix3(bg, acc, 0.22)].map(toHex);
+    return [mix3(bg, acc, 0.06), mix3(bg, acc, 0.32), acc, mix3(acc, [0.12, 0.07, 0.05], 0.38), mix3(bg, acc, 0.16)].map(toHex);
+  }
+  function folderThemeColors() {
+    const acc = hex3(theme.accent);
+    return { folderColor: toHex(mix3(acc, [0.08, 0.05, 0.04], 0.3)), frontColor: toHex(acc), paperColor: '#faf8f5', itemColor: '#ffffff', itemTextColor: '#1e1b18', labelColor: '#ffffff' };
+  }
+  function addSecFx(sec, type) {
+    commit();
+    const el = mk('div', FX_INFO[type].kind === 'bg' ? 'fx-bg' : 'fx-overlay'); el.dataset.fx = type; el.setAttribute('data-fx-cfg', JSON.stringify(FX_DEF[type]));
+    sec.prepend(el); refresh(); openFxPanel(el); fxDirty = true;
+  }
+  function treeFromTabs() {
+    const gs = tabGroups().filter(g => !g.corner && (!g.head || !g.head.hasAttribute('data-hidden')));
+    return 'Secciones\n' + gs.map(g => `  ${g.label} | #${g.id}`).join('\n');
+  }
+
   /* ── Efectos: panel de ajustes en el editor ── */
   const FX_FIELDS = {
     split: [
@@ -1258,8 +1682,88 @@ body.ed-typing .ed-bar { display: none !important; }
       { k: 'outline', l: 'Solo contorno', t: 'toggle' },
       { k: 'interactive', l: 'Se puede arrastrar', t: 'toggle' },
       { k: 'pauseOnHover', l: 'Se detiene al pasar el mouse', t: 'toggle' }
+    ],
+    grainient: [
+      { k: 'palette', l: 'Colores', t: 'select', o: [['theme', 'Los de mi web'], ['sunset', 'Atardecer (del ejemplo)'], ['custom', 'Personalizados']] },
+      { k: 'count', l: 'Cantidad de colores', t: 'range', min: 2, max: 5, step: 1, show: c => c.palette === 'custom' },
+      ...[1, 2, 3, 4, 5].map(i => ({ k: 'c' + i, l: 'Color ' + i, t: 'color', noClear: true, show: c => c.palette === 'custom' && c.count >= i })),
+      { k: 'type', l: 'Tipo de degradado', t: 'select', o: [['linear', 'Lineal'], ['radial', 'Radial'], ['conic', 'Cónico']] },
+      { k: 'angle', l: 'Ángulo', t: 'range', min: 0, max: 360, step: 1, u: '°' },
+      { k: 'bands', l: 'Bandas', t: 'range', min: 1, max: 6, step: 1 },
+      { k: 'softness', l: 'Suavidad entre colores', t: 'range', min: 0, max: 1, step: 0.05, pct: true },
+      { k: 'flow', l: 'Fluidez', t: 'range', min: 0, max: 2, step: 0.05 },
+      { k: 'silk', l: 'Ondas de seda', t: 'range', min: 0, max: 1, step: 0.05 },
+      { k: 'variation', l: 'Variación', t: 'range', min: 0, max: 1, step: 0.05 },
+      { k: 'scale', l: 'Escala', t: 'range', min: 0.3, max: 3, step: 0.05, u: '×' },
+      { k: 'speed', l: 'Velocidad', t: 'range', min: 0, max: 3, step: 0.05, u: '×' },
+      { k: 'grainAmount', l: 'Cantidad de grano', t: 'range', min: 0, max: 0.3, step: 0.01 },
+      { k: 'grainSize', l: 'Tamaño del grano', t: 'range', min: 0.5, max: 4, step: 0.1, u: ' px' },
+      { k: 'grainAnimated', l: 'Grano animado', t: 'toggle' },
+      { k: 'contrast', l: 'Contraste', t: 'range', min: 0.5, max: 2, step: 0.05 },
+      { k: 'saturation', l: 'Saturación', t: 'range', min: 0, max: 2, step: 0.05 },
+      { k: 'interactive', l: 'Reacciona al mouse', t: 'toggle' },
+      { k: 'stir', l: 'Fuerza del remolino', t: 'range', min: 0, max: 3, step: 0.1, show: c => c.interactive },
+      { k: 'clickSwirl', l: 'Remolino al hacer clic', t: 'toggle' },
+      { k: 'intro', l: 'Aparece con una animación', t: 'toggle' },
+      { k: 'lightMode', l: 'Modo claro', h: 'Aclara los colores para que el texto oscuro se lea mejor', t: 'toggle' },
+      { k: 'textMode', l: 'Color del texto de la sección', t: 'select', o: [['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Oscuro']] }
+    ],
+    glow: [
+      { k: 'color', l: 'Color de la luz', t: 'color' },
+      { k: 'theme', l: 'Fondo de la sección', t: 'select', o: [['auto', 'Detectar solo'], ['dark', 'Oscuro (la luz suma brillo)'], ['light', 'Claro (la luz se pinta encima)']] },
+      { k: 'intensity', l: 'Intensidad', t: 'range', min: 0.1, max: 3, step: 0.1 },
+      { k: 'trailWidth', l: 'Grosor de la estela', t: 'range', min: 1, max: 12, step: 0.5, u: ' px' },
+      { k: 'linger', l: 'Duración de la estela', t: 'range', min: 0.2, max: 4, step: 0.1, u: ' s' },
+      { k: 'glow', l: 'Resplandor', t: 'range', min: 0, max: 3, step: 0.1 },
+      { k: 'clickBurst', l: 'Destello al hacer clic', t: 'toggle' }
+    ],
+    branch: [
+      { k: 'tree', l: 'Estructura', t: 'textarea', rows: 8, h: 'Una línea por elemento. Los que empiezan con espacios cuelgan del grupo de arriba. Formato: Texto | enlace | ícono (por ejemplo: Servicios | #servicios | rocket).' },
+      { k: 'fromTabs', l: 'Armar con mis pestañas', t: 'action' },
+      { k: 'defaultOpen', l: 'Grupos abiertos al inicio', h: 'Números separados por coma, por ejemplo 1 o 1,2', t: 'text' },
+      { k: 'defaultActive', l: 'Elemento marcado al inicio', h: 'El enlace o el texto del elemento. Si la página está en esa pestaña, se marca solo.', t: 'text' },
+      { k: 'color', l: 'Color del texto', t: 'color', none: 'El de la página' },
+      { k: 'accentColor', l: 'Color del elemento activo', t: 'color' },
+      { k: 'lineColor', l: 'Color de las líneas', t: 'color', none: 'Gris de la página' },
+      { k: 'width', l: 'Ancho', t: 'range', min: 160, max: 420, step: 10, u: ' px' },
+      { k: 'rowHeight', l: 'Alto de cada fila', t: 'range', min: 28, max: 56, step: 1, u: ' px' },
+      { k: 'indent', l: 'Sangría de los hijos', t: 'range', min: 24, max: 72, step: 1, u: ' px' },
+      { k: 'trunk', l: 'Posición del tronco', t: 'range', min: 6, max: 40, step: 1, u: ' px' },
+      { k: 'radius', l: 'Redondeo', t: 'range', min: 0, max: 20, step: 1, u: ' px' },
+      { k: 'lineWidth', l: 'Grosor de las líneas', t: 'range', min: 0.5, max: 4, step: 0.5, u: ' px' },
+      { k: 'fontSize', l: 'Tamaño de letra', t: 'range', min: 11, max: 20, step: 1, u: ' px' },
+      { k: 'drawDuration', l: 'Velocidad del dibujo', t: 'range', min: 0, max: 1500, step: 50, u: ' ms' },
+      { k: 'foldDuration', l: 'Velocidad al plegar', t: 'range', min: 0, max: 1200, step: 50, u: ' ms' }
+    ],
+    folder: [
+      { k: 'items', l: 'Tarjetas', t: 'textarea', rows: 6, h: 'Una por línea. Para que lleve a algún lado: Texto | #pestaña (o una dirección web).' },
+      { k: 'label', l: 'Nombre de la carpeta', t: 'text' },
+      { k: 'sublabel', l: 'Texto chico', h: 'Vacío: muestra la cantidad de tarjetas', t: 'text' },
+      { k: 'trigger', l: 'Se abre', t: 'select', o: [['hover', 'Al pasar el mouse'], ['click', 'Al hacer clic']] },
+      { k: 'closeOnSelect', l: 'Se cierra al elegir una tarjeta', t: 'toggle' },
+      { k: 'physics', l: 'Las tarjetas flotan', t: 'toggle' },
+      { k: 'drift', l: 'Cuánto flotan', t: 'range', min: 0, max: 2, step: 0.1, show: c => c.physics },
+      { k: 'palette', l: 'Colores', t: 'select', o: [['theme', 'Los de mi web'], ['custom', 'Personalizados']] },
+      { k: 'folderColor', l: 'Carpeta (atrás)', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'frontColor', l: 'Carpeta (frente)', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'paperColor', l: 'Hojas', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'itemColor', l: 'Tarjetas', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'itemTextColor', l: 'Texto de las tarjetas', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'labelColor', l: 'Texto de la carpeta', t: 'color', noClear: true, show: c => c.palette === 'custom' },
+      { k: 'width', l: 'Ancho', t: 'range', min: 140, max: 320, step: 5, u: ' px' },
+      { k: 'height', l: 'Alto', t: 'range', min: 100, max: 240, step: 4, u: ' px' },
+      { k: 'radius', l: 'Redondeo', t: 'range', min: 0, max: 30, step: 1, u: ' px' },
+      { k: 'spread', l: 'Apertura del abanico', t: 'range', min: 0, max: 420, step: 10, u: ' px' },
+      { k: 'lift', l: 'Altura de las tarjetas', t: 'range', min: 0, max: 90, step: 2, u: ' px' },
+      { k: 'tilt', l: 'Inclinación de las tarjetas', t: 'range', min: 0, max: 30, step: 1, u: '°' },
+      { k: 'flapAngle', l: 'Apertura del frente', t: 'range', min: 0, max: 80, step: 1, u: '°' },
+      { k: 'restAngle', l: 'Inclinación en reposo', t: 'range', min: 0, max: 40, step: 1, u: '°' },
+      { k: 'openDuration', l: 'Duración de la apertura', t: 'range', min: 150, max: 1500, step: 10, u: ' ms' },
+      { k: 'stagger', l: 'Retraso entre tarjetas', t: 'range', min: 0, max: 150, step: 5, u: ' ms' },
+      { k: 'bounce', l: 'Rebote', t: 'range', min: 0, max: 1, step: 0.05 }
     ]
   };
+  const escH = v => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const escA = v => String(v ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const fmtV = (f, v) => f.pct ? Math.round(v * 100) + '%' : (Math.round(v * 100) / 100) + (f.u || '');
   function fxFormHTML(type, c) {
@@ -1268,6 +1772,9 @@ body.ed-typing .ed-bar { display: none !important; }
       if (f.t === 'select') return `<label class="ed-f"><span>${f.l}</span><select data-k="${f.k}">${f.o.map(([a, b]) => `<option value="${a}"${a === v ? ' selected' : ''}>${b}</option>`).join('')}</select></label>`;
       if (f.t === 'range') return `<label class="ed-f"><span>${f.l}<b>${fmtV(f, v)}</b></span><input type="range" data-k="${f.k}" min="${f.min}" max="${f.max}" step="${f.step}" value="${v}"></label>`;
       if (f.t === 'toggle') return `<button type="button" class="ed-tg${v ? ' on' : ''}" data-k="${f.k}"><span>${f.l}${f.h ? `<small>${f.h}</small>` : ''}</span><i></i></button>`;
+      if (f.t === 'textarea') return `<label class="ed-f"><span>${f.l}</span><textarea data-k="${f.k}" rows="${f.rows || 6}" spellcheck="false">${escH(v)}</textarea>${f.h ? `<small style="display:block;margin-top:4px;color:var(--text-soft);font-size:12px">${f.h}</small>` : ''}</label>`;
+      if (f.t === 'action') return `<button type="button" class="ed-btn ghost" data-action="${f.k}" style="display:block;width:100%;text-align:center;margin-bottom:14px">${f.l}</button>`;
+      if (f.t === 'color' && f.noClear) return `<div class="ed-f"><span>${f.l}</span><div class="ed-crow"><input type="color" data-k="${f.k}" value="${/^#[0-9a-f]{6}$/i.test(v) ? v : '#000000'}"><span style="font-size:12px;color:var(--text-soft)">${escH(v)}</span></div></div>`;
       if (f.t === 'text') return `<label class="ed-f"><span>${f.l}</span><input type="text" data-k="${f.k}" value="${escA(v)}" spellcheck="false">${f.h ? `<small style="display:block;margin-top:4px;color:var(--text-soft);font-size:12px">${f.h}</small>` : ''}</label>`;
       return `<div class="ed-f"><span>${f.l}</span><div class="ed-crow"><button type="button" data-clear="${f.k}" class="${v ? '' : 'on'}">${f.none || 'Color principal'}</button><input type="color" data-k="${f.k}" value="${/^#[0-9a-f]{6}$/i.test(v) ? v : theme.accent}" title="Elegir otro color"></div></div>`;
     }).join('');
@@ -1280,7 +1787,7 @@ body.ed-typing .ed-bar { display: none !important; }
     if (fxTarget && fxTarget !== el) closeFx();
     closePop(); panel.classList.remove('open');
     fxTarget = el; fxSnap = cur(); fxDirty = false; drawFx(); fxPanel.classList.add('open');
-    if (FX_INFO[el.dataset.fx].text) previewFx(el);
+    if (stillFx(el.dataset.fx)) previewFx(el);
   }
   function closeFx() {
     if (!fxTarget && !fxPanel.classList.contains('open')) return;
@@ -1293,9 +1800,9 @@ body.ed-typing .ed-bar { display: none !important; }
       `<h3>${info.text ? 'Efecto de texto' : info.name}<button type="button" data-close title="Cerrar">×</button></h3>` +
       (info.text ? `<div class="ed-fx-tabs">${['split', 'focus'].map(t => `<button type="button" data-type="${t}" class="${t === type ? 'on' : ''}">${FX_INFO[t].name}</button>`).join('')}</div>` : '') +
       `<p class="ed-fx-desc">${info.desc}</p>` +
-      `<div class="ed-fx-actions">${info.text ? '<button type="button" class="ed-btn" data-play>▶ Ver animación</button>' : ''}<button type="button" class="ed-btn ghost" data-reset>Valores originales</button></div>` +
+      `<div class="ed-fx-actions">${info.text ? '<button type="button" class="ed-btn" data-play>▶ Ver animación</button>' : info.still ? '<button type="button" class="ed-btn" data-play>▶ Probar: mové el mouse</button>' : ''}<button type="button" class="ed-btn ghost" data-reset>Valores originales</button></div>` +
       fxFormHTML(type, c) +
-      `<div class="ed-fx-actions" style="margin-top:14px"><button type="button" class="ed-btn danger" data-remove>${info.text ? 'Quitar efecto' : 'Eliminar este bloque'}</button></div>`;
+      `<div class="ed-fx-actions" style="margin-top:14px"><button type="button" class="ed-btn danger" data-remove>${info.text || info.kind ? 'Quitar efecto' : 'Eliminar este bloque'}</button></div>`;
     fxPanel.scrollTop = top;
   }
   function fxChange(mut, redraw) {
@@ -1305,10 +1812,16 @@ body.ed-typing .ed-bar { display: none !important; }
     clearTimeout(fxT);
     fxT = setTimeout(() => {
       const el = fxTarget; if (!el || !el.isConnected) return;
-      if (FX_INFO[el.dataset.fx].text) previewFx(el); else renderFx(el);
-    }, FX_INFO[fxTarget.dataset.fx].text ? 350 : 60);
+      if (stillFx(el.dataset.fx)) previewFx(el); else renderFx(el);
+    }, FX_INFO[fxTarget.dataset.fx].text ? 350 : 80);
   }
-  const setK = (k, v, redraw) => fxChange(() => { const c = fxCfg(fxTarget); c[k] = v; fxTarget.setAttribute('data-fx-cfg', JSON.stringify(c)); }, redraw);
+  const setK = (k, v, redraw) => fxChange(() => {
+    const c = fxCfg(fxTarget);
+    if (k === 'palette' && v === 'custom' && c.palette !== 'custom') {   // «Personalizados» arranca desde los colores que se estaban viendo
+      if (fxTarget.dataset.fx === 'grainient') { (c.palette === 'sunset' ? SUNSET : themePalette()).forEach((h, i) => c['c' + (i + 1)] = h); c.count = 5; }
+      if (fxTarget.dataset.fx === 'folder') Object.assign(c, folderThemeColors());
+    }
+    c[k] = v; fxTarget.setAttribute('data-fx-cfg', JSON.stringify(c)); }, redraw);
   function previewFx(el) {
     if (!el || !el.isConnected) return;
     if (document.activeElement && el.contains(document.activeElement)) document.activeElement.blur();
@@ -1343,18 +1856,20 @@ body.ed-typing .ed-bar { display: none !important; }
       const el = fxTarget, text = FX_INFO[el.dataset.fx].text;
       fxTarget = null; fxPanel.classList.remove('open'); unrender(el);
       if (text) { el.removeAttribute('data-fx'); el.removeAttribute('data-fx-cfg'); }
+      else if (FX_INFO[el.dataset.fx].kind) el.remove();
       else { const sec = el.closest('[data-block]'); if (sec && !sec.querySelector('[data-e]')) sec.remove(); else el.remove(); }
-      refresh(); toast(text ? 'Efecto quitado' : 'Bloque eliminado', [{ label: 'Deshacer', fn: undo }]); return;
+      refresh(); toast(text || (FX_INFO[el.dataset.fx] && FX_INFO[el.dataset.fx].kind) ? 'Efecto quitado' : 'Bloque eliminado', [{ label: 'Deshacer', fn: undo }]); return;
     }
     const tg = e.target.closest('button.ed-tg[data-k]'); if (tg) return setK(tg.dataset.k, !fxCfg(fxTarget)[tg.dataset.k], true);
     const cl = e.target.closest('[data-clear]'); if (cl) return setK(cl.dataset.clear, '', true);
+    const ac = e.target.closest('[data-action]'); if (ac && ac.dataset.action === 'fromTabs') return setK('tree', treeFromTabs(), true);
   });
   fxPanel.addEventListener('input', e => {
     const t = e.target, k = t.dataset && t.dataset.k; if (!k || !fxTarget) return;
     const v = t.type === 'range' ? +t.value : t.value;
     setK(k, v, t.tagName === 'SELECT');
     if (t.type === 'range') { const f = FX_FIELDS[fxTarget.dataset.fx].find(x => x.k === k); t.parentElement.querySelector('b').textContent = fmtV(f, v); }
-    if (t.type === 'color') { const cb = t.parentElement.querySelector('[data-clear]'); if (cb) cb.classList.remove('on'); }
+    if (t.type === 'color') { const cb = t.parentElement.querySelector('[data-clear]'); if (cb) cb.classList.remove('on'); const lb = t.nextElementSibling; if (lb && lb.tagName === 'SPAN') lb.textContent = v; }
   });
   fxPanel.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeFx(); } });
 
@@ -1565,6 +2080,9 @@ body.ed-typing .ed-bar { display: none !important; }
         fn: () => { commit(); if (sec.dataset.vis === 'owner') sec.removeAttribute('data-vis'); else sec.dataset.vis = 'owner'; refresh();
           toast(sec.dataset.vis === 'owner' ? 'Ahora el ícono se ve solo en tus navegadores (donde entraste con ?editar).' : 'Ahora todos ven el ícono.', [], 5000); } });
     }
+    const bgEl = sec.querySelector(':scope > [data-fx="grainient"]'), glEl = sec.querySelector(':scope > [data-fx="glow"]');
+    m.push({ label: bgEl ? 'Ajustar fondo Grainient' : 'Fondo animado (Grainient)', hint: bgEl ? 'El fondo de esta sección' : 'Degradado animado con grano, con tus colores', fn: () => bgEl ? openFxPanel(bgEl) : addSecFx(sec, 'grainient') },
+           { label: glEl ? 'Ajustar cursor luminoso' : 'Cursor luminoso', hint: glEl ? 'El efecto de esta sección' : 'Una estela de luz sigue al mouse', fn: () => glEl ? openFxPanel(glEl) : addSecFx(sec, 'glow') });
     m.push({ label: 'Duplicar sección', fn: () => run('dup', sec, sec, b, true) },
            { label: 'Eliminar sección', danger: true, fn: () => run('del', sec, sec, b, true) });
     return m;
@@ -2059,8 +2577,11 @@ body.ed-typing .ed-bar { display: none !important; }
     if (!editing) return;
     const b = e.target.closest('[data-act]');
     if (b && site.contains(b)) { e.preventDefault(); e.stopPropagation(); act(b.dataset.act, b); return; }
-    const fb = e.target.closest('#site [data-fx="circular"], #site [data-fx="curved"]');
+    const fb = e.target.closest('#site [data-fx="circular"], #site [data-fx="curved"], #site [data-fx="branch"], #site [data-fx="folder"], #site [data-fx="grainient"]');
     if (fb) { e.preventDefault(); openFxPanel(fb); return; }
+    if (e.target.matches && e.target.matches('#site [data-block], #site [data-block] > .wrap, #site .hero-wrap')) {   // clic en el fondo vacío de una sección con Grainient
+      const bgFx = e.target.closest('[data-block]').querySelector(':scope > [data-fx="grainient"]'); if (bgFx) { openFxPanel(bgFx); return; }
+    }
     if (e.target.closest('#site .fx-prev')) endPreview();
     const slot = e.target.closest('[data-slot]');
     if (slot && site.contains(slot)) { e.preventDefault(); iconPicker(slot, slot); return; }
@@ -2171,237 +2692,5 @@ body.ed-typing .ed-bar { display: none !important; }
   }
 })();
 </script>
-
-
-<script async="" src="/.netlify/scripts/hud?variant=owner-private" data-nf-variant="owner-private" data-netlify-site-id="bda6403e-b9b8-4f3f-8b10-d57778c7669f" data-app-host="app.netlify.com"></script>
-<iframe id="nl-hud-frame" title="Netlify" style="position: fixed; bottom: 0px; right: 0px; border: 0px; margin: 0px; padding: 0px; background: transparent; color-scheme: dark; z-index: 2147483645; width: 573px; height: 78px; clip-path: path(&quot;M 3 3 H 560 V 65 H 3 Z&quot;);" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;color-scheme&quot; content=&quot;dark&quot;&gt;&lt;style&gt;
-    :root{--nl-vw:1879px;--nl-vh:920px}
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:transparent;overflow:hidden}
-    body{display:flex;align-items:flex-end;justify-content:flex-end;height:100vh;
-      padding:8px 18px 18px 8px;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#f4f9f9;-webkit-font-smoothing:antialiased}
-    .nl-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:10px;width:max-content;max-width:calc(var(--nl-vw,100vw) - 26px)}
-    button{font-family:inherit;cursor:pointer}
-    :focus-visible{outline:2px solid #32e6e2;outline-offset:2px;border-radius:6px}
-    .nl-icon-btn{position:relative;flex:none;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid transparent;background:transparent;color:#d5e3e6;transition:background .15s ease,color .15s ease}
-    .nl-icon-btn:hover{background:rgba(255,255,255,0.08);color:#f4f9f9}
-    .nl-tap::after{content:&quot;&quot;;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:max(100%,44px);height:max(100%,44px)}
-    @keyframes nl-rise{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
-    @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
-  
-      .nl-popover{display:none;width:min(320px,calc(var(--nl-vw,100vw) - 26px));max-height:calc(var(--nl-vh,100vh) - 90px);overflow-y:auto;background:linear-gradient(180deg,#132832 0%,#0e1e25 100%);border:1px solid rgba(255,255,255,0.09);border-radius:18px;transform-origin:bottom right;animation:nl-rise .28s cubic-bezier(.34,1.4,.4,1) both}
-      .nl-popover.open{display:block}
-      .nl-popover-head{display:flex;align-items:center;gap:9px;padding:13px 12px 5px 16px}
-      .nl-popover-icon{display:inline-flex;color:#32e6e2}
-      .nl-popover-title{flex:1;font-size:13.5px;font-weight:700;letter-spacing:-0.01em;color:#f4f9f9}
-      .nl-popover-body{padding:0 16px 12px}
-      .nl-task{display:flex;align-items:center;gap:10px;padding:11px 0}
-      .nl-task+.nl-task{border-top:1px solid rgba(255,255,255,0.06)}
-      .nl-task-meta{flex:1;min-width:0}
-      .nl-task-title{font-size:13.5px;font-weight:650;color:#f4f9f9}
-      .nl-task-desc{font-size:11.5px;color:#a9bdc2}
-      .nl-task-run{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid rgba(50,230,226,0.35);background:transparent;color:#32e6e2;font-size:12px;font-weight:700;border-radius:999px;padding:6px 13px;transition:background .15s ease,transform .15s cubic-bezier(.34,1.4,.4,1)}
-      .nl-task-run:hover{background:rgba(5,189,186,0.12);transform:translateY(-1px)}
-      .nl-bar,.nl-mini{-webkit-user-select:none;user-select:none}
-      .nl-bar{display:flex;align-items:center;gap:2px;white-space:nowrap;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,#142b34,#0e1e25);border-radius:999px;padding:7px 8px 7px 14px;color:#f4f9f9}
-      .nl-logo{flex:none;margin-right:8px;display:inline-flex}
-      .nl-status{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:0.01em;color:#fbbf24;padding:6px 5px;border-radius:8px;transition:background .15s ease}
-      .nl-status:hover,.nl-status[aria-expanded='true']{background:rgba(251,191,36,0.12)}
-      .nl-tip{display:none;align-self:flex-start;width:min(300px,calc(var(--nl-vw,100vw) - 26px));background:linear-gradient(180deg,#132832 0%,#0e1e25 100%);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.5;color:#d5e3e6;animation:nl-rise .2s cubic-bezier(.34,1.4,.4,1) both}
-      .nl-tip.open{display:block}
-      .nl-tip a{display:flex;width:fit-content;align-items:center;gap:4px;margin-top:8px;color:#32e6e2;text-decoration:none;font-weight:650}
-      .nl-tip a:hover{text-decoration:underline}
-      .nl-sep{width:1px;height:18px;background:rgba(255,255,255,0.09);margin:0 10px 0 12px;flex:none}
-      .nl-btn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;border:0;background:transparent;color:#d5e3e6;font-family:inherit;font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;transition:background .15s ease,color .15s ease}
-      .nl-btn svg{color:#32e6e2}
-      .nl-btn:hover{background:rgba(255,255,255,0.07);color:#f4f9f9}
-      .nl-btn[aria-expanded='true']{background:rgba(255,255,255,0.1);color:#f4f9f9}
-      .nl-publish{display:inline-flex;align-items:center;gap:7px;text-decoration:none;margin-left:6px;background:#05bdba;color:#02191b;font-size:13px;font-weight:700;padding:8px 15px;border-radius:999px;transition:background .15s ease,transform .15s cubic-bezier(.34,1.4,.4,1)}
-      .nl-publish:hover{background:#32e6e2;transform:translateY(-1px)}
-      .nl-min{margin-left:6px}
-
-      /* ——— Minimized ——— */
-      .nl-bar,.nl-mini{min-height:52px}
-      .nl-mini{display:none;align-items:center;gap:2px;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,#142b34,#0e1e25);border-radius:999px;padding:5px 5px 5px 13px;cursor:pointer}
-      .nl-mini-state .nl-mini{display:flex}
-      .nl-mini-state .nl-bar,.nl-mini-state .nl-popover,.nl-mini-state .nl-tip{display:none}
-      .nl-mini-brand{display:inline-flex;align-items:center;gap:7px;padding-right:8px}
-      .nl-mini-lock{display:inline-flex;color:#fbbf24}
-
-      /* ——— Narrow layout ——— */
-      .nl-narrow .nl-shrinks{position:absolute;width:1px;height:1px;overflow:hidden;
-        clip-path:inset(50%);white-space:nowrap}
-      .nl-narrow .nl-status{gap:0}
-      .nl-narrow .nl-bar{padding:6px 6px 6px 10px}
-      .nl-narrow .nl-logo{margin-right:6px}
-      .nl-narrow .nl-sep{margin:0 6px 0 8px}
-      .nl-narrow .nl-btn{padding:8px 9px}
-      .nl-narrow .nl-publish{margin-left:4px;padding:8px 11px}
-    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-      &lt;div class=&quot;nl-wrap&quot;&gt;
-        &lt;section class=&quot;nl-popover&quot; id=&quot;nl-pop&quot; aria-label=&quot;Pre-launch tools&quot;&gt;
-          &lt;div class=&quot;nl-popover-head&quot;&gt;
-            &lt;span class=&quot;nl-popover-icon&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.98407 9.625L8.58935 11.0952C8.62792 11.1889 8.71922 11.25 8.82053 11.25H9.77587C9.88268 11.25 9.95527 11.1415 9.91454 11.0428L7.3828 4.90468C7.3442 4.81107 7.25294 4.75 7.15169 4.75H6.34295C6.24163 4.75 6.15033 4.81115 6.11177 4.90484L3.58524 11.0429C3.54461 11.1416 3.61719 11.25 3.72395 11.25H4.67399C4.7753 11.25 4.86659 11.1889 4.90516 11.0952L5.51045 9.625H7.98407ZM7.46943 8.375L6.74726 6.62092L6.02508 8.375H7.46943Z&quot;/&gt;&lt;path d=&quot;M10.75 11.25C10.6119 11.25 10.5 11.1381 10.5 11V5C10.5 4.86193 10.6119 4.75 10.75 4.75H11.5C11.6381 4.75 11.75 4.86193 11.75 5V11C11.75 11.1381 11.6381 11.25 11.5 11.25H10.75Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M0 5.5C0 2.73858 2.23858 0.5 5 0.5H11C13.7614 0.5 16 2.73858 16 5.5V10.5C16 13.2614 13.7614 15.5 11 15.5H5C2.23858 15.5 0 13.2614 0 10.5V5.5ZM5 1.75H11C13.0711 1.75 14.75 3.42893 14.75 5.5V10.5C14.75 12.5711 13.0711 14.25 11 14.25H5C2.92893 14.25 1.25 12.5711 1.25 10.5V5.5C1.25 3.42893 2.92893 1.75 5 1.75Z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
-            &lt;span class=&quot;nl-popover-title&quot;&gt;Pre-launch tools&lt;/span&gt;
-            &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap&quot; id=&quot;nl-pop-close&quot; aria-label=&quot;Close&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.9&quot; stroke-linecap=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-          &lt;/div&gt;
-          &lt;div class=&quot;nl-popover-body&quot;&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;SEO / GEO audit&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;Check that Google and AI assistants can find and read your site.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=d7bd9353-a6a3-442d-86f0-9b15488f68c3&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;Performance check&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;See how fast your pages load, and what is slowing them down.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=f8ef80a5-be9b-494d-9fac-a4ac5d5689a4&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;Security audit&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;Look for common weak spots, like out-of-date code or open settings.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=5f50f746-2ba1-4a3d-8a47-1a515f4420eb&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/section&gt;
-        &lt;div class=&quot;nl-mini&quot; id=&quot;nl-mini&quot;&gt;
-          &lt;span class=&quot;nl-mini-brand&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
-    &lt;path fill=&quot;#fff&quot; d=&quot;M17.9922 18.3225H14.005L13.6746 17.9921V14.005L14.005 13.6746H17.9922L18.3226 14.005V17.9921L17.9922 18.3225Z&quot;/&gt;
-    &lt;g fill=&quot;#05BDBA&quot;&gt;
-      &lt;path d=&quot;M9.6958 24.3311H9.35705L7.6661 22.6401V22.3041L10.2511 19.7164L12.042 19.7191L12.2808 19.9552V21.7461L9.6958 24.3311Z&quot;/&gt;
-      &lt;path d=&quot;M7.6661 9.69576V9.35701L9.35705 7.66606H9.6958L12.2808 10.2511V12.0392L12.042 12.2808H10.2511L7.6661 9.69576Z&quot;/&gt;
-      &lt;path d=&quot;M10.0457 17.4369H0.205466L0 17.2314V14.7658L0.205466 14.5603H10.0457L10.2511 14.7658V17.2314L10.0457 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M31.7945 17.4369H21.9544L21.7489 17.2314V14.7658L21.9544 14.5603H31.7945L32 14.7658V17.2314L31.7945 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 10.0456V2.66547L14.7686 2.46001H17.2343L17.4396 2.66547V10.0456L17.2343 10.2511H14.7686L14.5631 10.0456Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 29.3316V21.9515L14.7686 21.746H17.2343L17.4396 21.9515V29.3316L17.2343 29.5371H14.7686L14.5631 29.3316Z&quot;/&gt;
-    &lt;/g&gt;&lt;/svg&gt;&lt;span class=&quot;nl-mini-lock&quot;&gt;&lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; fill-rule=&quot;evenodd&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 1.5A3.5 3.5 0 0 0 4.5 5v2H4A1.5 1.5 0 0 0 2.5 8.5v4A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12 7h-.5V5A3.5 3.5 0 0 0 8 1.5zm2 5.5V5a2 2 0 1 0-4 0v2h4z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-mini-open&quot; id=&quot;nl-mini-open&quot;
-                  aria-label=&quot;Show Netlify site tools&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 4.5 8.5 8 12 11.5M7.5 4.5 4 8 7.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-mini-hide&quot; id=&quot;nl-mini-hide&quot;
-                  aria-label=&quot;Hide Netlify tools on this site&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.9&quot; stroke-linecap=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;section class=&quot;nl-tip&quot; id=&quot;nl-tip&quot; aria-label=&quot;Project visibility&quot;&gt;
-          This project is private - only your team and people you invite can view it.
-          &lt;a href=&quot;https://docs.netlify.com/manage/security/secure-access-to-sites/project-visibility/&quot;
-             target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Learn more &lt;span aria-hidden=&quot;true&quot;&gt;&amp;#8599;&lt;/span&gt;&lt;/a&gt;
-        &lt;/section&gt;
-        &lt;div class=&quot;nl-bar&quot; role=&quot;toolbar&quot; aria-label=&quot;Netlify site tools&quot;&gt;
-          &lt;span class=&quot;nl-logo&quot;&gt;&lt;svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
-    &lt;path fill=&quot;#fff&quot; d=&quot;M17.9922 18.3225H14.005L13.6746 17.9921V14.005L14.005 13.6746H17.9922L18.3226 14.005V17.9921L17.9922 18.3225Z&quot;/&gt;
-    &lt;g fill=&quot;#05BDBA&quot;&gt;
-      &lt;path d=&quot;M9.6958 24.3311H9.35705L7.6661 22.6401V22.3041L10.2511 19.7164L12.042 19.7191L12.2808 19.9552V21.7461L9.6958 24.3311Z&quot;/&gt;
-      &lt;path d=&quot;M7.6661 9.69576V9.35701L9.35705 7.66606H9.6958L12.2808 10.2511V12.0392L12.042 12.2808H10.2511L7.6661 9.69576Z&quot;/&gt;
-      &lt;path d=&quot;M10.0457 17.4369H0.205466L0 17.2314V14.7658L0.205466 14.5603H10.0457L10.2511 14.7658V17.2314L10.0457 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M31.7945 17.4369H21.9544L21.7489 17.2314V14.7658L21.9544 14.5603H31.7945L32 14.7658V17.2314L31.7945 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 10.0456V2.66547L14.7686 2.46001H17.2343L17.4396 2.66547V10.0456L17.2343 10.2511H14.7686L14.5631 10.0456Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 29.3316V21.9515L14.7686 21.746H17.2343L17.4396 21.9515V29.3316L17.2343 29.5371H14.7686L14.5631 29.3316Z&quot;/&gt;
-    &lt;/g&gt;&lt;/svg&gt;&lt;/span&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-status&quot; id=&quot;nl-status&quot;
-                  aria-expanded=&quot;false&quot; aria-controls=&quot;nl-tip&quot;&gt;&lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; fill-rule=&quot;evenodd&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 1.5A3.5 3.5 0 0 0 4.5 5v2H4A1.5 1.5 0 0 0 2.5 8.5v4A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12 7h-.5V5A3.5 3.5 0 0 0 8 1.5zm2 5.5V5a2 2 0 1 0-4 0v2h4z&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;nl-shrinks&quot;&gt;Private&lt;/span&gt;&lt;/button&gt;
-          &lt;span class=&quot;nl-sep&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;a class=&quot;nl-btn&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?modal=share&amp;from_hud=private&amp;hud_action=share&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.5636 8C6.94548 8.31953 6.24382 8.5 5.5 8.5C4.75618 8.5 4.05452 8.31953 3.4364 8H1.5L0.5 9V13L1.5 14H9.5L10.5 13V9L9.5 8H7.5636ZM8.87868 9.5H7.90075C7.16414 9.82186 6.35125 10 5.5 10C4.64875 10 3.83586 9.82186 3.09925 9.5H2.12132L2 9.62132V12.3787L2.12132 12.5H8.87868L9 12.3787V9.62132L8.87868 9.5Z&quot;/&gt;&lt;path d=&quot;M13.9999 10.1213V11.8463L12.2043 11.8481L12.0039 12.0357V13.1606L12.2043 13.3481H13.7955L13.7975 13.3463H14.7024L15.4999 12.5V9.5L14.5001 8.5001L12.2043 8.49976L12.0039 8.68726V9.81225L12.2043 9.99976L13.8786 10L13.9999 10.1213Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M5.5 7C6.88071 7 8 5.88071 8 4.5C8 3.11929 6.88071 2 5.5 2C4.11929 2 3 3.11929 3 4.5C3 5.88071 4.11929 7 5.5 7ZM5.5 5.5C6.05228 5.5 6.5 5.05228 6.5 4.5C6.5 3.94772 6.05228 3.5 5.5 3.5C4.94772 3.5 4.5 3.94772 4.5 4.5C4.5 5.05228 4.94772 5.5 5.5 5.5Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M13.7 5.1C13.7 6.25937 12.7594 7.2 11.6 7.2C10.4406 7.2 9.5 6.25937 9.5 5.1C9.5 3.94062 10.4406 3 11.6 3C12.7594 3 13.7 3.94062 13.7 5.1ZM11.6 5.7C11.9309 5.7 12.2 5.43095 12.2 5.1C12.2 4.76905 11.9309 4.5 11.6 4.5C11.2691 4.5 11 4.76905 11 5.1C11 5.43095 11.2691 5.7 11.6 5.7Z&quot;/&gt;&lt;/svg&gt;
-            &lt;span class=&quot;nl-shrinks&quot;&gt;Share&lt;/span&gt;&lt;/a&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-btn&quot; id=&quot;nl-tools&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;nl-pop&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.98407 9.625L8.58935 11.0952C8.62792 11.1889 8.71922 11.25 8.82053 11.25H9.77587C9.88268 11.25 9.95527 11.1415 9.91454 11.0428L7.3828 4.90468C7.3442 4.81107 7.25294 4.75 7.15169 4.75H6.34295C6.24163 4.75 6.15033 4.81115 6.11177 4.90484L3.58524 11.0429C3.54461 11.1416 3.61719 11.25 3.72395 11.25H4.67399C4.7753 11.25 4.86659 11.1889 4.90516 11.0952L5.51045 9.625H7.98407ZM7.46943 8.375L6.74726 6.62092L6.02508 8.375H7.46943Z&quot;/&gt;&lt;path d=&quot;M10.75 11.25C10.6119 11.25 10.5 11.1381 10.5 11V5C10.5 4.86193 10.6119 4.75 10.75 4.75H11.5C11.6381 4.75 11.75 4.86193 11.75 5V11C11.75 11.1381 11.6381 11.25 11.5 11.25H10.75Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M0 5.5C0 2.73858 2.23858 0.5 5 0.5H11C13.7614 0.5 16 2.73858 16 5.5V10.5C16 13.2614 13.7614 15.5 11 15.5H5C2.23858 15.5 0 13.2614 0 10.5V5.5ZM5 1.75H11C13.0711 1.75 14.75 3.42893 14.75 5.5V10.5C14.75 12.5711 13.0711 14.25 11 14.25H5C2.92893 14.25 1.25 12.5711 1.25 10.5V5.5C1.25 3.42893 2.92893 1.75 5 1.75Z&quot;/&gt;&lt;/svg&gt;
-            &lt;span class=&quot;nl-shrinks&quot;&gt;Pre-launch tools&lt;/span&gt;&lt;/button&gt;
-          &lt;a class=&quot;nl-publish&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?modal=go-live&amp;from_hud=private&amp;hud_action=make_public&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M11.072 6C10.8557 5.99995 10.6443 5.93576 10.4644 5.81554C10.2846 5.69533 10.1444 5.52449 10.0617 5.32463C9.97895 5.12477 9.95733 4.90486 9.99956 4.69271C10.0418 4.48056 10.146 4.2857 10.299 4.13276C10.4519 3.97982 10.6468 3.87568 10.859 3.8335C11.0711 3.79132 11.291 3.81299 11.4909 3.89578C11.6907 3.97857 11.8615 4.11876 11.9817 4.29862C12.1019 4.47848 12.166 4.68994 12.166 4.90625C12.1658 5.19633 12.0505 5.47447 11.8454 5.67956C11.6402 5.88464 11.3621 5.9999 11.072 6Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M3.59279 4.5H6.77473L8.48034 2.74577L10.1619 1L14.4308 1.00686L15 1.59031V6.01763L11.5291 9.61732L11.78 12.4852L11.1608 13.7165L8.58695 15.2986L7.59043 14.7959L7.31674 11.6676L4.624 8.875H1.65598L1.06836 7.92609L2.42011 5.22418L3.59279 4.5ZM8.7673 11.037L8.96573 13.305L10.0122 12.6618L10.2486 12.1917L10.1476 11.037L8.7673 11.037ZM8.43037 10.6616L12.036 6.93056L13.5 5.41225V2.50537L10.7987 2.50103L10.0283 3.30089L5.69627 7.82603L8.43037 10.6616ZM5.27424 7.38834L5.35943 6H4.01862L3.57089 6.27649L3.02131 7.375H5.26138L5.27424 7.38834Z&quot;/&gt;&lt;path d=&quot;M2.05008 10.9935L3.79156 9.6874L4.81429 10.7954L3.17932 12.0216L2.95615 13.1374L4.07201 12.9143L5.28155 11.3016L6.31603 12.4222L5.10008 14.0435L4.64717 14.3289L2.14717 14.8289L1.26465 13.9464L1.76465 11.4464L2.05008 10.9935Z&quot;/&gt;&lt;/svg&gt; Make public&lt;/a&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-min&quot; id=&quot;nl-min&quot;
-                  aria-label=&quot;Minimize Netlify tools&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 4.5 7.5 8 4 11.5M8.5 4.5 12 8 8.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;script&gt;
-        
-    function nlSend(){
-      var wrap=document.querySelector('.nl-wrap'),boxes=[];
-      for(var i=0;i&lt;wrap.children.length;i++){
-        var c=wrap.children[i];
-        if(!c.offsetWidth||!c.offsetHeight)continue;
-        boxes.push({x:c.offsetLeft-wrap.offsetLeft+8,
-                    y:c.offsetTop-wrap.offsetTop+8,
-                    w:c.offsetWidth,h:c.offsetHeight});
-      }
-      parent.postMessage({nlHud:'resize',
-        width:wrap.offsetWidth+26,
-        height:wrap.offsetHeight+26,
-        boxes:boxes},'*');
-    }
-    function nlSendSoon(){requestAnimationFrame(nlSend);}
-    window.addEventListener('load',nlSend);
-    window.addEventListener('message',function(e){
-      if(e.source!==parent||!e.data||e.data.nlHud!=='viewport')return;
-      var s=document.documentElement.style;
-      s.setProperty('--nl-vw',e.data.w+'px');
-      s.setProperty('--nl-vh',e.data.h+'px');
-      document.documentElement.classList.toggle('nl-narrow',e.data.w&lt;600);
-      nlSendSoon();
-    });
-    var nlCoarse=window.matchMedia('(pointer: coarse)').matches;
-    function nlSubmit(form){
-      if(form.requestSubmit)return form.requestSubmit();
-      if(form.checkValidity&amp;&amp;!form.checkValidity())
-        return form.reportValidity&amp;&amp;form.reportValidity();
-      form.submit();
-    }
-  
-        var btn=document.getElementById('nl-tools'),pop=document.getElementById('nl-pop');
-        function setOpen(open){
-          pop.classList.toggle('open',open);
-          btn.setAttribute('aria-expanded',open?'true':'false');
-          nlSendSoon();
-        }
-        btn.addEventListener('click',function(){setOpen(!pop.classList.contains('open'));});
-        document.getElementById('nl-pop-close').addEventListener('click',function(){setOpen(false);btn.focus();});
-
-        var statusBtn=document.getElementById('nl-status'),tip=document.getElementById('nl-tip'),tipTimer=null;
-        function setTip(open){
-          tip.classList.toggle('open',open);
-          statusBtn.setAttribute('aria-expanded',open?'true':'false');
-          nlSendSoon();
-        }
-        function openTip(){clearTimeout(tipTimer);setTip(true);}
-        function closeTipSoon(){clearTimeout(tipTimer);tipTimer=setTimeout(function(){setTip(false);},200);}
-        if(!nlCoarse){
-          statusBtn.addEventListener('mouseenter',openTip);
-          statusBtn.addEventListener('mouseleave',closeTipSoon);
-          tip.addEventListener('mouseenter',openTip);
-          tip.addEventListener('mouseleave',closeTipSoon);
-        }
-        statusBtn.addEventListener('focus',function(){
-          var keyboard;
-          try{keyboard=statusBtn.matches(':focus-visible');}catch(e){keyboard=!nlCoarse;}
-          if(keyboard)openTip();
-        });
-        statusBtn.addEventListener('blur',closeTipSoon);
-        statusBtn.addEventListener('click',function(){
-          clearTimeout(tipTimer);
-          setTip(nlCoarse ? !tip.classList.contains('open') : true);
-        });
-
-        var root=document.documentElement;
-        function setStage(value){
-          root.classList.toggle('nl-mini-state',value==='mini');
-          if(value==='mini'){setOpen(false);setTip(false);}
-          parent.postMessage({nlHud:'state',value:value},'*');
-          nlSendSoon();
-        }
-        document.getElementById('nl-min').addEventListener('click',function(){
-          setStage('mini');
-          document.getElementById('nl-mini-open').focus();
-        });
-        document.getElementById('nl-mini').addEventListener('click',function(e){
-          if(e.target.closest('#nl-mini-hide'))return;
-          setStage('');
-          document.getElementById('nl-min').focus();
-        });
-        document.getElementById('nl-mini-hide').addEventListener('click',function(){
-          parent.postMessage({nlHud:'state',value:'hidden'},'*');
-        });
-        document.addEventListener('keydown',function(e){
-          if(e.key!=='Escape')return;
-          if(tip.classList.contains('open')){setTip(false);statusBtn.focus();return;}
-          if(pop.classList.contains('open')){setOpen(false);btn.focus();}
-        });
-      &lt;/script&gt;
-    &lt;/body&gt;&lt;/html&gt;" data-nl-ready="1"></iframe>
-<script async="" src="/.netlify/scripts/hud?variant=owner-private" data-nf-variant="owner-private" data-netlify-site-id="bda6403e-b9b8-4f3f-8b10-d57778c7669f" data-app-host="app.netlify.com"></script>
-</body></html>
+</body>
+</html>
