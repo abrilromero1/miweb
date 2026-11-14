@@ -400,6 +400,66 @@ footer {
 
 [data-hidden] { display: none; }
 
+/* ───────────── Animaciones y efectos (se activan desde Diseño) ───────────── */
+:root { --shine: rgba(255,255,255,.55); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --shine: rgba(255,255,255,.09); } }
+:root[data-theme="dark"] { --shine: rgba(255,255,255,.09); }
+
+/* Entrada al hacer scroll */
+.rv { transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease; }
+.rv:nth-child(2) { transition-delay: .08s; } .rv:nth-child(3) { transition-delay: .16s; }
+.rv:nth-child(4) { transition-delay: .24s; } .rv:nth-child(5) { transition-delay: .32s; } .rv:nth-child(n+6) { transition-delay: .4s; }
+.anim-ready:not([data-reveal="none"]) :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { opacity: 0; }
+.anim-ready[data-reveal="up"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateY(28px); }
+.anim-ready[data-reveal="slide"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateX(-40px); }
+.anim-ready[data-reveal="slide"] :is(body:not(.editing), body.ed-fxprev) .rv:nth-child(even):not(.rv-in) { transform: translateX(40px); }
+.anim-ready[data-reveal="zoom"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: scale(.9); }
+.anim-ready[data-reveal="blur"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateY(10px); filter: blur(10px); }
+
+/* Capas de luces y destellos (las crea el script; no se guardan en el contenido) */
+.hero { position: relative; overflow: hidden; isolation: isolate; }
+.hero > .wrap { position: relative; z-index: 1; }
+.cta-box { position: relative; overflow: hidden; isolation: isolate; }
+.cta-box > :not(.fx) { position: relative; z-index: 1; }
+.fx { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.glow { position: absolute; border-radius: 50%; filter: blur(64px); background: var(--accent); opacity: .26; animation: fx-drift 18s ease-in-out infinite alternate; }
+.glow.g1 { width: 380px; height: 380px; top: -150px; right: -70px; }
+.glow.g2 { width: 320px; height: 320px; bottom: -170px; left: -110px; background: color-mix(in srgb, var(--accent) 55%, #F0C060); opacity: .2; animation-duration: 23s; animation-direction: alternate-reverse; }
+.cta-box .glow { width: 200px; height: 200px; filter: blur(44px); }
+.cta-box .glow.g1 { top: -110px; right: -40px; } .cta-box .glow.g2 { bottom: -120px; left: -40px; }
+@keyframes fx-drift { to { transform: translate(-90px, 60px) scale(1.25); } }
+.spk { position: absolute; width: var(--s, 10px); height: var(--s, 10px); color: var(--accent); opacity: 0; transform: translate(-50%,-50%) scale(0); animation: fx-twinkle 3s ease-in-out infinite; }
+.spk:nth-child(3n) { color: #E8B04A; }
+.spk svg { display: block; width: 100%; height: 100%; }
+@keyframes fx-twinkle { 0%, 100% { opacity: 0; transform: translate(-50%,-50%) scale(0) rotate(0deg); } 50% { opacity: .85; transform: translate(-50%,-50%) scale(1) rotate(45deg); } }
+
+/* Efectos al pasar el mouse (no se activan mientras editás) */
+:root[data-lift="on"] body:not(.editing) :is(.service-card, .note, .c-link, .t-item .info) { transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .2s; }
+:root[data-lift="on"] body:not(.editing) :is(.service-card, .note, .c-link, .t-item .info):hover { transform: translateY(-4px); box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--accent) 50%, transparent); }
+:root[data-spot="on"] :is(.service-card, .note, .t-item .info) { background-image: radial-gradient(240px circle at var(--mx, -500px) var(--my, -500px), color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%); }
+:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card) { position: relative; overflow: hidden; }
+:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card, .cta-box)::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(115deg, transparent 35%, var(--shine) 50%, transparent 65%); transform: translateX(-100%); }
+:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card, .cta-box):hover::after { transform: translateX(100%); transition: transform .9s ease; }
+
+/* Cinta en movimiento */
+.marquee-section { padding: 22px 0; border-bottom: 1px solid var(--border); background: var(--bg-alt); overflow: hidden; }
+.marquee { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; flex-shrink: 0; gap: 18px; padding-right: 18px; animation: fx-marquee var(--mq, 32s) linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.chip { display: inline-flex; align-items: center; gap: 18px; white-space: nowrap; font-family: var(--font-head); font-size: 20px; color: var(--text-mid); }
+.chip::after { content: '✦'; color: var(--accent); font-size: 13px; }
+@keyframes fx-marquee { to { transform: translateX(-100%); } }
+.editing .marquee-section { padding-top: 54px; }
+.editing .marquee { -webkit-mask-image: none; mask-image: none; }
+.editing .marquee-track { animation: none; flex-wrap: wrap; padding: 0 24px 0 40px; row-gap: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .glow, .spk { animation: none; }
+  .spk { display: none; }
+  .marquee-track { animation: none !important; flex-wrap: wrap; }
+}
+
 /* ───────────── Editor (solo visible en modo edición) ───────────── */
 .ed-ui { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.4; }
 body.editing { padding-bottom: 96px; }
@@ -415,15 +475,19 @@ body.editing { padding-bottom: 96px; }
 .editing [data-hidden]::before { content: 'Oculta para visitantes'; position: absolute; top: 10px; left: 10px; font: 500 11px system-ui, sans-serif; background: var(--text); color: var(--bg); padding: 3px 8px; border-radius: 6px; }
 .ed-dragging { opacity: .35; }
 
-.ed-bar { position: absolute; display: none; gap: 1px; padding: 3px; background: #24201C; border: 1px solid #3A342E; border-radius: 9px; box-shadow: 0 6px 18px rgba(0,0,0,.22); z-index: 20; user-select: none; }
+.ed-bar { position: absolute; display: none; gap: 1px; padding: 3px; background: #24201C; border: 1px solid #3A342E; border-radius: 9px; box-shadow: 0 6px 18px rgba(0,0,0,.22); z-index: 6; user-select: none; }
+body.ed-typing .ed-bar { display: none !important; }
 .ed-bar button, .ed-toolbar button, .ed-fmt button { all: unset; box-sizing: border-box; cursor: pointer; }
 .ed-bar button { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 6px; color: #CFC5BA; }
 .ed-bar button:hover { background: rgba(255,255,255,.12); color: #fff; }
-.ed-bar button[data-act="drag"] { cursor: grab; }
-.ed-bar button[data-act="del"]:hover { background: #7A2E22; }
+.ed-bar button[data-act="menu"] { cursor: grab; }
 .ed-bar svg, .ed-toolbar svg { width: 15px; height: 15px; }
-.ed-ibar { top: -15px; right: 6px; }
-.ed-sbar { top: 10px; right: 10px; }
+/* Manija de cada elemento: afuera, a la izquierda, para no tapar nunca el texto */
+.ed-ibar { top: 0; right: 100%; flex-direction: column; padding: 2px; border-radius: 7px; }
+.ed-ibar button { width: 20px; height: 22px; border-radius: 5px; }
+.ed-ibar svg { width: 13px; height: 13px; }
+.ed-sbar { top: 8px; right: 10px; z-index: 5; }
+.ed-pop .mi.danger { color: #C0412B; }
 .editing [data-item]:hover > .ed-ibar, .editing [data-item].ed-sel > .ed-ibar,
 .editing [data-block]:hover > .ed-sbar, .editing [data-block].ed-sel > .ed-sbar { display: flex; }
 .ed-add { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 10px 18px; border: 1.5px dashed var(--border); border-radius: max(0px, calc(var(--r) - 2px)); color: var(--text-soft); font: 500 13px system-ui, sans-serif; }
@@ -481,6 +545,16 @@ body.editing { padding-bottom: 96px; }
 .ed-seg button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 8px 0; font-size: 13px; }
 .ed-seg button.on { background: var(--accent); color: #fff; }
 .ed-panel input[type=range] { width: 100%; accent-color: var(--accent); }
+.ed-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ed-chips button { all: unset; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; }
+.ed-chips button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ed-tgs { display: grid; gap: 2px; }
+.ed-tg { all: unset; box-sizing: border-box; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; font-size: 13.5px; }
+.ed-tg small { display: block; color: var(--text-soft); font-size: 12px; line-height: 1.35; margin-top: 1px; }
+.ed-tg i { flex-shrink: 0; width: 34px; height: 20px; border-radius: 999px; background: var(--border); position: relative; transition: background .2s; }
+.ed-tg i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .2s; }
+.ed-tg.on i { background: var(--accent); }
+.ed-tg.on i::after { transform: translateX(14px); }
 .ed-hint { font-size: 12.5px; color: var(--text-mid); background: var(--bg-alt); border-radius: 10px; padding: 12px 14px; line-height: 1.55; }
 .ed-hint b { font-weight: 600; }
 .ed-hint + .ed-hint { margin-top: 8px; }
@@ -511,7 +585,7 @@ body.editing { padding-bottom: 96px; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto","reveal":"up","glow":"on","sparkle":"on","shine":"on","spot":"on","lift":"on"}'></style>
 </head>
 <body>
 <div id="site">
@@ -736,7 +810,15 @@ body.editing { padding-bottom: 96px; }
     outfit:    { name: 'Outfit', note: 'limpia', head: "'Outfit', system-ui, sans-serif", body: "'Outfit', system-ui, sans-serif", url: 'family=Outfit:wght@400;500' }
   };
   const PRESETS = ['#B5623A', '#2F6F62', '#2B5C8A', '#7A4E9C', '#B0475B', '#4A4540'];
-  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto' };
+  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto', reveal: 'up', glow: 'on', sparkle: 'on', shine: 'on', spot: 'on', lift: 'on' };
+  const REVEALS = [['none', 'Ninguna'], ['up', 'Subir'], ['slide', 'Deslizar'], ['zoom', 'Zoom'], ['blur', 'Enfocar']];
+  const EFFECTS = [
+    ['glow', 'Luces en la portada', 'Manchas de color que se mueven despacio'],
+    ['sparkle', 'Destellos', 'Estrellitas que titilan en la portada y el recuadro destacado'],
+    ['shine', 'Brillo al pasar el mouse', 'Un reflejo de luz cruza tarjetas y botones'],
+    ['spot', 'Luz que sigue al cursor', 'Las tarjetas se iluminan donde está el mouse'],
+    ['lift', 'Tarjetas que se elevan', 'Se levantan un poco al pasar el mouse']
+  ];
 
   /* ── Plantillas de elementos y secciones ── */
   const ITEM_TPL = {
@@ -745,7 +827,8 @@ body.editing { padding-bottom: 96px; }
     job: () => `<div class="t-item" data-item><span class="dates" data-e>2025 – hoy</span><div class="info"><p class="role" data-e>Puesto</p><p class="co" data-e>Empresa</p><p class="desc" data-e data-ml>Responsabilidades y logros.</p></div></div>`,
     cred: () => `<span class="cred" data-item>${svg('check', 2.5)}<span class="t" data-e>Nueva credencial</span></span>`,
     contact: () => `<a href="#" class="c-link" data-item><span class="ic" data-slot data-icon="globe">${svg('globe')}</span><span class="t" data-e>Nuevo enlace</span></a>`,
-    para: () => `<div class="para" data-item><p data-e data-ml>Nuevo párrafo.</p></div>`
+    para: () => `<div class="para" data-item><p data-e data-ml>Nuevo párrafo.</p></div>`,
+    chip: () => `<span class="chip" data-item><span class="t" data-e>Nueva palabra</span></span>`
   };
   const shell = (cls, nav, title, desc, inner) =>
     `<section class="${cls}" data-block data-nav="${nav}"><div class="wrap"><h2 class="s-title" data-e>${title}</h2><p class="s-desc" data-e data-ml>${desc}</p>${inner}</div></section>`;
@@ -755,6 +838,7 @@ body.editing { padding-bottom: 96px; }
     { label: 'Notas con etiqueta', hint: 'Apuntes, artículos, recursos', html: () => shell('notes-section', 'Recursos', 'Recursos', 'Una frase que introduzca la sección.', `<div class="notes-grid" data-list="note">${ITEM_TPL.note()}${ITEM_TPL.note()}${ITEM_TPL.note()}</div>`) },
     { label: 'Línea de tiempo', hint: 'Experiencia, formación, cursos', html: () => shell('exp-section', 'Formación', 'Formación', 'Cursos y certificaciones.', `<div class="timeline" data-list="job">${ITEM_TPL.job()}</div>`) },
     { label: 'Enlaces de contacto', hint: 'Email, redes, WhatsApp', html: () => shell('contact-section', 'Contacto', 'Contacto', 'Escribime por cualquiera de estos medios.', `<div class="contact-row" data-list="contact">${ITEM_TPL.contact()}</div>`) },
+    { label: 'Cinta en movimiento', hint: 'Palabras clave que se deslizan solas', html: () => `<section class="marquee-section" data-block><div class="marquee"><div class="marquee-track" data-list="chip">${['ISO 9001:2015', 'Auditorías internas', 'Mejora continua', 'Gestión de calidad', 'Acciones correctivas', 'Mapeo de procesos'].map(w => ITEM_TPL.chip().replace('Nueva palabra', w)).join('')}</div></div></section>` },
     { label: 'Destacado', hint: 'Recuadro con una frase importante', html: () => `<section class="text-section" data-block><div class="wrap"><div class="cta-box"><p data-e>Una frase destacada</p><span class="small" data-e>Un detalle que la complemente</span></div></div></section>` }
   ];
 
@@ -776,11 +860,12 @@ body.editing { padding-bottom: 96px; }
   };
 
   function clean(node) {
-    node.querySelectorAll('.ed-x').forEach(n => n.remove());
+    node.querySelectorAll('.ed-x,.fx').forEach(n => n.remove());
+    node.querySelectorAll('[style*="--m"]').forEach(n => { n.style.removeProperty('--mx'); n.style.removeProperty('--my'); n.style.removeProperty('--mq'); if (!n.getAttribute('style')) n.removeAttribute('style'); });
     node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
       n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
     });
-    node.querySelectorAll('.ed-sel,.ed-dragging').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging'); if (!n.classList.length) n.removeAttribute('class'); });
+    node.querySelectorAll('.ed-sel,.ed-dragging,.rv,.rv-in').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'rv', 'rv-in'); if (!n.classList.length) n.removeAttribute('class'); });
   }
   const serialize = () => { const c = site.cloneNode(true); clean(c); return c.innerHTML; };
   const cloneClean = n => { const w = mk('div'); w.appendChild(n.cloneNode(true)); clean(w); const c = w.firstElementChild; c.removeAttribute('id'); return c; };
@@ -805,7 +890,74 @@ body.editing { padding-bottom: 96px; }
     const href = `https://fonts.googleapis.com/css2?${f.url}&display=swap`;
     if (fontLink.getAttribute('href') !== href) fontLink.setAttribute('href', href);
     if (theme.mode === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', theme.mode);
+    setFxAttrs(); fx();
   }
+
+  /* ── Animaciones y efectos ── */
+  const FX_KEYS = ['reveal', 'glow', 'sparkle', 'shine', 'spot', 'lift'];
+  const REVEAL_SEL = '.hero .label, .hero h1, .hero .sub, .hero .creds, .s-title, .s-desc, .contact-intro, .text-body, .cta-box, .timeline > [data-item], .services-grid > [data-item], .notes-grid > [data-item], .contact-row > [data-item], .marquee';
+  const SPARK = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4 6.2 12 0z"/></svg>';
+  const reduceMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rnd = (a, b) => (a + Math.random() * (b - a)).toFixed(2);
+  function setFxAttrs() { FX_KEYS.forEach(k => root.setAttribute('data-' + k, theme[k])); }
+  function fx() {   // capas decorativas: se regeneran en cada carga y nunca se guardan
+    site.querySelectorAll('.fx').forEach(n => n.remove());
+    const still = reduceMotion();
+    site.querySelectorAll('.hero, .cta-box').forEach(h => {
+      const big = h.classList.contains('hero');
+      if (theme.glow === 'on') { const g = mk('div', 'fx', '<span class="glow g1"></span><span class="glow g2"></span>'); g.setAttribute('aria-hidden', 'true'); h.prepend(g); }
+      if (theme.sparkle === 'on' && !still) {
+        const box = mk('div', 'fx'); box.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < (big ? 16 : 7); i++) {
+          const sp = mk('span', 'spk', SPARK);
+          sp.style.cssText = `left:${rnd(3, 97)}%;top:${rnd(6, 94)}%;--s:${rnd(big ? 7 : 6, big ? 15 : 11)}px;animation-delay:${rnd(0, 6)}s;animation-duration:${rnd(2.4, 4.4)}s`;
+          box.appendChild(sp);
+        }
+        h.prepend(box);
+      }
+    });
+    if (!editing && !still) site.querySelectorAll('.marquee').forEach(m => {
+      const t = m.querySelector('.marquee-track'); if (!t || !t.children.length) return;
+      const w = t.getBoundingClientRect().width || 1, copies = Math.ceil(innerWidth / w) + 1;
+      t.style.setProperty('--mq', Math.max(14, Math.round(w / 45)) + 's');
+      for (let i = 0; i < copies; i++) {
+        const c = t.cloneNode(true); c.classList.add('fx'); c.setAttribute('aria-hidden', 'true');
+        c.querySelectorAll('[data-item],[data-e],[data-list]').forEach(n => { n.removeAttribute('data-item'); n.removeAttribute('data-e'); });
+        c.removeAttribute('data-list'); m.appendChild(c);
+      }
+    });
+  }
+  let io = null;
+  function initReveal() {
+    if (io) { io.disconnect(); io = null; }
+    if (theme.reveal === 'none' || reduceMotion() || !('IntersectionObserver' in window)) return;
+    io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; io.unobserve(el); el.classList.add('rv-in');
+      setTimeout(() => el.classList.remove('rv', 'rv-in'), 1600);
+    }), { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
+    site.querySelectorAll(REVEAL_SEL).forEach(el => { if (el.closest('[data-hidden]')) return; el.classList.add('rv'); io.observe(el); });
+  }
+  function previewReveal() {   // muestra la animación elegida sin salir del editor
+    if (theme.reveal === 'none' || reduceMotion()) return;
+    const els = [...site.querySelectorAll(REVEAL_SEL)].filter(el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+    els.forEach(el => { el.classList.add('rv'); el.classList.remove('rv-in'); });
+    body.classList.add('ed-fxprev'); void site.offsetWidth;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      els.forEach(el => el.classList.add('rv-in'));
+      setTimeout(() => { els.forEach(el => el.classList.remove('rv', 'rv-in')); body.classList.remove('ed-fxprev'); }, 1500);
+    }));
+  }
+  document.addEventListener('pointermove', e => {
+    if (editing || theme.spot !== 'on' || e.pointerType === 'touch') return;
+    const c = e.target.closest && e.target.closest('.service-card, .note, .t-item .info'); if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+  document.addEventListener('pointerout', e => {
+    const c = e.target.closest && e.target.closest('.service-card, .note, .t-item .info');
+    if (c && !c.contains(e.relatedTarget)) { c.style.removeProperty('--mx'); c.style.removeProperty('--my'); if (!c.getAttribute('style')) c.removeAttribute('style'); }
+  });
 
   /* ── Estado, borrador e historial ── */
   const stateStr = (html = serialize(), th = theme) => html + '\u0000' + JSON.stringify(Object.assign({}, DEFAULT_THEME, th));
@@ -852,22 +1004,16 @@ body.editing { padding-bottom: 96px; }
   const btn = (act, icon, title) => `<button type="button" data-act="${act}" title="${title}">${ui(icon)}</button>`;
   function itemBar(it) {
     const b = mk('div', 'ed-bar ed-ibar ed-x',
-      btn('drag', 'drag', 'Arrastrar para mover') + btn('up', 'up', 'Mover antes') + btn('down', 'down', 'Mover después') +
-      btn('add', 'plus', 'Agregar uno nuevo debajo') + btn('dup', 'copy', 'Duplicar') +
-      (it.matches('a') ? btn('link', 'link', 'Cambiar enlace') : '') +
-      (it.querySelector('[data-slot]') ? btn('icon', 'icon', 'Cambiar ícono') : '') +
-      btn('del', 'trash', 'Eliminar'));
+      btn('menu', 'drag', 'Arrastrá para mover · clic para más opciones') + btn('add', 'plus', 'Agregar uno nuevo debajo'));
     b.contentEditable = 'false'; return b;
   }
   function sectionBar(s) {
     const hidden = s.hasAttribute('data-hidden');
     const b = mk('div', 'ed-bar ed-sbar ed-x',
-      btn('drag', 'drag', 'Arrastrar sección') + btn('up', 'up', 'Subir sección') + btn('down', 'down', 'Bajar sección') +
+      btn('menu', 'drag', 'Arrastrá para mover la sección · clic para más opciones') +
       btn('addsec', 'addsec', 'Agregar sección debajo') +
       (s.querySelector('[data-list]') ? btn('additem', 'plus', 'Agregar elemento') : '') +
-      btn('nav', 'menu', 'Nombre en el menú') +
-      btn('hide', hidden ? 'eye' : 'eyeoff', hidden ? 'Mostrar a visitantes' : 'Ocultar a visitantes') +
-      btn('dup', 'copy', 'Duplicar sección') + btn('del', 'trash', 'Eliminar sección'));
+      btn('hide', hidden ? 'eye' : 'eyeoff', hidden ? 'Mostrar a visitantes' : 'Ocultar a visitantes'));
     b.contentEditable = 'false'; return b;
   }
   function decorate() {
@@ -878,7 +1024,7 @@ body.editing { padding-bottom: 96px; }
       if (!l.querySelector(':scope > [data-item]')) l.appendChild(mk('button', 'ed-add ed-x', '+ Agregar elemento')).setAttribute('data-act', 'additem');
     });
   }
-  function refresh() { clean(site); buildNav(); if (editing) decorate(); scheduleSave(); }
+  function refresh() { clean(site); buildNav(); if (editing) decorate(); fx(); scheduleSave(); }
 
   function focusFirst(n) {
     const f = n.matches('[data-e]') ? n : n.querySelector('[data-e]'); if (!f) return;
@@ -897,8 +1043,36 @@ body.editing { padding-bottom: 96px; }
     const sec = b.closest('[data-block]');
     const it = isSec ? null : b.closest('[data-item]');
     const target = isSec ? sec : it;
+    if (target) {   // mantiene visible la manija mientras se usa el menú
+      site.querySelectorAll('.ed-sel').forEach(n => n.classList.remove('ed-sel'));
+      target.classList.add('ed-sel');
+    }
+    if (name === 'menu') return showMenu(b, isSec ? secMenu(sec, b) : itemMenu(it, b));
+    run(name, target, sec, b, isSec);
+  }
+  function itemMenu(it, b) {
+    const m = [
+      { label: 'Mover antes', fn: () => move(it, -1) },
+      { label: 'Mover después', fn: () => move(it, 1) },
+      { label: 'Duplicar', fn: () => run('dup', it, null, b) }
+    ];
+    if (it.matches('a')) m.push({ label: 'Cambiar enlace', hint: it.getAttribute('href') || '', fn: () => run('link', it, null, b) });
+    if (it.querySelector('[data-slot]')) m.push({ label: 'Cambiar ícono', fn: () => run('icon', it, null, b) });
+    m.push({ label: 'Eliminar', danger: true, fn: () => run('del', it, null, b) });
+    return m;
+  }
+  function secMenu(sec, b) {
+    return [
+      { label: 'Subir sección', fn: () => move(sec, -1) },
+      { label: 'Bajar sección', fn: () => move(sec, 1) },
+      { label: 'Nombre en el menú', hint: sec.dataset.nav ? `Ahora: ${sec.dataset.nav}` : 'No aparece en el menú', fn: () => run('nav', sec, sec, b, true) },
+      { label: 'Duplicar sección', fn: () => run('dup', sec, sec, b, true) },
+      { label: 'Eliminar sección', danger: true, fn: () => run('del', sec, sec, b, true) }
+    ];
+  }
+  function run(name, target, sec, b, isSec) {
+    const it = target;
     switch (name) {
-      case 'drag': break;
       case 'up': move(target, -1); break;
       case 'down': move(target, 1); break;
       case 'dup': { commit(); const c = cloneClean(target); target.after(c); refresh(); break; }
@@ -908,17 +1082,17 @@ body.editing { padding-bottom: 96px; }
         commit(); const n = frag(tpl()); it.after(n); refresh(); focusFirst(n); break;
       }
       case 'additem': {
-        const list = b.closest('[data-list]') || sec.querySelector('[data-list]'); const tpl = list && ITEM_TPL[list.dataset.list]; if (!tpl) return;
+        const list = b.closest('[data-list]') || (target && target.querySelector('[data-list]')); const tpl = list && ITEM_TPL[list.dataset.list]; if (!tpl) return;
         commit(); const n = frag(tpl()); list.appendChild(n); refresh(); focusFirst(n); break;
       }
-      case 'hide': { commit(); sec.toggleAttribute('data-hidden'); refresh(); toast(sec.hasAttribute('data-hidden') ? 'Sección oculta para visitantes' : 'Sección visible otra vez'); break; }
+      case 'hide': { commit(); sec = target; sec.toggleAttribute('data-hidden'); refresh(); toast(sec.hasAttribute('data-hidden') ? 'Sección oculta para visitantes' : 'Sección visible otra vez'); break; }
       case 'nav':
-        askText(b, 'Nombre en el menú superior (dejalo vacío para que no aparezca)', sec.dataset.nav || '').then(v => {
+        sec = target; askText(b, 'Nombre en el menú superior (dejalo vacío para que no aparezca)', sec.dataset.nav || '').then(v => {
           if (v === null) return; commit(); v = v.trim(); if (v) sec.dataset.nav = v; else delete sec.dataset.nav; refresh();
         }); break;
       case 'addsec':
         showMenu(b, SEC_TPL.map(t => ({ label: t.label, hint: t.hint, fn: () => {
-          commit(); const n = frag(t.html()); sec.after(n); refresh(); n.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => focusFirst(n), 300);
+          commit(); const n = frag(t.html()); target.after(n); refresh(); n.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => focusFirst(n), 300);
         } }))); break;
       case 'link':
         askText(b, 'Enlace: email, número de WhatsApp o dirección web', it.getAttribute('href') || '').then(v => {
@@ -945,7 +1119,7 @@ body.editing { padding-bottom: 96px; }
   function closePop() { if (pop.style.display !== 'block') return; pop.style.display = 'none'; const c = popCancel; popCancel = null; if (c) c(); }
   function showMenu(anchor, items) {
     closePop(); pop.innerHTML = '';
-    items.forEach(i => { const m = mk('button', 'mi'); m.type = 'button'; m.textContent = i.label; if (i.hint) m.appendChild(mk('small')).textContent = i.hint; m.onclick = () => { closePop(); i.fn(); }; pop.appendChild(m); });
+    items.forEach(i => { const m = mk('button', 'mi' + (i.danger ? ' danger' : '')); m.type = 'button'; m.textContent = i.label; if (i.hint) m.appendChild(mk('small')).textContent = i.hint; m.onclick = () => { closePop(); i.fn(); }; pop.appendChild(m); });
     openPop(anchor);
   }
   function askText(anchor, label, value) {
@@ -1048,17 +1222,22 @@ body.editing { padding-bottom: 96px; }
     '<div class="grp"><span class="gl">Tipografía</span><div class="ed-opts" data-g="font">' +
       Object.entries(FONTS).map(([k, f]) => `<button type="button" data-v="${k}">${f.name}<small>${f.note}</small></button>`).join('') + '</div></div>' +
     '<div class="grp"><span class="gl">Bordes redondeados</span><input type="range" min="0" max="24" step="1"></div>' +
+    '<div class="grp"><span class="gl">Animación al aparecer</span><div class="ed-chips" data-g="reveal">' +
+      REVEALS.map(([k, l]) => `<button type="button" data-v="${k}">${l}</button>`).join('') + '</div></div>' +
+    '<div class="grp"><span class="gl">Efectos</span><div class="ed-tgs">' +
+      EFFECTS.map(([k, l, h]) => `<button type="button" class="ed-tg" data-k="${k}"><span>${l}<small>${h}</small></span><i></i></button>`).join('') +
+      '</div><p class="ed-tg"><small>Los efectos al pasar el mouse se ven en «Ver como visitante».</small></p></div>' +
     '<div class="grp"><span class="gl">Modo para visitantes</span><div class="ed-seg" data-g="mode">' +
       '<button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>' +
-    '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Pasá el mouse sobre una tarjeta o sección para moverla, duplicarla, ocultarla o borrarla. Arrastrá desde <b>⋮⋮</b> para reordenar.</div>' +
+    '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Al pasar el mouse sobre una tarjeta aparece a su izquierda una manija <b>⋮⋮</b>: arrastrala para mover, o hacé clic para duplicar, cambiar el ícono o borrar. Con <b>+</b> agregás uno nuevo debajo. Las secciones tienen su barra arriba a la derecha.</div>' +
     '<div class="ed-hint"><b>Guardar y publicar.</b> Mientras editás, todo se guarda solo en este navegador. Para que lo vean los demás, tocá <b>Publicar</b>: se guarda en tu repositorio de GitHub y la página se actualiza en 1 o 2 minutos.</div>' +
     '<div class="ed-hint"><b>Volver a editar.</b> Agregá <b>?editar</b> al final de la dirección de tu página, o usá Ctrl/Cmd + Shift + E. Los visitantes nunca ven estas herramientas.</div>';
   const colorIn = panel.querySelector('input[type=color]'), radiusIn = panel.querySelector('input[type=range]');
   function syncPanel() {
     panel.querySelectorAll('[data-c]').forEach(b => b.classList.toggle('on', b.dataset.c.toLowerCase() === theme.accent.toLowerCase()));
     colorIn.value = theme.accent; radiusIn.value = theme.radius;
-    panel.querySelectorAll('[data-g="font"] [data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === theme.font));
-    panel.querySelectorAll('[data-g="mode"] [data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === theme.mode));
+    panel.querySelectorAll('[data-g]').forEach(g => g.querySelectorAll('[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === String(theme[g.dataset.g]))));
+    panel.querySelectorAll('[data-k]').forEach(b => b.classList.toggle('on', theme[b.dataset.k] === 'on'));
   }
   function themeEdit(mut, final = true) {
     if (!themePre) themePre = cur();
@@ -1068,7 +1247,8 @@ body.editing { padding-bottom: 96px; }
   panel.addEventListener('click', e => {
     if (e.target.closest('[data-close]')) return panel.classList.remove('open');
     const c = e.target.closest('[data-c]'); if (c) return themeEdit(() => theme.accent = c.dataset.c);
-    const o = e.target.closest('[data-v]'); if (o) { const g = o.parentElement.dataset.g; themeEdit(() => theme[g] = o.dataset.v); }
+    const k = e.target.closest('[data-k]'); if (k) return themeEdit(() => theme[k.dataset.k] = theme[k.dataset.k] === 'on' ? 'off' : 'on');
+    const o = e.target.closest('[data-v]'); if (o) { const g = o.parentElement.dataset.g; themeEdit(() => theme[g] = o.dataset.v); if (g === 'reveal') previewReveal(); }
   });
   colorIn.addEventListener('input', () => themeEdit(() => theme.accent = colorIn.value, false));
   colorIn.addEventListener('change', () => themeEdit(() => theme.accent = colorIn.value, true));
@@ -1080,7 +1260,7 @@ body.editing { padding-bottom: 96px; }
 
   /* ── Entrar / salir / exportar ── */
   function enterEdit() {
-    store.set(OWNER, '1'); buildUI(); editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
+    store.set(OWNER, '1'); buildUI(); if (io) { io.disconnect(); io = null; } editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
     if (gh) syncFromGitHub().then(showPending); else showPending();
   }
   function showPending() {
@@ -1243,14 +1423,15 @@ body.editing { padding-bottom: 96px; }
   });
   function exitEdit() {
     editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open');
-    fmt.style.display = 'none'; toastEl.classList.remove('show'); clean(site); fab.classList.add('show');
+    fmt.style.display = 'none'; toastEl.classList.remove('show'); clean(site); fx(); initReveal(); fab.classList.add('show');
     if (document.activeElement) document.activeElement.blur();
   }
   function buildHTML(html) {
     const doc = root.cloneNode(true);
     doc.querySelector('#site').innerHTML = html;
     doc.querySelectorAll('.ed-ui').forEach(n => n.remove());
-    const b = doc.querySelector('body'); b.classList.remove('editing'); if (!b.classList.length) b.removeAttribute('class');
+    const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev'); if (!b.classList.length) b.removeAttribute('class');
+    doc.classList.remove('anim-ready'); if (!doc.classList.length) doc.removeAttribute('class');
     return '<!DOCTYPE html>\n' + doc.outerHTML + '\n';
   }
   function exportHTML() {
@@ -1282,6 +1463,7 @@ body.editing { padding-bottom: 96px; }
       const s = e.target.closest('[data-block]'); if (s) s.classList.add('ed-sel');
     }
   }, true);
+  document.addEventListener('mousemove', () => { if (body.classList.contains('ed-typing')) body.classList.remove('ed-typing'); });
   document.addEventListener('mousedown', e => {
     if (pop.style.display === 'block' && !pop.contains(e.target) && !fmt.contains(e.target)) closePop();
   });
@@ -1294,6 +1476,7 @@ body.editing { padding-bottom: 96px; }
     if (!field && mod && k === 'z') { if (e.target.closest && e.target.closest('input')) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (!field && mod && k === 'y') { e.preventDefault(); redo(); return; }
     if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); if (field) field.blur(); }
+    if (field && !mod && e.key.length === 1) body.classList.add('ed-typing');
     if (field && e.key === 'Enter') {
       e.preventDefault();
       if (field.hasAttribute('data-ml') && e.shiftKey) document.execCommand('insertLineBreak');
@@ -1323,7 +1506,7 @@ body.editing { padding-bottom: 96px; }
   /* Arrastrar y soltar */
   let dragEl = null, dragSel = '';
   site.addEventListener('mousedown', e => {
-    const h = e.target.closest('[data-act="drag"]'); if (!h || !editing) return;
+    const h = e.target.closest('[data-act="menu"]'); if (!h || !editing) return;
     const t = h.closest('.ed-sbar') ? h.closest('[data-block]') : h.closest('[data-item]');
     if (t) t.draggable = true;
   });
@@ -1349,8 +1532,10 @@ body.editing { padding-bottom: 96px; }
 
   /* ── Arranque ── */
   body.appendChild(fab);
+  setFxAttrs(); root.classList.add('anim-ready');
   if (new URLSearchParams(location.search).has('editar')) enterEdit();
-  else if (store.get(OWNER)) fab.classList.add('show');
+  else { fx(); initReveal(); if (store.get(OWNER)) fab.classList.add('show'); }
+  addEventListener('resize', () => { if (!editing && site.querySelector('.marquee')) { clearTimeout(fx.t); fx.t = setTimeout(fx, 250); } });
 })();
 </script>
 </body>
