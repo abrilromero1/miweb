@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abril Romero — ISO 9001</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Professional warmth — earthy, trustworthy */
+  --bg: #FAF8F5;
+  --bg-alt: #F2EDE7;
+  --card: #FFFFFF;
+  --text: #1E1B18;
+  --text-mid: #5C534A;
+  --text-soft: #8A7F74;
+  --accent: #B5623A;
+  --accent-hover: #9A5130;
+  --accent-light: #F5E8E0;
+  --accent-text: #8B4422;
+  --border: #E5DDD4;
+  --green: #3D7A4A;
+  --green-light: #E4F0E6;
+  --green-text: #2B5933;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141210;
+    --bg-alt: #1C1916;
+    --card: #211E1A;
+    --text: #E5DDD4;
+    --text-mid: #A89888;
+    --text-soft: #7A6F64;
+    --accent: #D4845C;
+    --accent-hover: #E0946C;
+    --accent-light: #33231A;
+    --accent-text: #D4845C;
+    --border: #332D26;
+    --green: #5CAA6A;
+    --green-light: #1A2A1E;
+    --green-text: #5CAA6A;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #141210;
+  --bg-alt: #1C1916;
+  --card: #211E1A;
+  --text: #E5DDD4;
+  --text-mid: #A89888;
+  --text-soft: #7A6F64;
+  --accent: #D4845C;
+  --accent-hover: #E0946C;
+  --accent-light: #33231A;
+  --accent-text: #D4845C;
+  --border: #332D26;
+  --green: #5CAA6A;
+  --green-light: #1A2A1E;
+  --green-text: #5CAA6A;
+  color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  z-index: 10;
+}
+nav .inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+nav .logo {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--accent);
+  text-decoration: none;
+}
+nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+nav a {
+  font-size: 14px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--accent); }
+
+@media (max-width: 520px) {
+  nav ul { gap: 16px; }
+  nav a { font-size: 13px; }
+}
+
+section { padding: 0 24px; }
+
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero {
+  padding-top: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+}
+.hero .label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-text);
+  background: var(--accent-light);
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: balance;
+  margin-bottom: 16px;
+}
+@media (max-width: 520px) {
+  .hero h1 { font-size: 26px; }
+}
+.hero .sub {
+  font-size: 17px;
+  color: var(--text-mid);
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+.hero .creds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.cred {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green-text);
+  background: var(--green-light);
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+.cred svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.s-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+.s-desc {
+  font-size: 15px;
+  color: var(--text-soft);
+  margin-bottom: 28px;
+  max-width: 560px;
+}
+
+.services-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+.services-grid {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 520px) {
+  .services-grid { grid-template-columns: 1fr 1fr; }
+}
+.service-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+.service-card .icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+.service-card .icon-wrap svg {
+  width: 20px;
+  height: 20px;
+}
+.service-card h3 {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.service-card p {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+.notes-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.note {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+}
+.note:hover { border-color: var(--accent); }
+.note .tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent-text);
+  background: var(--accent-light);
+  padding: 2px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.note h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.note p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.exp-section {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.t-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+}
+@media (max-width: 520px) {
+  .t-item { grid-template-columns: 1fr; gap: 4px; }
+}
+.t-item .dates {
+  font-size: 13px;
+  color: var(--text-soft);
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.t-item .info {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.t-item .role {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+.t-item .co {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.t-item .desc {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+}
+
+.contact-section {
+  padding-top: 48px;
+  padding-bottom: 64px;
+}
+.contact-intro {
+  font-size: 16px;
+  color: var(--text-mid);
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.c-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.c-link:hover { border-color: var(--accent); }
+.c-link svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.cta-box {
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-top: 32px;
+  text-align: center;
+}
+.cta-box p {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.cta-box .small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--text-mid);
+  font-weight: 400;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--text-soft);
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">Abril Romero</a>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#notas">Notas</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="label">ISO 9001 internal auditor</span>
+    <h1>Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <p class="sub">
+      Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.
+    </p>
+    <div class="creds">
+      <span class="cred">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Auditora interna ISO 9001
+      </span>
+      <span class="cred">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Introduccion a ISO 9001:2015
+      </span>
+    </div>
+  </div>
+</section>
+
+<section class="services-section" id="servicios">
+  <div class="wrap">
+    <h2 class="s-title">Servicios</h2>
+    <p class="s-desc">Lo que puedo hacer por tu organizacion.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+        </div>
+        <h3>Auditorias internas</h3>
+        <p>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Preparacion para certificacion</h3>
+        <p>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Documentacion del SGC</h3>
+        <p>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
+      </div>
+      <div class="service-card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Capacitacion</h3>
+        <p>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="notes-section" id="notas">
+  <div class="wrap">
+    <h2 class="s-title">Notas de estudio</h2>
+    <p class="s-desc">Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
+    <div class="notes-grid">
+      <div class="note">
+        <span class="tag">ISO 9001</span>
+        <h3>Los 7 principios de calidad</h3>
+        <p>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Auditoria</span>
+        <h3>Planificacion de auditorias</h3>
+        <p>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
+      </div>
+      <div class="note">
+        <span class="tag">ISO 9001</span>
+        <h3>No conformidades y acciones correctivas</h3>
+        <p>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Auditoria</span>
+        <h3>Tecnicas de entrevista</h3>
+        <p>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Calidad</span>
+        <h3>Mapeo de procesos</h3>
+        <p>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
+      </div>
+      <div class="note">
+        <span class="tag">Auditoria</span>
+        <h3>Informes y seguimiento</h3>
+        <p>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="exp-section" id="experiencia">
+  <div class="wrap">
+    <h2 class="s-title">Experiencia</h2>
+    <p class="s-desc">Mi recorrido profesional.</p>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="dates">2024 – hoy</span>
+        <div class="info">
+          <p class="role">Auditora interna (intern)</p>
+          <p class="co">[Nombre de la empresa]</p>
+          <p class="desc">Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="dates">2023 – 2024</span>
+        <div class="info">
+          <p class="role">[Tu rol anterior]</p>
+          <p class="co">[Nombre de la empresa]</p>
+          <p class="desc">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="dates">2022 – 2023</span>
+        <div class="info">
+          <p class="role">[Otro rol]</p>
+          <p class="co">[Nombre de la empresa]</p>
+          <p class="desc">Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contacto">
+  <div class="wrap">
+    <h2 class="s-title">Contacto</h2>
+    <p class="contact-intro">
+      Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.
+    </p>
+    <div class="contact-row">
+      <a href="mailto:tu@email.com" class="c-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+        tu@email.com
+      </a>
+      <a href="https://linkedin.com/in/tu-perfil" class="c-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://wa.me/54XXXXXXXXXX" class="c-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <div class="cta-box">
+      <p>Consultame sin compromiso</p>
+      <span class="small">Respondo en menos de 24 horas</span>
+    </div>
+  </div>
+</section>
+
+<footer>Abril Romero · 2026</footer>
+
+</body>
+</html>
