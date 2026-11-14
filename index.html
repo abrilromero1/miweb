@@ -400,64 +400,63 @@ footer {
 
 [data-hidden] { display: none; }
 
-/* ───────────── Animaciones y efectos (se activan desde Diseño) ───────────── */
-:root { --shine: rgba(255,255,255,.55); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --shine: rgba(255,255,255,.09); } }
-:root[data-theme="dark"] { --shine: rgba(255,255,255,.09); }
+/* ───────────── Efectos (se configuran desde la página con ✦) ───────────── */
+/* Split Text */
+.st-w { display: inline-block; white-space: nowrap; }
+.st-p { display: inline-block; transition: transform .25s cubic-bezier(.2,.8,.2,1), color .25s; }
+.st-m { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 .02em .08em; margin-bottom: -.08em; }
+.st-c { display: inline-block; transform-origin: 0 100%; }
+.st-hv-lift .st-p:hover { transform: translateY(-.16em); }
+.st-hv-scale .st-p:hover { transform: scale(1.22); }
+.st-hv-color .st-p:hover { color: var(--accent); }
+.st-hv-rotate .st-p:hover { transform: rotate(-10deg); }
 
-/* Entrada al hacer scroll */
-.rv { transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease; }
-.rv:nth-child(2) { transition-delay: .08s; } .rv:nth-child(3) { transition-delay: .16s; }
-.rv:nth-child(4) { transition-delay: .24s; } .rv:nth-child(5) { transition-delay: .32s; } .rv:nth-child(n+6) { transition-delay: .4s; }
-.anim-ready:not([data-reveal="none"]) :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { opacity: 0; }
-.anim-ready[data-reveal="up"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateY(28px); }
-.anim-ready[data-reveal="slide"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateX(-40px); }
-.anim-ready[data-reveal="slide"] :is(body:not(.editing), body.ed-fxprev) .rv:nth-child(even):not(.rv-in) { transform: translateX(40px); }
-.anim-ready[data-reveal="zoom"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: scale(.9); }
-.anim-ready[data-reveal="blur"] :is(body:not(.editing), body.ed-fxprev) .rv:not(.rv-in) { transform: translateY(10px); filter: blur(10px); }
+/* True Focus */
+.tf { position: relative; }
+.tf-w { display: inline-block; }
+.tf-frame { position: absolute; pointer-events: none; box-sizing: border-box; }
+.tf-frame i { position: absolute; width: var(--cs); height: var(--cs); border: 0 solid var(--c); border-radius: 3px; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--c) 55%, transparent)); }
+.tf-frame i:nth-child(1) { top: 0; left: 0; border-top-width: var(--bw); border-left-width: var(--bw); }
+.tf-frame i:nth-child(2) { top: 0; right: 0; border-top-width: var(--bw); border-right-width: var(--bw); }
+.tf-frame i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: var(--bw); border-left-width: var(--bw); }
+.tf-frame i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: var(--bw); border-right-width: var(--bw); }
+.tf-box { border: var(--bw) solid var(--c); border-radius: 8px; }
+.tf-underline::after { content: ''; position: absolute; left: 6px; right: 6px; bottom: 2px; height: var(--bw); border-radius: 2px; background: var(--c); }
+.tf-glow { border-radius: 10px; background: color-mix(in srgb, var(--c) 15%, transparent); box-shadow: 0 0 24px color-mix(in srgb, var(--c) 35%, transparent); }
+:is(.tf-box, .tf-underline, .tf-glow) i { display: none; }
 
-/* Capas de luces y destellos (las crea el script; no se guardan en el contenido) */
-.hero { position: relative; overflow: hidden; isolation: isolate; }
-.hero > .wrap { position: relative; z-index: 1; }
-.cta-box { position: relative; overflow: hidden; isolation: isolate; }
-.cta-box > :not(.fx) { position: relative; z-index: 1; }
-.fx { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-.glow { position: absolute; border-radius: 50%; filter: blur(64px); background: var(--accent); opacity: .26; animation: fx-drift 18s ease-in-out infinite alternate; }
-.glow.g1 { width: 380px; height: 380px; top: -150px; right: -70px; }
-.glow.g2 { width: 320px; height: 320px; bottom: -170px; left: -110px; background: color-mix(in srgb, var(--accent) 55%, #F0C060); opacity: .2; animation-duration: 23s; animation-direction: alternate-reverse; }
-.cta-box .glow { width: 200px; height: 200px; filter: blur(44px); }
-.cta-box .glow.g1 { top: -110px; right: -40px; } .cta-box .glow.g2 { bottom: -120px; left: -40px; }
-@keyframes fx-drift { to { transform: translate(-90px, 60px) scale(1.25); } }
-.spk { position: absolute; width: var(--s, 10px); height: var(--s, 10px); color: var(--accent); opacity: 0; transform: translate(-50%,-50%) scale(0); animation: fx-twinkle 3s ease-in-out infinite; }
-.spk:nth-child(3n) { color: #E8B04A; }
-.spk svg { display: block; width: 100%; height: 100%; }
-@keyframes fx-twinkle { 0%, 100% { opacity: 0; transform: translate(-50%,-50%) scale(0) rotate(0deg); } 50% { opacity: .85; transform: translate(-50%,-50%) scale(1) rotate(45deg); } }
+/* Circular Text */
+.ct { position: relative; flex: none; border-radius: 50%; user-select: none; -webkit-user-select: none; touch-action: none; transition: transform .25s ease-out; }
+.ct.ct-drag { cursor: grab; } .ct.ct-drag:active { cursor: grabbing; }
+.ct-rot { position: absolute; inset: 0; transition: scale .4s; }
+.ct.ct-bonkers .ct-rot { scale: .88; }
+.ct-ch { position: absolute; left: 50%; top: 50%; line-height: 1; white-space: pre; color: var(--ct-c); font-family: var(--font-body); }
+.ct-outline .ct-ch { color: transparent; -webkit-text-stroke: 1px var(--ct-c); }
+.ct-ring { position: absolute; border-radius: 50%; border: 1.5px solid var(--ct-c); opacity: .35; }
+.ct-center { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-head); color: var(--ct-c); pointer-events: none; }
 
-/* Efectos al pasar el mouse (no se activan mientras editás) */
-:root[data-lift="on"] body:not(.editing) :is(.service-card, .note, .c-link, .t-item .info) { transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .2s; }
-:root[data-lift="on"] body:not(.editing) :is(.service-card, .note, .c-link, .t-item .info):hover { transform: translateY(-4px); box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--accent) 50%, transparent); }
-:root[data-spot="on"] :is(.service-card, .note, .t-item .info) { background-image: radial-gradient(240px circle at var(--mx, -500px) var(--my, -500px), color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%); }
-:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card) { position: relative; overflow: hidden; }
-:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card, .cta-box)::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(115deg, transparent 35%, var(--shine) 50%, transparent 65%); transform: translateX(-100%); }
-:root[data-shine="on"] body:not(.editing) :is(.c-link, .service-card, .cta-box):hover::after { transform: translateX(100%); transition: transform .9s ease; }
+/* Curved Loop */
+.cl { display: block; width: 100%; height: auto; overflow: visible; user-select: none; -webkit-user-select: none; touch-action: pan-y; }
+.cl.cl-drag { cursor: grab; } .cl.cl-drag:active { cursor: grabbing; }
+.cl text { fill: var(--cl-c); font-family: var(--font-head); white-space: pre; }
+.cl.cl-outline text { fill: none; stroke: var(--cl-c); stroke-width: 2px; }
 
-/* Cinta en movimiento */
-.marquee-section { padding: 22px 0; border-bottom: 1px solid var(--border); background: var(--bg-alt); overflow: hidden; }
-.marquee { display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.marquee-track { display: flex; flex-shrink: 0; gap: 18px; padding-right: 18px; animation: fx-marquee var(--mq, 32s) linear infinite; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.chip { display: inline-flex; align-items: center; gap: 18px; white-space: nowrap; font-family: var(--font-head); font-size: 20px; color: var(--text-mid); }
-.chip::after { content: '✦'; color: var(--accent); font-size: 13px; }
-@keyframes fx-marquee { to { transform: translateX(-100%); } }
-.editing .marquee-section { padding-top: 54px; }
-.editing .marquee { -webkit-mask-image: none; mask-image: none; }
-.editing .marquee-track { animation: none; flex-wrap: wrap; padding: 0 24px 0 40px; row-gap: 8px; }
+/* Bloques que usan los efectos */
+.hero-wrap { display: flex; align-items: center; gap: 36px; }
+.hero-text { flex: 1; min-width: 0; }
+@media (max-width: 720px) {
+  .hero-wrap { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .hero-wrap > [data-fx="circular"] { zoom: .7; }
+}
+.curve-section { padding: 28px 0; border-bottom: 1px solid var(--border); overflow: hidden; color: var(--text); }
+.circ-section { padding-top: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+.circ-wrap { display: flex; align-items: center; gap: 40px; }
+@media (max-width: 620px) { .circ-wrap { flex-direction: column; align-items: flex-start; } .circ-wrap > [data-fx="circular"] { zoom: .8; } }
+.circ-text { flex: 1; min-width: 0; }
+.circ-text .s-desc { margin-bottom: 0; }
 
 @media (prefers-reduced-motion: reduce) {
-  .rv { opacity: 1 !important; transform: none !important; filter: none !important; }
-  .glow, .spk { animation: none; }
-  .spk { display: none; }
-  .marquee-track { animation: none !important; flex-wrap: wrap; }
+  .st-c { animation: none !important; }
 }
 
 /* ───────────── Editor (solo visible en modo edición) ───────────── */
@@ -545,9 +544,27 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-seg button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 8px 0; font-size: 13px; }
 .ed-seg button.on { background: var(--accent); color: #fff; }
 .ed-panel input[type=range] { width: 100%; accent-color: var(--accent); }
-.ed-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.ed-chips button { all: unset; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; }
-.ed-chips button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.editing :is([data-fx="split"], [data-fx="focus"]) { text-decoration: underline dotted color-mix(in srgb, var(--accent) 70%, transparent); text-decoration-thickness: 2px; text-underline-offset: .22em; }
+.editing :is([data-fx="circular"], [data-fx="curved"]) { cursor: pointer; border-radius: 12px; }
+.editing :is([data-fx="circular"], [data-fx="curved"]):hover { outline: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 6px; }
+.ed-fmt .sep { width: 1px; background: #3A342E; margin: 4px 3px; }
+.ed-fx-tabs { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; margin-bottom: 16px; }
+.ed-fx-tabs button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 8px 0; font-size: 13px; }
+.ed-fx-tabs button.on { background: var(--accent); color: #fff; }
+.ed-fx-desc { font-size: 13px; color: var(--text-mid); margin: -8px 0 14px; }
+.ed-f { display: block; margin-bottom: 13px; font-size: 13px; }
+.ed-f > span { display: flex; justify-content: space-between; color: var(--text-mid); margin-bottom: 5px; font-weight: 500; }
+.ed-f > span b { font-weight: 500; color: var(--text); font-variant-numeric: tabular-nums; }
+.ed-f select, .ed-f input[type=text] { width: 100%; font: 14px system-ui, sans-serif; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
+.ed-f input[type=range] { width: 100%; accent-color: var(--accent); }
+.ed-f .ed-crow { display: flex; gap: 8px; align-items: center; }
+.ed-f input[type=color] { width: 36px; height: 30px; border: none; background: none; padding: 0; cursor: pointer; }
+.ed-f .ed-crow button { all: unset; cursor: pointer; font-size: 12.5px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; }
+.ed-f .ed-crow button.on { border-color: var(--accent); background: var(--accent-light); }
+.ed-fx-actions { display: flex; gap: 8px; margin: 4px 0 18px; }
+.ed-fx-actions .ed-btn { flex: 1; text-align: center; }
+.ed-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.ed-btn.danger { background: transparent; color: #C0412B; border: 1px solid color-mix(in srgb, #C0412B 40%, transparent); }
 .ed-tgs { display: grid; gap: 2px; }
 .ed-tg { all: unset; box-sizing: border-box; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; font-size: 13.5px; }
 .ed-tg small { display: block; color: var(--text-soft); font-size: 12px; line-height: 1.35; margin-top: 1px; }
@@ -585,7 +602,7 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto","reveal":"up","glow":"on","sparkle":"on","shine":"on","spot":"on","lift":"on"}'></style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
 </head>
 <body>
 <div id="site">
@@ -598,15 +615,22 @@ body.ed-typing .ed-bar { display: none !important; }
 </nav>
 
 <section class="hero" data-block>
-  <div class="wrap">
+  <div class="wrap hero-wrap">
+  <div class="hero-text">
     <span class="label" data-e>ISO 9001 internal auditor</span>
-    <h1 data-e>Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <h1 data-e data-fx="split" data-fx-cfg="{&quot;effect&quot;: &quot;rise&quot;, &quot;splitType&quot;: &quot;chars&quot;, &quot;delay&quot;: 50, &quot;duration&quot;: 1.25, &quot;staggerFrom&quot;: &quot;start&quot;, &quot;trigger&quot;: &quot;view&quot;, &quot;hoverEffect&quot;: &quot;lift&quot;, &quot;loop&quot;: false, &quot;loopDelay&quot;: 1.5, &quot;mask&quot;: false, &quot;threshold&quot;: 0.1, &quot;rootMargin&quot;: -100}">Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
     <p class="sub" data-e data-ml>Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
     <div class="creds" data-list="cred">
       <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Auditora interna ISO 9001</span></span>
       <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Introduccion a ISO 9001:2015</span></span>
     </div>
   </div>
+    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;: &quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;, &quot;onHover&quot;: &quot;speedUp&quot;, &quot;direction&quot;: &quot;clockwise&quot;, &quot;spinDuration&quot;: 20, &quot;size&quot;: 200, &quot;fontSize&quot;: 24, &quot;draggable&quot;: true, &quot;hoverTilt&quot;: 20, &quot;tilt&quot;: 0, &quot;fontWeight&quot;: 900, &quot;letterSpacing&quot;: 0, &quot;startAngle&quot;: 0, &quot;repeat&quot;: 1, &quot;fill&quot;: true, &quot;ring&quot;: false, &quot;center&quot;: &quot;&quot;, &quot;color&quot;: &quot;&quot;}"></div>
+  </div>
+</section>
+
+<section class="curve-section" data-block>
+  <div class="curve" data-fx="curved" data-fx-cfg="{&quot;text&quot;: &quot;Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦&quot;, &quot;shape&quot;: &quot;arc&quot;, &quot;speed&quot;: 2, &quot;curveAmount&quot;: 400, &quot;direction&quot;: &quot;left&quot;, &quot;fontSize&quot;: 96, &quot;fontWeight&quot;: 700, &quot;letterSpacing&quot;: 0, &quot;separator&quot;: &quot;&quot;, &quot;outline&quot;: false, &quot;scrollBoost&quot;: 0, &quot;edgeFade&quot;: 0, &quot;interactive&quot;: true, &quot;pauseOnHover&quot;: false, &quot;color&quot;: &quot;&quot;}"></div>
 </section>
 
 <section class="services-section" id="servicios" data-block data-nav="Servicios">
@@ -720,7 +744,7 @@ body.ed-typing .ed-bar { display: none !important; }
       <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item><span class="ic" data-slot data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="t" data-e>WhatsApp</span></a>
     </div>
     <div class="cta-box">
-      <p data-e>Consultame sin compromiso</p>
+      <p data-e data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultame sin compromiso</p>
       <span class="small" data-e>Respondo en menos de 24 horas</span>
     </div>
   </div>
@@ -810,15 +834,23 @@ body.ed-typing .ed-bar { display: none !important; }
     outfit:    { name: 'Outfit', note: 'limpia', head: "'Outfit', system-ui, sans-serif", body: "'Outfit', system-ui, sans-serif", url: 'family=Outfit:wght@400;500' }
   };
   const PRESETS = ['#B5623A', '#2F6F62', '#2B5C8A', '#7A4E9C', '#B0475B', '#4A4540'];
-  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto', reveal: 'up', glow: 'on', sparkle: 'on', shine: 'on', spot: 'on', lift: 'on' };
-  const REVEALS = [['none', 'Ninguna'], ['up', 'Subir'], ['slide', 'Deslizar'], ['zoom', 'Zoom'], ['blur', 'Enfocar']];
-  const EFFECTS = [
-    ['glow', 'Luces en la portada', 'Manchas de color que se mueven despacio'],
-    ['sparkle', 'Destellos', 'Estrellitas que titilan en la portada y el recuadro destacado'],
-    ['shine', 'Brillo al pasar el mouse', 'Un reflejo de luz cruza tarjetas y botones'],
-    ['spot', 'Luz que sigue al cursor', 'Las tarjetas se iluminan donde está el mouse'],
-    ['lift', 'Tarjetas que se elevan', 'Se levantan un poco al pasar el mouse']
-  ];
+  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto' };
+  const normTheme = t => Object.fromEntries(Object.keys(DEFAULT_THEME).map(k => [k, t && t[k] !== undefined ? t[k] : DEFAULT_THEME[k]]));
+
+  /* ── Efectos: valores iniciales (los mismos de los componentes originales) ── */
+  const FX_DEF = {
+    split: { effect: 'rise', splitType: 'chars', delay: 50, duration: 1.25, staggerFrom: 'start', trigger: 'view', hoverEffect: 'lift', loop: false, loopDelay: 1.5, mask: false, threshold: 0.1, rootMargin: -100 },
+    focus: { manualMode: false, focusStyle: 'brackets', easing: 'smooth', order: 'sequential', blurAmount: 5, focusScale: 1, unfocusedOpacity: 1, borderColor: '', cornerSize: 16, borderWidth: 3, animationDuration: 0.5, pauseBetweenAnimations: 1, highlightColor: '' },
+    circular: { text: 'AUDITORA INTERNA ✦ ISO 9001 ✦ ', onHover: 'speedUp', direction: 'clockwise', spinDuration: 20, size: 200, fontSize: 24, draggable: true, hoverTilt: 20, tilt: 0, fontWeight: 900, letterSpacing: 0, startAngle: 0, repeat: 1, fill: true, ring: false, center: '', color: '' },
+    curved: { text: 'Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦', shape: 'arc', speed: 2, curveAmount: 400, direction: 'left', fontSize: 96, fontWeight: 700, letterSpacing: 0, separator: '', outline: false, scrollBoost: 0, edgeFade: 0, interactive: true, pauseOnHover: false, color: '' }
+  };
+  const FX_INFO = {
+    split: { name: 'Split Text', text: true, desc: 'Las letras o palabras aparecen una por una.' },
+    focus: { name: 'True Focus', text: true, desc: 'Un marco recorre la frase y enfoca una palabra a la vez.' },
+    circular: { name: 'Texto circular', desc: 'Texto que gira en círculo. Los visitantes pueden arrastrarlo para girarlo.' },
+    curved: { name: 'Texto en curva', desc: 'Una frase que se desliza sobre una curva. Los visitantes pueden arrastrarla.' }
+  };
+  const fxAttr = type => JSON.stringify(FX_DEF[type]).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 
   /* ── Plantillas de elementos y secciones ── */
   const ITEM_TPL = {
@@ -827,8 +859,7 @@ body.ed-typing .ed-bar { display: none !important; }
     job: () => `<div class="t-item" data-item><span class="dates" data-e>2025 – hoy</span><div class="info"><p class="role" data-e>Puesto</p><p class="co" data-e>Empresa</p><p class="desc" data-e data-ml>Responsabilidades y logros.</p></div></div>`,
     cred: () => `<span class="cred" data-item>${svg('check', 2.5)}<span class="t" data-e>Nueva credencial</span></span>`,
     contact: () => `<a href="#" class="c-link" data-item><span class="ic" data-slot data-icon="globe">${svg('globe')}</span><span class="t" data-e>Nuevo enlace</span></a>`,
-    para: () => `<div class="para" data-item><p data-e data-ml>Nuevo párrafo.</p></div>`,
-    chip: () => `<span class="chip" data-item><span class="t" data-e>Nueva palabra</span></span>`
+    para: () => `<div class="para" data-item><p data-e data-ml>Nuevo párrafo.</p></div>`
   };
   const shell = (cls, nav, title, desc, inner) =>
     `<section class="${cls}" data-block data-nav="${nav}"><div class="wrap"><h2 class="s-title" data-e>${title}</h2><p class="s-desc" data-e data-ml>${desc}</p>${inner}</div></section>`;
@@ -838,7 +869,8 @@ body.ed-typing .ed-bar { display: none !important; }
     { label: 'Notas con etiqueta', hint: 'Apuntes, artículos, recursos', html: () => shell('notes-section', 'Recursos', 'Recursos', 'Una frase que introduzca la sección.', `<div class="notes-grid" data-list="note">${ITEM_TPL.note()}${ITEM_TPL.note()}${ITEM_TPL.note()}</div>`) },
     { label: 'Línea de tiempo', hint: 'Experiencia, formación, cursos', html: () => shell('exp-section', 'Formación', 'Formación', 'Cursos y certificaciones.', `<div class="timeline" data-list="job">${ITEM_TPL.job()}</div>`) },
     { label: 'Enlaces de contacto', hint: 'Email, redes, WhatsApp', html: () => shell('contact-section', 'Contacto', 'Contacto', 'Escribime por cualquiera de estos medios.', `<div class="contact-row" data-list="contact">${ITEM_TPL.contact()}</div>`) },
-    { label: 'Cinta en movimiento', hint: 'Palabras clave que se deslizan solas', html: () => `<section class="marquee-section" data-block><div class="marquee"><div class="marquee-track" data-list="chip">${['ISO 9001:2015', 'Auditorías internas', 'Mejora continua', 'Gestión de calidad', 'Acciones correctivas', 'Mapeo de procesos'].map(w => ITEM_TPL.chip().replace('Nueva palabra', w)).join('')}</div></div></section>` },
+    { label: 'Texto en curva', hint: 'Una frase que se desliza sobre una curva', html: () => `<section class="curve-section" data-block><div class="curve" data-fx="curved" data-fx-cfg="${fxAttr('curved')}"></div></section>` },
+    { label: 'Texto circular', hint: 'Un círculo de texto que gira, con un texto al lado', html: () => `<section class="circ-section" data-block data-nav="Sobre mí"><div class="wrap circ-wrap"><div class="circ" data-fx="circular" data-fx-cfg="${fxAttr('circular')}"></div><div class="circ-text"><h2 class="s-title" data-e>Sobre mí</h2><p class="s-desc" data-e data-ml>Contá quién sos, cómo trabajás y qué te diferencia.</p></div></div></section>` },
     { label: 'Destacado', hint: 'Recuadro con una frase importante', html: () => `<section class="text-section" data-block><div class="wrap"><div class="cta-box"><p data-e>Una frase destacada</p><span class="small" data-e>Un detalle que la complemente</span></div></div></section>` }
   ];
 
@@ -860,12 +892,13 @@ body.ed-typing .ed-bar { display: none !important; }
   };
 
   function clean(node) {
-    node.querySelectorAll('.ed-x,.fx').forEach(n => n.remove());
-    node.querySelectorAll('[style*="--m"]').forEach(n => { n.style.removeProperty('--mx'); n.style.removeProperty('--my'); n.style.removeProperty('--mq'); if (!n.getAttribute('style')) n.removeAttribute('style'); });
+    if (node === site) stopFx();
+    node.querySelectorAll('[data-fx-src], .fx-prev, .st, .tf').forEach(restoreFx);
+    node.querySelectorAll('.ed-x').forEach(n => n.remove());
     node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
       n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
     });
-    node.querySelectorAll('.ed-sel,.ed-dragging,.rv,.rv-in').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'rv', 'rv-in'); if (!n.classList.length) n.removeAttribute('class'); });
+    node.querySelectorAll('.ed-sel,.ed-dragging').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging'); if (!n.classList.length) n.removeAttribute('class'); });
   }
   const serialize = () => { const c = site.cloneNode(true); clean(c); return c.innerHTML; };
   const cloneClean = n => { const w = mk('div'); w.appendChild(n.cloneNode(true)); clean(w); const c = w.firstElementChild; c.removeAttribute('id'); return c; };
@@ -873,7 +906,7 @@ body.ed-typing .ed-bar { display: none !important; }
   /* ── Tema ── */
   const themeEl = document.getElementById('theme-style');
   const fontLink = document.getElementById('font-link');
-  let theme = Object.assign({}, DEFAULT_THEME, parse(themeEl.dataset.json));
+  let theme = normTheme(parse(themeEl.dataset.json));
 
   function themeCSS(t) {
     const a = t.accent, f = FONTS[t.font] || FONTS.lora;
@@ -890,77 +923,414 @@ body.ed-typing .ed-bar { display: none !important; }
     const href = `https://fonts.googleapis.com/css2?${f.url}&display=swap`;
     if (fontLink.getAttribute('href') !== href) fontLink.setAttribute('href', href);
     if (theme.mode === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', theme.mode);
-    setFxAttrs(); fx();
+    if (fxReady) renderFx();
   }
 
-  /* ── Animaciones y efectos ── */
-  const FX_KEYS = ['reveal', 'glow', 'sparkle', 'shine', 'spot', 'lift'];
-  const REVEAL_SEL = '.hero .label, .hero h1, .hero .sub, .hero .creds, .s-title, .s-desc, .contact-intro, .text-body, .cta-box, .timeline > [data-item], .services-grid > [data-item], .notes-grid > [data-item], .contact-row > [data-item], .marquee';
-  const SPARK = '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4 6.2 12 0z"/></svg>';
-  const reduceMotion = () => window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const rnd = (a, b) => (a + Math.random() * (b - a)).toFixed(2);
-  function setFxAttrs() { FX_KEYS.forEach(k => root.setAttribute('data-' + k, theme[k])); }
-  function fx() {   // capas decorativas: se regeneran en cada carga y nunca se guardan
-    site.querySelectorAll('.fx').forEach(n => n.remove());
+  /* ── Efectos: motor ──
+     Cada efecto guarda su configuración en data-fx-cfg. Lo que dibuja en pantalla es temporal:
+     el contenido original se guarda en data-fx-src y se restaura antes de guardar o publicar. */
+  const OLD_FX_ATTRS = ['data-reveal', 'data-glow', 'data-sparkle', 'data-shine', 'data-spot', 'data-lift'];
+  const fxLive = new Map();
+  let fxReady = false, fxUid = 0;
+  const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const fxCfg = el => Object.assign({}, FX_DEF[el.dataset.fx] || {}, parse(el.getAttribute('data-fx-cfg')) || {});
+  const FX_CLASSES = ['fx-prev', 'st', 'tf', 'st-hv-lift', 'st-hv-scale', 'st-hv-color', 'st-hv-rotate'];
+
+  function fxSrc(el) { if (!el.hasAttribute('data-fx-src')) el.setAttribute('data-fx-src', el.innerHTML); }
+  function restoreFx(n) {
+    if (n.hasAttribute('data-fx-src')) { n.innerHTML = n.getAttribute('data-fx-src'); n.removeAttribute('data-fx-src'); n.removeAttribute('aria-label'); }
+    n.classList.remove(...FX_CLASSES); if (!n.classList.length) n.removeAttribute('class');
+  }
+  function unrender(el) { const t = fxLive.get(el); if (t) { try { t(); } catch (e) {} fxLive.delete(el); } restoreFx(el); }
+  function stopFx() { fxLive.forEach(t => { try { t(); } catch (e) {} }); fxLive.clear(); }
+  function renderFx(only) {
+    const list = only ? [only] : [...site.querySelectorAll('[data-fx]')];
+    list.forEach(el => {
+      const type = el.dataset.fx; if (!FX_DEF[type]) return;
+      if (editing && FX_INFO[type].text && !el.classList.contains('fx-prev')) return;   // al editar, el texto queda quieto
+      if (fxLive.has(el) || el.hasAttribute('data-fx-src')) unrender(el);
+      if (el.dataset.fx !== type) return;
+      try {
+        const t = { split: renderSplit, focus: renderFocus, circular: renderCircular, curved: renderCurved }[type](el, fxCfg(el));
+        fxLive.set(el, t || (() => {}));
+      } catch (err) { console.error('Efecto', type, err); restoreFx(el); }
+    });
+  }
+  function splitWords(el, makeWord) {
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), ts = [];
+    while (tw.nextNode()) ts.push(tw.currentNode);
+    ts.forEach(t => {
+      const f = document.createDocumentFragment();
+      t.nodeValue.split(/(\s+)/).forEach(part => {
+        if (!part) return;
+        f.appendChild(/^\s+$/.test(part) ? document.createTextNode(part) : makeWord(part));
+      });
+      t.replaceWith(f);
+    });
+  }
+
+  /* Split Text */
+  const SPLIT_FROM = {
+    rise: { transform: 'translateY(110%)', opacity: 0 }, fade: { opacity: 0 },
+    blur: { transform: 'translateY(25%)', opacity: 0, filter: 'blur(12px)' }, drop: { transform: 'translateY(-110%)', opacity: 0 },
+    scale: { transform: 'scale(0)', opacity: 0 }, rotate: { transform: 'rotate(-80deg)', opacity: 0 }, slide: { transform: 'translateX(-.7em)', opacity: 0 }
+  };
+  function renderSplit(el, c) {
+    const label = el.textContent.trim(); fxSrc(el); el.setAttribute('aria-label', label);
+    el.classList.add('st'); if (c.hoverEffect && c.hoverEffect !== 'none') el.classList.add('st-hv-' + c.hoverEffect);
+    const pieces = [];
+    const piece = txt => {
+      const p = mk('span', 'st-p'), ch = mk('span', 'st-c'); ch.textContent = txt; ch.setAttribute('aria-hidden', 'true');
+      if (c.mask) { const m = mk('span', 'st-m'); m.appendChild(ch); p.appendChild(m); } else p.appendChild(ch);
+      pieces.push(ch); return p;
+    };
+    splitWords(el, word => {
+      const w = mk('span', 'st-w');
+      if (c.splitType === 'words') w.appendChild(piece(word)); else Array.from(word).forEach(ch => w.appendChild(piece(ch)));
+      return w;
+    });
+    if (reduceMotion() || !pieces.length || !pieces[0].animate) return;
+    const n = pieces.length, from = SPLIT_FROM[c.effect] || SPLIT_FROM.rise, to = {};
+    Object.keys(from).forEach(k => to[k] = k === 'opacity' ? 1 : k === 'filter' ? 'blur(0px)' : 'none');
+    let order = pieces.map((_, i) => i);
+    if (c.staggerFrom === 'end') order = order.map(i => n - 1 - i);
+    else if (c.staggerFrom === 'center') order = order.map(i => Math.abs(i - (n - 1) / 2));
+    else if (c.staggerFrom === 'random') order = order.map(() => Math.random() * n);
+    const anims = pieces.map((p, i) => p.animate([from, to], { duration: c.duration * 1000, delay: order[i] * c.delay, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' }));
+    anims.forEach(a => a.pause());
+    let alive = true, timer = 0, io = null;
+    const play = () => {
+      if (!alive) return;
+      anims.forEach(a => { a.currentTime = 0; a.play(); });
+      Promise.all(anims.map(a => a.finished)).then(() => { if (alive && c.loop) timer = setTimeout(play, c.loopDelay * 1000); }).catch(() => {});
+    };
+    const onEnter = () => play();
+    if (el.classList.contains('fx-prev') || c.trigger === 'load') play();
+    if (c.trigger === 'hover') { if (!el.classList.contains('fx-prev')) anims.forEach(a => a.finish()); el.addEventListener('mouseenter', onEnter); }
+    else if (c.trigger === 'view' && !el.classList.contains('fx-prev')) {
+      io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); io = null; play(); } },
+        { threshold: c.threshold, rootMargin: `${c.rootMargin}px 0px ${c.rootMargin}px 0px` });
+      io.observe(el);
+    }
+    return () => { alive = false; clearTimeout(timer); if (io) io.disconnect(); el.removeEventListener('mouseenter', onEnter); anims.forEach(a => a.cancel()); };
+  }
+
+  /* True Focus */
+  const EASE = { smooth: 'cubic-bezier(.4,0,.2,1)', spring: 'cubic-bezier(.34,1.56,.64,1)', snappy: 'cubic-bezier(.2,.9,.1,1)', linear: 'linear' };
+  function renderFocus(el, c) {
+    const label = el.textContent.trim(); fxSrc(el); el.setAttribute('aria-label', label); el.classList.add('tf');
+    const words = [];
+    splitWords(el, w => { const s = mk('span', 'tf-w'); s.textContent = w; s.setAttribute('aria-hidden', 'true'); words.push(s); return s; });
+    if (!words.length) return;
+    const d = c.animationDuration, e = EASE[c.easing] || EASE.smooth;
+    const frame = mk('span', 'tf-frame tf-' + c.focusStyle, '<i></i><i></i><i></i><i></i>'); frame.setAttribute('aria-hidden', 'true');
+    const move = `left ${d}s ${e}, top ${d}s ${e}, width ${d}s ${e}, height ${d}s ${e}, opacity .3s`;
+    frame.style.cssText = `--c:${c.borderColor || 'var(--accent)'};--cs:${c.cornerSize}px;--bw:${c.borderWidth}px;opacity:0`;
+    el.appendChild(frame);
+    words.forEach(w => w.style.transition = `filter ${d}s ${e}, opacity ${d}s ${e}, transform ${d}s ${e}, color ${d}s ${e}`);
+    const pad = Math.max(5, c.cornerSize * 0.4);
+    let idx = -1, timer = 0, placed = false;
+    const place = () => {
+      const w = words[idx]; if (!w) return;
+      if (!placed) frame.style.transition = 'none';
+      Object.assign(frame.style, { left: (w.offsetLeft - pad) + 'px', top: (w.offsetTop - pad * 0.55) + 'px', width: (w.offsetWidth + pad * 2) + 'px', height: (w.offsetHeight + pad * 1.1) + 'px', opacity: 1 });
+      if (!placed) { void frame.offsetWidth; frame.style.transition = move; placed = true; }
+    };
+    const set = i => {
+      idx = i;
+      words.forEach((w, j) => {
+        const on = j === i;
+        w.style.filter = on ? 'none' : `blur(${c.blurAmount}px)`;
+        w.style.opacity = on ? 1 : c.unfocusedOpacity;
+        w.style.transform = on && c.focusScale !== 1 ? `scale(${c.focusScale})` : 'none';
+        w.style.color = on && c.highlightColor ? c.highlightColor : '';
+      });
+      place();
+    };
+    const next = () => {
+      let i = (idx + 1) % words.length;
+      if (c.order === 'random' && words.length > 1) do { i = Math.floor(Math.random() * words.length); } while (i === idx);
+      set(i);
+    };
+    set(0);
+    if (c.manualMode) words.forEach((w, j) => w.addEventListener('mouseenter', () => set(j)));
+    else if (!reduceMotion() && words.length > 1) timer = setInterval(next, (d + c.pauseBetweenAnimations) * 1000);
+    const ro = 'ResizeObserver' in window ? new ResizeObserver(place) : null; if (ro) ro.observe(el);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    return () => { clearInterval(timer); if (ro) ro.disconnect(); };
+  }
+
+  /* Circular Text */
+  const HOVER_SPEED = { none: 1, speedUp: 4, slowDown: 0.25, pause: 0, goBonkers: 20 };
+  function renderCircular(el, c) {
+    fxSrc(el);
+    const size = +c.size || 200, fs = +c.fontSize || 24, base3d = `perspective(700px) rotateX(${c.tilt}deg)`;
+    const stage = mk('div', 'ct' + (c.fill ? '' : ' ct-outline') + (c.draggable && !editing ? ' ct-drag' : ''));
+    stage.setAttribute('role', 'img'); stage.setAttribute('aria-label', (c.text || '').trim());
+    stage.style.cssText = `width:${size}px;height:${size}px;--ct-c:${c.color || 'var(--accent)'};transform:${base3d}`;
+    const rot = mk('div', 'ct-rot');
+    const chars = Array.from((c.text || '').repeat(Math.max(1, Math.round(c.repeat) || 1))), n = chars.length || 1, r = size / 2 - fs * 0.62;
+    chars.forEach((ch, i) => {
+      const sp = mk('span', 'ct-ch'); sp.textContent = ch; sp.setAttribute('aria-hidden', 'true');
+      sp.style.cssText = `font-size:${fs}px;font-weight:${c.fontWeight};letter-spacing:${c.letterSpacing}px;transform:translate(-50%,-50%) rotate(${(+c.startAngle || 0) + 360 * i / n}deg) translateY(${-r}px)`;
+      rot.appendChild(sp);
+    });
+    stage.appendChild(rot);
+    if (c.ring) { const g = mk('div', 'ct-ring'); g.style.inset = (fs * 1.35) + 'px'; stage.appendChild(g); }
+    if (c.center) { const ce = mk('div', 'ct-center'); ce.textContent = c.center; ce.style.fontSize = Math.round(size * 0.2) + 'px'; stage.appendChild(ce); }
+    el.appendChild(stage);
+    const speed = reduceMotion() ? 0 : 360 / Math.max(1, c.spinDuration) * (c.direction === 'counterclockwise' ? -1 : 1);
+    let angle = 0, mul = 1, hover = false, drag = null, vel = 0, last = performance.now(), raf = 0;
+    const tick = t => {
+      const dt = Math.min(0.05, (t - last) / 1000); last = t;
+      if (!drag) {
+        const target = hover ? (HOVER_SPEED[c.onHover] ?? 1) : 1;
+        mul += (target - mul) * Math.min(1, dt * 3);
+        angle += speed * mul * dt + vel * dt; vel *= Math.pow(0.04, dt);
+      }
+      rot.style.transform = `rotate(${angle}deg)`; raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const box = () => stage.getBoundingClientRect();
+    const ang = (e, b) => Math.atan2(e.clientY - (b.top + b.height / 2), e.clientX - (b.left + b.width / 2)) * 180 / Math.PI;
+    stage.addEventListener('pointerenter', () => { hover = true; if (c.onHover === 'goBonkers') stage.classList.add('ct-bonkers'); });
+    stage.addEventListener('pointerleave', () => { hover = false; stage.classList.remove('ct-bonkers'); stage.style.transform = base3d; });
+    stage.addEventListener('pointermove', e => {
+      const b = box();
+      if (drag) {
+        const a = ang(e, b); let dd = a - drag.a; if (dd > 180) dd -= 360; if (dd < -180) dd += 360;
+        const now = performance.now(); angle += dd; vel = dd / Math.max(0.008, (now - drag.t) / 1000); drag.a = a; drag.t = now;
+      } else if (c.hoverTilt && e.pointerType !== 'touch') {
+        const x = (e.clientX - b.left) / b.width - 0.5, y = (e.clientY - b.top) / b.height - 0.5;
+        stage.style.transform = `perspective(700px) rotateX(${c.tilt - y * 2 * c.hoverTilt}deg) rotateY(${x * 2 * c.hoverTilt}deg)`;
+      }
+    });
+    stage.addEventListener('pointerdown', e => { if (!c.draggable || editing) return; drag = { a: ang(e, box()), t: performance.now() }; vel = 0; stage.setPointerCapture(e.pointerId); });
+    const up = () => { if (!drag) return; drag = null; vel = Math.max(-900, Math.min(900, vel)); };
+    stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+    return () => cancelAnimationFrame(raf);
+  }
+
+  /* Curved Loop */
+  function renderCurved(el, c) {
+    fxSrc(el);
+    const NS = 'http://www.w3.org/2000/svg', W = 1440, fs = +c.fontSize || 96, k = c.shape === 'straight' ? 0 : (+c.curveAmount || 0), id = 'cl' + (++fxUid);
+    let y0, H, d;
+    if (c.shape === 'wave') { const a = Math.abs(k) * 0.35; y0 = fs + 16 + a; H = y0 + a + fs * 0.35; d = `M -100,${y0} C 260,${y0 + k} 460,${y0 - k} 720,${y0} S 1180,${y0 + k} 1540,${y0}`; }
+    else { y0 = fs + 16 + Math.max(0, -k / 2); H = y0 + Math.max(0, k / 2) + fs * 0.35; d = `M -100,${y0} Q 720,${y0 + k} 1540,${y0}`; }
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${Math.ceil(H)}`);
+    svg.setAttribute('class', 'cl' + (c.outline ? ' cl-outline' : '') + (c.interactive && !editing ? ' cl-drag' : ''));
+    svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', (c.text || '').trim());
+    svg.style.setProperty('--cl-c', c.color || 'currentColor');
+    if (c.edgeFade > 0) { const m = `linear-gradient(90deg, transparent, #000 ${c.edgeFade}%, #000 ${100 - c.edgeFade}%, transparent)`; svg.style.webkitMaskImage = m; svg.style.maskImage = m; }
+    const defs = document.createElementNS(NS, 'defs'), path = document.createElementNS(NS, 'path');
+    path.setAttribute('id', id); path.setAttribute('d', d); defs.appendChild(path); svg.appendChild(defs);
+    const mkText = () => { const t = document.createElementNS(NS, 'text'); t.setAttribute('font-size', fs); t.setAttribute('font-weight', c.fontWeight); t.setAttribute('letter-spacing', c.letterSpacing); return t; };
+    const measure = mkText(); measure.setAttribute('opacity', '0'); measure.setAttribute('aria-hidden', 'true'); svg.appendChild(measure);
+    const text = mkText(), tp = document.createElementNS(NS, 'textPath'); tp.setAttribute('href', '#' + id); text.appendChild(tp); svg.appendChild(text);
+    el.appendChild(svg);
+    const unit = (c.text || '').trim() + (c.separator ? ' ' + c.separator.trim() + ' ' : ' ');
+    let spacing = 1, offset = 0, raf = 0, last = performance.now(), dir = c.direction === 'right' ? 1 : -1, drag = null, hover = false, boost = 0, lastY = scrollY, alive = true;
+    const layout = () => {
+      if (!alive) return;
+      measure.textContent = unit; spacing = measure.getComputedTextLength() || 1;
+      tp.textContent = unit.repeat(Math.ceil(path.getTotalLength() / spacing) + 2);
+      offset = -spacing + (offset % spacing);
+    };
+    layout(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
     const still = reduceMotion();
-    site.querySelectorAll('.hero, .cta-box').forEach(h => {
-      const big = h.classList.contains('hero');
-      if (theme.glow === 'on') { const g = mk('div', 'fx', '<span class="glow g1"></span><span class="glow g2"></span>'); g.setAttribute('aria-hidden', 'true'); h.prepend(g); }
-      if (theme.sparkle === 'on' && !still) {
-        const box = mk('div', 'fx'); box.setAttribute('aria-hidden', 'true');
-        for (let i = 0; i < (big ? 16 : 7); i++) {
-          const sp = mk('span', 'spk', SPARK);
-          sp.style.cssText = `left:${rnd(3, 97)}%;top:${rnd(6, 94)}%;--s:${rnd(big ? 7 : 6, big ? 15 : 11)}px;animation-delay:${rnd(0, 6)}s;animation-duration:${rnd(2.4, 4.4)}s`;
-          box.appendChild(sp);
-        }
-        h.prepend(box);
-      }
+    const tick = t => {
+      const dt = Math.min(0.05, (t - last) / 1000); last = t;
+      if (!drag && !still && !(c.pauseOnHover && hover)) offset += dir * (c.speed * 60 + boost) * dt;
+      boost *= Math.pow(0.05, dt);
+      while (offset <= -spacing) offset += spacing;
+      while (offset > 0) offset -= spacing;
+      tp.setAttribute('startOffset', offset.toFixed(2)); raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const onScroll = () => { const dy = Math.abs(scrollY - lastY); lastY = scrollY; if (c.scrollBoost > 0) boost = Math.min(4000, boost + dy * c.scrollBoost * 6); };
+    addEventListener('scroll', onScroll, { passive: true });
+    svg.addEventListener('pointerenter', () => hover = true);
+    svg.addEventListener('pointerleave', () => hover = false);
+    svg.addEventListener('pointerdown', e => { if (!c.interactive || editing) return; drag = { x: e.clientX }; svg.setPointerCapture(e.pointerId); });
+    svg.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = (e.clientX - drag.x) * (W / (svg.getBoundingClientRect().width || W)); drag.x = e.clientX;
+      offset += dx; if (dx) dir = dx > 0 ? 1 : -1;
     });
-    if (!editing && !still) site.querySelectorAll('.marquee').forEach(m => {
-      const t = m.querySelector('.marquee-track'); if (!t || !t.children.length) return;
-      const w = t.getBoundingClientRect().width || 1, copies = Math.ceil(innerWidth / w) + 1;
-      t.style.setProperty('--mq', Math.max(14, Math.round(w / 45)) + 's');
-      for (let i = 0; i < copies; i++) {
-        const c = t.cloneNode(true); c.classList.add('fx'); c.setAttribute('aria-hidden', 'true');
-        c.querySelectorAll('[data-item],[data-e],[data-list]').forEach(n => { n.removeAttribute('data-item'); n.removeAttribute('data-e'); });
-        c.removeAttribute('data-list'); m.appendChild(c);
-      }
-    });
+    const up = () => drag = null; svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+    return () => { alive = false; cancelAnimationFrame(raf); removeEventListener('scroll', onScroll); };
   }
-  let io = null;
-  function initReveal() {
-    if (io) { io.disconnect(); io = null; }
-    if (theme.reveal === 'none' || reduceMotion() || !('IntersectionObserver' in window)) return;
-    io = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target; io.unobserve(el); el.classList.add('rv-in');
-      setTimeout(() => el.classList.remove('rv', 'rv-in'), 1600);
-    }), { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
-    site.querySelectorAll(REVEAL_SEL).forEach(el => { if (el.closest('[data-hidden]')) return; el.classList.add('rv'); io.observe(el); });
+
+  /* ── Efectos: panel de ajustes en el editor ── */
+  const FX_FIELDS = {
+    split: [
+      { k: 'effect', l: 'Efecto', t: 'select', o: [['rise', 'Subir'], ['fade', 'Aparecer'], ['blur', 'Desenfoque'], ['drop', 'Caer'], ['scale', 'Crecer'], ['rotate', 'Girar'], ['slide', 'Deslizar']] },
+      { k: 'splitType', l: 'Dividir en', t: 'select', o: [['chars', 'Letras'], ['words', 'Palabras']] },
+      { k: 'delay', l: 'Retraso entre partes', t: 'range', min: 0, max: 200, step: 5, u: ' ms' },
+      { k: 'duration', l: 'Duración de cada parte', t: 'range', min: 0.2, max: 3, step: 0.05, u: ' s' },
+      { k: 'staggerFrom', l: 'Empieza desde', t: 'select', o: [['start', 'El principio'], ['center', 'El centro'], ['end', 'El final'], ['random', 'Al azar']] },
+      { k: 'trigger', l: 'Se activa', t: 'select', o: [['view', 'Cuando aparece en pantalla'], ['load', 'Apenas carga la página'], ['hover', 'Al pasar el mouse']] },
+      { k: 'threshold', l: 'Qué parte tiene que verse', t: 'range', min: 0, max: 1, step: 0.05, pct: true, show: c => c.trigger === 'view' },
+      { k: 'rootMargin', l: 'Margen de activación', t: 'range', min: -300, max: 200, step: 10, u: ' px', show: c => c.trigger === 'view' },
+      { k: 'hoverEffect', l: 'Al pasar el mouse por una letra', t: 'select', o: [['none', 'Nada'], ['lift', 'Se eleva'], ['scale', 'Se agranda'], ['color', 'Cambia de color'], ['rotate', 'Se inclina']] },
+      { k: 'mask', l: 'Máscara', h: 'Las letras salen de atrás de una línea invisible', t: 'toggle' },
+      { k: 'loop', l: 'Repetir en bucle', t: 'toggle' },
+      { k: 'loopDelay', l: 'Pausa entre repeticiones', t: 'range', min: 0, max: 10, step: 0.5, u: ' s', show: c => c.loop }
+    ],
+    focus: [
+      { k: 'focusStyle', l: 'Estilo del marco', t: 'select', o: [['brackets', 'Esquinas'], ['box', 'Recuadro'], ['underline', 'Subrayado'], ['glow', 'Resplandor']] },
+      { k: 'manualMode', l: 'Modo manual', h: 'Enfoca la palabra donde está el mouse, en vez de avanzar sola', t: 'toggle' },
+      { k: 'order', l: 'Orden', t: 'select', o: [['sequential', 'Una tras otra'], ['random', 'Al azar']], show: c => !c.manualMode },
+      { k: 'easing', l: 'Movimiento', t: 'select', o: [['smooth', 'Suave'], ['spring', 'Con rebote'], ['snappy', 'Rápido'], ['linear', 'Lineal']] },
+      { k: 'animationDuration', l: 'Duración del cambio', t: 'range', min: 0.1, max: 2, step: 0.05, u: ' s' },
+      { k: 'pauseBetweenAnimations', l: 'Pausa en cada palabra', t: 'range', min: 0, max: 5, step: 0.1, u: ' s', show: c => !c.manualMode },
+      { k: 'blurAmount', l: 'Desenfoque del resto', t: 'range', min: 0, max: 15, step: 0.5, u: ' px' },
+      { k: 'unfocusedOpacity', l: 'Opacidad del resto', t: 'range', min: 0, max: 1, step: 0.05, pct: true },
+      { k: 'focusScale', l: 'Tamaño de la palabra enfocada', t: 'range', min: 1, max: 1.5, step: 0.05, u: '×' },
+      { k: 'borderColor', l: 'Color del marco', t: 'color' },
+      { k: 'highlightColor', l: 'Color de la palabra enfocada', t: 'color', none: 'Sin cambio' },
+      { k: 'cornerSize', l: 'Tamaño de las esquinas', t: 'range', min: 4, max: 40, step: 1, u: ' px', show: c => c.focusStyle === 'brackets' },
+      { k: 'borderWidth', l: 'Grosor del marco', t: 'range', min: 1, max: 8, step: 1, u: ' px' }
+    ],
+    circular: [
+      { k: 'text', l: 'Texto', h: 'Se reparte alrededor del círculo. Usá ✦ o * para separar.', t: 'text' },
+      { k: 'center', l: 'Texto o símbolo en el centro', t: 'text' },
+      { k: 'color', l: 'Color', t: 'color' },
+      { k: 'size', l: 'Tamaño del círculo', t: 'range', min: 100, max: 400, step: 5, u: ' px' },
+      { k: 'fontSize', l: 'Tamaño de letra', t: 'range', min: 8, max: 48, step: 1, u: ' px' },
+      { k: 'fontWeight', l: 'Grosor de letra', t: 'range', min: 300, max: 900, step: 100 },
+      { k: 'letterSpacing', l: 'Espacio entre letras', t: 'range', min: -2, max: 10, step: 0.5, u: ' px' },
+      { k: 'repeat', l: 'Repetir el texto', t: 'range', min: 1, max: 4, step: 1, u: '×' },
+      { k: 'direction', l: 'Dirección', t: 'select', o: [['clockwise', 'Horario'], ['counterclockwise', 'Antihorario']] },
+      { k: 'spinDuration', l: 'Duración de una vuelta', t: 'range', min: 2, max: 60, step: 1, u: ' s' },
+      { k: 'onHover', l: 'Al pasar el mouse', t: 'select', o: [['speedUp', 'Acelera'], ['slowDown', 'Frena'], ['pause', 'Se detiene'], ['goBonkers', 'Enloquece'], ['none', 'Nada']] },
+      { k: 'hoverTilt', l: 'Inclinación al pasar el mouse', t: 'range', min: 0, max: 45, step: 1, u: '°' },
+      { k: 'tilt', l: 'Inclinación fija', t: 'range', min: -60, max: 60, step: 1, u: '°' },
+      { k: 'startAngle', l: 'Ángulo inicial', t: 'range', min: 0, max: 360, step: 5, u: '°' },
+      { k: 'draggable', l: 'Se puede girar arrastrando', t: 'toggle' },
+      { k: 'fill', l: 'Letras rellenas', h: 'Apagado: solo el contorno', t: 'toggle' },
+      { k: 'ring', l: 'Anillo interior', t: 'toggle' }
+    ],
+    curved: [
+      { k: 'text', l: 'Texto', t: 'text' },
+      { k: 'separator', l: 'Separador entre repeticiones', h: 'Opcional, por ejemplo ✦ o •', t: 'text' },
+      { k: 'color', l: 'Color', t: 'color', none: 'Color del texto' },
+      { k: 'shape', l: 'Forma', t: 'select', o: [['arc', 'Arco'], ['wave', 'Onda'], ['straight', 'Recta']] },
+      { k: 'curveAmount', l: 'Curvatura', t: 'range', min: -600, max: 600, step: 10, show: c => c.shape !== 'straight' },
+      { k: 'fontSize', l: 'Tamaño de letra', t: 'range', min: 24, max: 200, step: 2 },
+      { k: 'fontWeight', l: 'Grosor de letra', t: 'range', min: 300, max: 900, step: 100 },
+      { k: 'letterSpacing', l: 'Espacio entre letras', t: 'range', min: -5, max: 30, step: 1 },
+      { k: 'direction', l: 'Dirección', t: 'select', o: [['left', 'Hacia la izquierda'], ['right', 'Hacia la derecha']] },
+      { k: 'speed', l: 'Velocidad', t: 'range', min: 0, max: 10, step: 0.5 },
+      { k: 'scrollBoost', l: 'Acelera al hacer scroll', t: 'range', min: 0, max: 5, step: 0.5 },
+      { k: 'edgeFade', l: 'Desvanecer los bordes', t: 'range', min: 0, max: 40, step: 1, u: '%' },
+      { k: 'outline', l: 'Solo contorno', t: 'toggle' },
+      { k: 'interactive', l: 'Se puede arrastrar', t: 'toggle' },
+      { k: 'pauseOnHover', l: 'Se detiene al pasar el mouse', t: 'toggle' }
+    ]
+  };
+  const escA = v => String(v ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const fmtV = (f, v) => f.pct ? Math.round(v * 100) + '%' : (Math.round(v * 100) / 100) + (f.u || '');
+  function fxFormHTML(type, c) {
+    return FX_FIELDS[type].filter(f => !f.show || f.show(c)).map(f => {
+      const v = c[f.k];
+      if (f.t === 'select') return `<label class="ed-f"><span>${f.l}</span><select data-k="${f.k}">${f.o.map(([a, b]) => `<option value="${a}"${a === v ? ' selected' : ''}>${b}</option>`).join('')}</select></label>`;
+      if (f.t === 'range') return `<label class="ed-f"><span>${f.l}<b>${fmtV(f, v)}</b></span><input type="range" data-k="${f.k}" min="${f.min}" max="${f.max}" step="${f.step}" value="${v}"></label>`;
+      if (f.t === 'toggle') return `<button type="button" class="ed-tg${v ? ' on' : ''}" data-k="${f.k}"><span>${f.l}${f.h ? `<small>${f.h}</small>` : ''}</span><i></i></button>`;
+      if (f.t === 'text') return `<label class="ed-f"><span>${f.l}</span><input type="text" data-k="${f.k}" value="${escA(v)}" spellcheck="false">${f.h ? `<small style="display:block;margin-top:4px;color:var(--text-soft);font-size:12px">${f.h}</small>` : ''}</label>`;
+      return `<div class="ed-f"><span>${f.l}</span><div class="ed-crow"><button type="button" data-clear="${f.k}" class="${v ? '' : 'on'}">${f.none || 'Color principal'}</button><input type="color" data-k="${f.k}" value="${/^#[0-9a-f]{6}$/i.test(v) ? v : theme.accent}" title="Elegir otro color"></div></div>`;
+    }).join('');
   }
-  function previewReveal() {   // muestra la animación elegida sin salir del editor
-    if (theme.reveal === 'none' || reduceMotion()) return;
-    const els = [...site.querySelectorAll(REVEAL_SEL)].filter(el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
-    els.forEach(el => { el.classList.add('rv'); el.classList.remove('rv-in'); });
-    body.classList.add('ed-fxprev'); void site.offsetWidth;
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      els.forEach(el => el.classList.add('rv-in'));
-      setTimeout(() => { els.forEach(el => el.classList.remove('rv', 'rv-in')); body.classList.remove('ed-fxprev'); }, 1500);
-    }));
+
+  const fxPanel = mk('div', 'ed-panel ed-ui');
+  let fxTarget = null, fxSnap = null, fxDirty = false, fxT = 0;
+  function openFxPanel(el) {
+    if (!el || !FX_DEF[el.dataset.fx]) return;
+    if (fxTarget && fxTarget !== el) closeFx();
+    closePop(); panel.classList.remove('open');
+    fxTarget = el; fxSnap = cur(); fxDirty = false; drawFx(); fxPanel.classList.add('open');
+    if (FX_INFO[el.dataset.fx].text) previewFx(el);
   }
-  document.addEventListener('pointermove', e => {
-    if (editing || theme.spot !== 'on' || e.pointerType === 'touch') return;
-    const c = e.target.closest && e.target.closest('.service-card, .note, .t-item .info'); if (!c) return;
-    const r = c.getBoundingClientRect();
-    c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-  }, { passive: true });
-  document.addEventListener('pointerout', e => {
-    const c = e.target.closest && e.target.closest('.service-card, .note, .t-item .info');
-    if (c && !c.contains(e.relatedTarget)) { c.style.removeProperty('--mx'); c.style.removeProperty('--my'); if (!c.getAttribute('style')) c.removeAttribute('style'); }
+  function closeFx() {
+    if (!fxTarget && !fxPanel.classList.contains('open')) return;
+    fxPanel.classList.remove('open'); fxTarget = null; clearTimeout(fxT); endPreview();
+  }
+  function drawFx() {
+    const el = fxTarget, type = el.dataset.fx, info = FX_INFO[type], c = fxCfg(el);
+    const top = fxPanel.scrollTop;
+    fxPanel.innerHTML =
+      `<h3>${info.text ? 'Efecto de texto' : info.name}<button type="button" data-close title="Cerrar">×</button></h3>` +
+      (info.text ? `<div class="ed-fx-tabs">${['split', 'focus'].map(t => `<button type="button" data-type="${t}" class="${t === type ? 'on' : ''}">${FX_INFO[t].name}</button>`).join('')}</div>` : '') +
+      `<p class="ed-fx-desc">${info.desc}</p>` +
+      `<div class="ed-fx-actions">${info.text ? '<button type="button" class="ed-btn" data-play>▶ Ver animación</button>' : ''}<button type="button" class="ed-btn ghost" data-reset>Valores originales</button></div>` +
+      fxFormHTML(type, c) +
+      `<div class="ed-fx-actions" style="margin-top:14px"><button type="button" class="ed-btn danger" data-remove>${info.text ? 'Quitar efecto' : 'Eliminar este bloque'}</button></div>`;
+    fxPanel.scrollTop = top;
+  }
+  function fxChange(mut, redraw) {
+    if (!fxTarget) return;
+    if (!fxDirty) { hist.push(fxSnap); fut = []; fxDirty = true; }
+    mut(); if (redraw) drawFx(); scheduleSave();
+    clearTimeout(fxT);
+    fxT = setTimeout(() => {
+      const el = fxTarget; if (!el || !el.isConnected) return;
+      if (FX_INFO[el.dataset.fx].text) previewFx(el); else renderFx(el);
+    }, FX_INFO[fxTarget.dataset.fx].text ? 350 : 60);
+  }
+  const setK = (k, v, redraw) => fxChange(() => { const c = fxCfg(fxTarget); c[k] = v; fxTarget.setAttribute('data-fx-cfg', JSON.stringify(c)); }, redraw);
+  function previewFx(el) {
+    if (!el || !el.isConnected) return;
+    if (document.activeElement && el.contains(document.activeElement)) document.activeElement.blur();
+    if (el.contains(getSelection().anchorNode)) getSelection().removeAllRanges();
+    fmt.style.display = 'none';
+    unrender(el); el.removeAttribute('contenteditable'); el.classList.add('fx-prev'); renderFx(el);
+  }
+  function endPreview() {
+    const list = site.querySelectorAll('.fx-prev'); if (!list.length) return;
+    list.forEach(unrender); if (editing) refresh();
+  }
+  function textFxMenu(anchor, host) {
+    if (host.dataset.fx && FX_INFO[host.dataset.fx]) return openFxPanel(host);
+    const add = type => () => {
+      commit(); host.dataset.fx = type; host.setAttribute('data-fx-cfg', JSON.stringify(FX_DEF[type]));
+      scheduleSave(); openFxPanel(host); fxDirty = true;
+    };
+    showMenu(anchor, [
+      { label: 'Split Text', hint: 'Las letras o palabras aparecen una por una', fn: add('split') },
+      { label: 'True Focus', hint: 'Un marco enfoca una palabra a la vez', fn: add('focus') }
+    ]);
+  }
+  fxPanel.addEventListener('click', e => {
+    if (!fxTarget) return;
+    if (e.target.closest('[data-close]')) return closeFx();
+    const ty = e.target.closest('[data-type]');
+    if (ty) { if (ty.dataset.type !== fxTarget.dataset.fx) fxChange(() => { fxTarget.dataset.fx = ty.dataset.type; fxTarget.setAttribute('data-fx-cfg', JSON.stringify(FX_DEF[ty.dataset.type])); }, true); return; }
+    if (e.target.closest('[data-play]')) return previewFx(fxTarget);
+    if (e.target.closest('[data-reset]')) return fxChange(() => fxTarget.setAttribute('data-fx-cfg', JSON.stringify(FX_DEF[fxTarget.dataset.fx])), true);
+    if (e.target.closest('[data-remove]')) {
+      if (!fxDirty) { hist.push(fxSnap); fut = []; }
+      const el = fxTarget, text = FX_INFO[el.dataset.fx].text;
+      fxTarget = null; fxPanel.classList.remove('open'); unrender(el);
+      if (text) { el.removeAttribute('data-fx'); el.removeAttribute('data-fx-cfg'); }
+      else { const sec = el.closest('[data-block]'); if (sec && !sec.querySelector('[data-e]')) sec.remove(); else el.remove(); }
+      refresh(); toast(text ? 'Efecto quitado' : 'Bloque eliminado', [{ label: 'Deshacer', fn: undo }]); return;
+    }
+    const tg = e.target.closest('button.ed-tg[data-k]'); if (tg) return setK(tg.dataset.k, !fxCfg(fxTarget)[tg.dataset.k], true);
+    const cl = e.target.closest('[data-clear]'); if (cl) return setK(cl.dataset.clear, '', true);
   });
+  fxPanel.addEventListener('input', e => {
+    const t = e.target, k = t.dataset && t.dataset.k; if (!k || !fxTarget) return;
+    const v = t.type === 'range' ? +t.value : t.value;
+    setK(k, v, t.tagName === 'SELECT');
+    if (t.type === 'range') { const f = FX_FIELDS[fxTarget.dataset.fx].find(x => x.k === k); t.parentElement.querySelector('b').textContent = fmtV(f, v); }
+    if (t.type === 'color') { const cb = t.parentElement.querySelector('[data-clear]'); if (cb) cb.classList.remove('on'); }
+  });
+  fxPanel.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); closeFx(); } });
 
   /* ── Estado, borrador e historial ── */
-  const stateStr = (html = serialize(), th = theme) => html + '\u0000' + JSON.stringify(Object.assign({}, DEFAULT_THEME, th));
+  const stateStr = (html = serialize(), th = theme) => html + '\u0000' + JSON.stringify(normTheme(th));
   let baseHash = hash(stateStr());        // huella del archivo tal como se cargó
   let editing = false, hist = [], fut = [], saveT = 0, pendingDraft = null, textPre = null, themePre = null;
   const cur = () => ({ html: serialize(), theme: { ...theme } });
@@ -968,7 +1338,7 @@ body.ed-typing .ed-bar { display: none !important; }
   const draft = parse(store.get(KEY));
   if (draft && typeof draft.html === 'string') {
     if (draft.base === baseHash) {
-      site.innerHTML = draft.html; theme = Object.assign({}, DEFAULT_THEME, draft.theme); applyTheme();
+      site.innerHTML = draft.html; theme = normTheme(draft.theme); applyTheme();
     } else {
       pendingDraft = draft; store.set(KEY + '-prev', JSON.stringify(draft));
     }
@@ -984,7 +1354,7 @@ body.ed-typing .ed-bar { display: none !important; }
     }, 350);
   }
   function commit() { hist.push(cur()); if (hist.length > 150) hist.shift(); fut = []; }
-  function restore(s) { site.innerHTML = s.html; theme = Object.assign({}, DEFAULT_THEME, s.theme); applyTheme(); syncPanel(); refresh(); }
+  function restore(s) { stopFx(); site.innerHTML = s.html; theme = normTheme(s.theme); applyTheme(); syncPanel(); closeFx(); refresh(); }
   function undo() { if (!hist.length) return toast('No hay nada para deshacer'); fut.push(cur()); restore(hist.pop()); }
   function redo() { if (!fut.length) return toast('No hay nada para rehacer'); hist.push(cur()); restore(fut.pop()); }
 
@@ -1024,7 +1394,7 @@ body.ed-typing .ed-bar { display: none !important; }
       if (!l.querySelector(':scope > [data-item]')) l.appendChild(mk('button', 'ed-add ed-x', '+ Agregar elemento')).setAttribute('data-act', 'additem');
     });
   }
-  function refresh() { clean(site); buildNav(); if (editing) decorate(); fx(); scheduleSave(); }
+  function refresh() { clean(site); buildNav(); if (editing) decorate(); renderFx(); scheduleSave(); }
 
   function focusFirst(n) {
     const f = n.matches('[data-e]') ? n : n.querySelector('[data-e]'); if (!f) return;
@@ -1148,12 +1518,14 @@ body.ed-typing .ed-bar { display: none !important; }
     '<button type="button" data-f="bold" title="Negrita"><b>N</b></button>' +
     '<button type="button" data-f="italic" title="Cursiva"><i>K</i></button>' +
     '<button type="button" data-f="link" title="Enlace">' + ui('link').replace('<svg', '<svg width="14" height="14"') + '</button>' +
-    '<button type="button" data-f="clear" title="Quitar formato">✕</button>');
+    '<button type="button" data-f="clear" title="Quitar formato">✕</button>' +
+    '<span class="sep"></span><button type="button" data-f="fx" title="Efecto de texto">✦ Efecto</button>');
   fmt.addEventListener('mousedown', e => e.preventDefault());
   fmt.addEventListener('click', e => {
     const b = e.target.closest('[data-f]'); if (!b) return;
     const f = b.dataset.f, s = getSelection(); if (!s.rangeCount) return;
     const host = hostOf(s.anchorNode);
+    if (f === 'fx') { if (host) textFxMenu(b, host); return; }
     if (f === 'bold' || f === 'italic') document.execCommand(f);
     if (f === 'clear') { document.execCommand('removeFormat'); document.execCommand('unlink'); }
     if (f === 'link') {
@@ -1171,10 +1543,12 @@ body.ed-typing .ed-bar { display: none !important; }
   document.addEventListener('selectionchange', () => {
     if (!editing) return;
     const s = getSelection();
-    if (!s.rangeCount || s.isCollapsed || !hostOf(s.anchorNode)) { if (!pop.contains(document.activeElement)) fmt.style.display = 'none'; return; }
-    const r = s.getRangeAt(0).getBoundingClientRect(); if (!r.width) return;
+    const host = s.rangeCount ? hostOf(s.anchorNode) : null;
+    if (!host || host.classList.contains('fx-prev')) { if (!pop.contains(document.activeElement) && pop.style.display !== 'block') fmt.style.display = 'none'; return; }
+    const r = s.isCollapsed ? host.getBoundingClientRect() : s.getRangeAt(0).getBoundingClientRect(); if (!r.width && !s.isCollapsed) return;
     fmt.style.display = 'flex';
-    const left = Math.max(scrollX + 8, Math.min(r.left + scrollX + r.width / 2 - fmt.offsetWidth / 2, scrollX + innerWidth - fmt.offsetWidth - 8));
+    const want = s.isCollapsed ? r.left + scrollX : r.left + scrollX + r.width / 2 - fmt.offsetWidth / 2;
+    const left = Math.max(scrollX + 8, Math.min(want, scrollX + innerWidth - fmt.offsetWidth - 8));
     fmt.style.left = left + 'px'; fmt.style.top = (r.top + scrollY - fmt.offsetHeight - 8) + 'px';
   });
 
@@ -1192,7 +1566,7 @@ body.ed-typing .ed-bar { display: none !important; }
   toolbar.addEventListener('click', e => {
     const b = e.target.closest('[data-t]'); if (!b) return;
     ({ undo, redo, publish, view: exitEdit,
-       design: () => panel.classList.toggle('open'),
+       design: () => { closeFx(); panel.classList.toggle('open'); },
        more: () => showMenu(b, [
          { label: 'Conexión con GitHub', hint: gh ? `${gh.owner}/${gh.repo} · ${gh.branch}` : 'Todavía no está configurada', fn: openSetup },
          { label: 'Descargar HTML', hint: 'Copia de respaldo en tu computadora', fn: exportHTML },
@@ -1222,14 +1596,10 @@ body.ed-typing .ed-bar { display: none !important; }
     '<div class="grp"><span class="gl">Tipografía</span><div class="ed-opts" data-g="font">' +
       Object.entries(FONTS).map(([k, f]) => `<button type="button" data-v="${k}">${f.name}<small>${f.note}</small></button>`).join('') + '</div></div>' +
     '<div class="grp"><span class="gl">Bordes redondeados</span><input type="range" min="0" max="24" step="1"></div>' +
-    '<div class="grp"><span class="gl">Animación al aparecer</span><div class="ed-chips" data-g="reveal">' +
-      REVEALS.map(([k, l]) => `<button type="button" data-v="${k}">${l}</button>`).join('') + '</div></div>' +
-    '<div class="grp"><span class="gl">Efectos</span><div class="ed-tgs">' +
-      EFFECTS.map(([k, l, h]) => `<button type="button" class="ed-tg" data-k="${k}"><span>${l}<small>${h}</small></span><i></i></button>`).join('') +
-      '</div><p class="ed-tg"><small>Los efectos al pasar el mouse se ven en «Ver como visitante».</small></p></div>' +
     '<div class="grp"><span class="gl">Modo para visitantes</span><div class="ed-seg" data-g="mode">' +
       '<button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>' +
     '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Al pasar el mouse sobre una tarjeta aparece a su izquierda una manija <b>⋮⋮</b>: arrastrala para mover, o hacé clic para duplicar, cambiar el ícono o borrar. Con <b>+</b> agregás uno nuevo debajo. Las secciones tienen su barra arriba a la derecha.</div>' +
+    '<div class="ed-hint"><b>Efectos.</b> Hacé clic en un texto y tocá <b>✦</b> en la barrita negra para darle un efecto (Split Text o True Focus). Los textos con efecto tienen un subrayado punteado. El texto circular y el texto en curva se ajustan haciéndoles clic; para agregar más, usá «Agregar sección».</div>' +
     '<div class="ed-hint"><b>Guardar y publicar.</b> Mientras editás, todo se guarda solo en este navegador. Para que lo vean los demás, tocá <b>Publicar</b>: se guarda en tu repositorio de GitHub y la página se actualiza en 1 o 2 minutos.</div>' +
     '<div class="ed-hint"><b>Volver a editar.</b> Agregá <b>?editar</b> al final de la dirección de tu página, o usá Ctrl/Cmd + Shift + E. Los visitantes nunca ven estas herramientas.</div>';
   const colorIn = panel.querySelector('input[type=color]'), radiusIn = panel.querySelector('input[type=range]');
@@ -1237,7 +1607,6 @@ body.ed-typing .ed-bar { display: none !important; }
     panel.querySelectorAll('[data-c]').forEach(b => b.classList.toggle('on', b.dataset.c.toLowerCase() === theme.accent.toLowerCase()));
     colorIn.value = theme.accent; radiusIn.value = theme.radius;
     panel.querySelectorAll('[data-g]').forEach(g => g.querySelectorAll('[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === String(theme[g.dataset.g]))));
-    panel.querySelectorAll('[data-k]').forEach(b => b.classList.toggle('on', theme[b.dataset.k] === 'on'));
   }
   function themeEdit(mut, final = true) {
     if (!themePre) themePre = cur();
@@ -1247,8 +1616,7 @@ body.ed-typing .ed-bar { display: none !important; }
   panel.addEventListener('click', e => {
     if (e.target.closest('[data-close]')) return panel.classList.remove('open');
     const c = e.target.closest('[data-c]'); if (c) return themeEdit(() => theme.accent = c.dataset.c);
-    const k = e.target.closest('[data-k]'); if (k) return themeEdit(() => theme[k.dataset.k] = theme[k.dataset.k] === 'on' ? 'off' : 'on');
-    const o = e.target.closest('[data-v]'); if (o) { const g = o.parentElement.dataset.g; themeEdit(() => theme[g] = o.dataset.v); if (g === 'reveal') previewReveal(); }
+    const o = e.target.closest('[data-v]'); if (o) { const g = o.parentElement.dataset.g; themeEdit(() => theme[g] = o.dataset.v); }
   });
   colorIn.addEventListener('input', () => themeEdit(() => theme.accent = colorIn.value, false));
   colorIn.addEventListener('change', () => themeEdit(() => theme.accent = colorIn.value, true));
@@ -1256,11 +1624,11 @@ body.ed-typing .ed-bar { display: none !important; }
   radiusIn.addEventListener('change', () => themeEdit(() => theme.radius = +radiusIn.value, true));
 
   let uiBuilt = false;
-  function buildUI() { if (uiBuilt) return; uiBuilt = true; [toolbar, panel, pop, fmt, toastEl, modal].forEach(n => body.appendChild(n)); syncPanel(); }
+  function buildUI() { if (uiBuilt) return; uiBuilt = true; [toolbar, panel, fxPanel, pop, fmt, toastEl, modal].forEach(n => body.appendChild(n)); syncPanel(); }
 
   /* ── Entrar / salir / exportar ── */
   function enterEdit() {
-    store.set(OWNER, '1'); buildUI(); if (io) { io.disconnect(); io = null; } editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
+    store.set(OWNER, '1'); buildUI(); editing = true; body.classList.add('editing'); fab.classList.remove('show'); refresh();
     if (gh) syncFromGitHub().then(showPending); else showPending();
   }
   function showPending() {
@@ -1310,7 +1678,7 @@ body.ed-typing .ed-bar { display: none !important; }
     const doc = new DOMParser().parseFromString(b64dec(d.content || ''), 'text/html');
     const s = doc.getElementById('site'); if (!s) return { sha: d.sha, html: null };
     const te = doc.getElementById('theme-style');
-    const th = Object.assign({}, DEFAULT_THEME, parse(te && te.getAttribute('data-json')));
+    const th = normTheme(parse(te && te.getAttribute('data-json')));
     return { sha: d.sha, html: s.innerHTML, theme: th, hash: hash(stateStr(s.innerHTML, th)) };
   }
 
@@ -1328,7 +1696,7 @@ body.ed-typing .ed-bar { display: none !important; }
     baseHash = rem.hash;
     const src = mine ? d : rem;
     hist.push(cur()); fut = [];
-    site.innerHTML = src.html; theme = Object.assign({}, DEFAULT_THEME, src.theme); applyTheme(); syncPanel(); refresh();
+    site.innerHTML = src.html; theme = normTheme(src.theme); applyTheme(); syncPanel(); refresh();
     if (mine) pendingDraft = null;
     toast(mine ? 'Retomé tus cambios sin publicar.' : 'Cargué la última versión publicada.', [], 4000);
   }
@@ -1422,8 +1790,8 @@ body.ed-typing .ed-bar { display: none !important; }
     if (e.key === 'Escape') { e.stopPropagation(); closeSetup(); }
   });
   function exitEdit() {
-    editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open');
-    fmt.style.display = 'none'; toastEl.classList.remove('show'); clean(site); fx(); initReveal(); fab.classList.add('show');
+    editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open'); closeFx();
+    fmt.style.display = 'none'; toastEl.classList.remove('show'); closeFx(); clean(site); renderFx(); fab.classList.add('show');
     if (document.activeElement) document.activeElement.blur();
   }
   function buildHTML(html) {
@@ -1431,7 +1799,7 @@ body.ed-typing .ed-bar { display: none !important; }
     doc.querySelector('#site').innerHTML = html;
     doc.querySelectorAll('.ed-ui').forEach(n => n.remove());
     const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev'); if (!b.classList.length) b.removeAttribute('class');
-    doc.classList.remove('anim-ready'); if (!doc.classList.length) doc.removeAttribute('class');
+    OLD_FX_ATTRS.forEach(a => doc.removeAttribute(a)); doc.classList.remove('anim-ready'); if (!doc.classList.length) doc.removeAttribute('class');
     return '<!DOCTYPE html>\n' + doc.outerHTML + '\n';
   }
   function exportHTML() {
@@ -1453,6 +1821,9 @@ body.ed-typing .ed-bar { display: none !important; }
     if (!editing) return;
     const b = e.target.closest('[data-act]');
     if (b && site.contains(b)) { e.preventDefault(); e.stopPropagation(); act(b.dataset.act, b); return; }
+    const fb = e.target.closest('#site [data-fx="circular"], #site [data-fx="curved"]');
+    if (fb) { e.preventDefault(); openFxPanel(fb); return; }
+    if (e.target.closest('#site .fx-prev')) endPreview();
     const slot = e.target.closest('[data-slot]');
     if (slot && site.contains(slot)) { e.preventDefault(); iconPicker(slot, slot); return; }
     const a = e.target.closest('#site a');
@@ -1475,7 +1846,7 @@ body.ed-typing .ed-bar { display: none !important; }
     if (mod && k === 's') { e.preventDefault(); toast('Tus cambios se guardan solos. Cuando quieras que los vean los demás, tocá Publicar.'); return; }
     if (!field && mod && k === 'z') { if (e.target.closest && e.target.closest('input')) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (!field && mod && k === 'y') { e.preventDefault(); redo(); return; }
-    if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); if (field) field.blur(); }
+    if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); closeFx(); if (field) field.blur(); }
     if (field && !mod && e.key.length === 1) body.classList.add('ed-typing');
     if (field && e.key === 'Enter') {
       e.preventDefault();
@@ -1532,10 +1903,10 @@ body.ed-typing .ed-bar { display: none !important; }
 
   /* ── Arranque ── */
   body.appendChild(fab);
-  setFxAttrs(); root.classList.add('anim-ready');
+  OLD_FX_ATTRS.forEach(a => root.removeAttribute(a)); root.classList.remove('anim-ready'); if (!root.classList.length) root.removeAttribute('class');
+  fxReady = true;
   if (new URLSearchParams(location.search).has('editar')) enterEdit();
-  else { fx(); initReveal(); if (store.get(OWNER)) fab.classList.add('show'); }
-  addEventListener('resize', () => { if (!editing && site.querySelector('.marquee')) { clearTimeout(fx.t); fx.t = setTimeout(fx, 250); } });
+  else { renderFx(); if (store.get(OWNER)) fab.classList.add('show'); }
 })();
 </script>
 </body>
