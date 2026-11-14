@@ -34,11 +34,26 @@ El token queda guardado solo en ese navegador; nunca se publica dentro de la pá
 En otro dispositivo (por ejemplo, el celular) hay que pegarlo una vez más.
 Si lo perdés o vence, borralo en GitHub y creá otro.
 
+## 4. Notas privadas
+
+Las notas con candado son **privadas**: no se publican en la página. Se guardan en un archivo `notas.json`
+dentro de un segundo repositorio **privado** (por ejemplo `miweb-notas`), y solo las ves vos, con GitHub conectado.
+
+Para que funcione (una sola vez):
+1. En GitHub, creá un repositorio nuevo **privado** llamado `miweb-notas` (podés marcar *Add a README*).
+2. Editá tu token en <https://github.com/settings/personal-access-tokens> y en *Repository access* sumá `miweb-notas`
+   (así el token tiene acceso a los dos repositorios, con *Contents: Read and write*).
+3. En el editor, menú **⋯ → Conexión con GitHub**: revisá que diga `miweb-notas` y tocá **Probar y guardar**.
+4. Tocá **Publicar**. Las notas privadas pasan a `miweb-notas` y salen de la página pública.
+
+Cada nota se cambia desde su manija **⋮⋮ → Hacer pública / Hacer privada**. Las notas nuevas empiezan como privadas.
+Si el repositorio privado no está disponible, el editor no publica nada, para que no se pierdan notas.
+
 ## Bueno saber
 
 - **Siempre editás la última versión.** Al entrar al editor, se trae la versión publicada más reciente directo de GitHub,
   aunque GitHub Pages todavía muestre una anterior por caché.
 - **Cambios sin publicar:** si cerrás sin publicar, al volver los encontrás donde los dejaste (en ese mismo navegador).
 - **Historial:** cada vez que publicás queda un commit en GitHub, así que siempre podés volver a una versión anterior desde ahí.
-- **Copia de respaldo:** en el menú **⋯** del editor está **Descargar HTML**.
+- **Copia de respaldo:** en el menú **⋯** del editor está **Descargar HTML** (sin las notas privadas).
 - Si publicaste desde otro dispositivo mientras tenías el editor abierto, te avisa antes de reemplazar esa versión.
