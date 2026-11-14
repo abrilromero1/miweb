@@ -655,14 +655,16 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json="{&quot;accent&quot;:&quot;#B5623A&quot;,&quot;font&quot;:&quot;lora&quot;,&quot;radius&quot;:12,&quot;mode&quot;:&quot;auto&quot;}"></style>
+<style id="theme-style" data-json="{&quot;accent&quot;:&quot;#B5623A&quot;,&quot;font&quot;:&quot;lora&quot;,&quot;radius&quot;:12,&quot;mode&quot;:&quot;auto&quot;}">:root{--accent:#B5623A;--accent-hover:color-mix(in srgb,#B5623A 82%,#000);--accent-light:color-mix(in srgb,#B5623A 12%,#fff);--accent-text:color-mix(in srgb,#B5623A 75%,#000);--r:12px;--font-head:'Lora', Georgia, serif;--font-body:'DM Sans', system-ui, sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}}
+:root[data-theme="dark"]{--accent:color-mix(in srgb,#B5623A 72%,#fff);--accent-hover:color-mix(in srgb,#B5623A 62%,#fff);--accent-light:color-mix(in srgb,#B5623A 20%,#141210);--accent-text:color-mix(in srgb,#B5623A 72%,#fff);}</style>
 </head>
 <body>
 <div id="site">
 
 <nav>
   <div class="inner">
-    <a href="#" class="logo" data-e="">Abril Romero</a>
+    <a href="#" class="logo" data-e="">¡Hola!</a>
     <ul><li><a href="#inicio">Inicio</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li><li class="corner" data-vis="owner"><a href="#notas" title="Notas" aria-label="Notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg></a></li></ul>
   </div>
 </nav>
@@ -671,8 +673,8 @@ body.ed-typing .ed-bar { display: none !important; }
   <div class="wrap hero-wrap">
   <div class="hero-text">
     <span class="label" data-e="">Auditora interna Jr. ISO 9001</span>
-    <h1 data-e="" data-fx="split" data-fx-cfg="{&quot;effect&quot;:&quot;rise&quot;,&quot;splitType&quot;:&quot;chars&quot;,&quot;delay&quot;:50,&quot;duration&quot;:1.25,&quot;staggerFrom&quot;:&quot;start&quot;,&quot;trigger&quot;:&quot;view&quot;,&quot;hoverEffect&quot;:&quot;lift&quot;,&quot;loop&quot;:false,&quot;loopDelay&quot;:1.5,&quot;mask&quot;:false,&quot;threshold&quot;:0.1,&quot;rootMargin&quot;:-100}">Ayudo a las organizaciones a construir sistemas de calidad&nbsp;</h1>
-    <p class="sub" data-e="" data-ml="" data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;:true,&quot;focusStyle&quot;:&quot;brackets&quot;,&quot;easing&quot;:&quot;spring&quot;,&quot;order&quot;:&quot;sequential&quot;,&quot;blurAmount&quot;:5,&quot;focusScale&quot;:1,&quot;unfocusedOpacity&quot;:1,&quot;borderColor&quot;:&quot;&quot;,&quot;cornerSize&quot;:16,&quot;borderWidth&quot;:3,&quot;animationDuration&quot;:0.5,&quot;pauseBetweenAnimations&quot;:1,&quot;highlightColor&quot;:&quot;&quot;}">Auditorias internas, preparación para certificaciones y documentación de SGC. Un enfoque real.&nbsp;</p>
+    <h1 data-e="">Ayudo a las PyMEs a construir sistemas de calidad&nbsp;</h1>
+    <p class="sub" data-e="" data-ml="">Auditorias internas, preparación para certificaciones y documentación de SGC. Un enfoque real.&nbsp;</p>
     <div class="creds" data-list="cred">
       <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 9001</span></span>
       <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 19011</span></span>
@@ -680,7 +682,7 @@ body.ed-typing .ed-bar { display: none !important; }
   </div>
     <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;:&quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;,&quot;onHover&quot;:&quot;speedUp&quot;,&quot;direction&quot;:&quot;clockwise&quot;,&quot;spinDuration&quot;:20,&quot;size&quot;:200,&quot;fontSize&quot;:24,&quot;draggable&quot;:true,&quot;hoverTilt&quot;:20,&quot;tilt&quot;:0,&quot;fontWeight&quot;:900,&quot;letterSpacing&quot;:0,&quot;startAngle&quot;:0,&quot;repeat&quot;:1,&quot;fill&quot;:true,&quot;ring&quot;:false,&quot;center&quot;:&quot;IRAM&quot;,&quot;color&quot;:&quot;&quot;}"></div>
   </div>
-</section>
+</section><section class="text-section" data-block=""><div class="wrap"><div class="cta-box"><p data-e="">Existe una forma de ver que es también una forma de pensar: el visualizar las conexiones.</p><span class="small" data-e="">Ray Monk</span></div></div></section>
 
 
 
@@ -2400,4 +2402,6 @@ body.ed-typing .ed-bar { display: none !important; }
           if(pop.classList.contains('open')){setOpen(false);btn.focus();}
         });
       &lt;/script&gt;
-    &lt;/body&gt;&lt;/html&gt;" data-nl-ready="1"></iframe></body></html>
+    &lt;/body&gt;&lt;/html&gt;" data-nl-ready="1"></iframe>
+<script async="" src="/.netlify/scripts/hud?variant=owner-private" data-nf-variant="owner-private" data-netlify-site-id="bda6403e-b9b8-4f3f-8b10-d57778c7669f" data-app-host="app.netlify.com"></script>
+</body></html>
