@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abril Romero — ISO 9001</title>
-<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&amp;family=DM+Sans:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link id="font-link" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Professional warmth — earthy, trustworthy */
@@ -83,7 +84,7 @@ nav {
   z-index: 10;
 }
 nav .inner {
-  max-width: 800px;
+  max-width: var(--page-wrap, 800px);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -120,7 +121,7 @@ nav .logo { white-space: nowrap; }
 section { padding: 0 24px; }
 
 .wrap {
-  max-width: 800px;
+  max-width: var(--sec-wrap, var(--page-wrap, 800px));
   margin: 0 auto;
 }
 
@@ -463,9 +464,16 @@ footer {
 .fx-bg { z-index: 0; }
 .fx-overlay { z-index: 3; }
 .fx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.fxdark { --text: #F7F1EA; --text-mid: rgba(247,241,234,.84); --text-soft: rgba(247,241,234,.68); color: var(--text); }
-.fxlight { --text: #1E1B18; --text-mid: #4A433C; --text-soft: #6A6158; color: var(--text); }
-:is(.fxdark, .fxlight) :is(.service-card, .note, .t-item .info, .c-link, .cta-box) { --text: var(--text-base); --text-mid: var(--text-mid-base); --text-soft: var(--text-soft-base); }
+[data-block][style*="--sec-minh"] { min-height: var(--sec-minh); display: flex; flex-direction: column; justify-content: var(--sec-valign, center); }
+[data-block][style*="--sec-minh"] > .wrap { width: 100%; }
+[data-block][style*="--sb1"] { background: linear-gradient(var(--sba, 135deg), var(--sb1), var(--sb2, var(--sb1))); }
+[data-shadow="none"] { box-shadow: none !important; }
+[data-shadow="soft"] { box-shadow: 0 10px 28px -12px rgba(0,0,0,.28) !important; }
+[data-shadow="strong"] { box-shadow: 0 22px 48px -14px rgba(0,0,0,.45) !important; }
+.page-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.fxdark, [data-tone="light"] { --text: #F7F1EA; --text-mid: rgba(247,241,234,.84); --text-soft: rgba(247,241,234,.68); color: var(--text); }
+.fxlight, [data-tone="dark"] { --text: #1E1B18; --text-mid: #4A433C; --text-soft: #6A6158; color: var(--text); }
+:is(.fxdark, .fxlight, [data-tone]) :is(.service-card, .note, .t-item .info, .c-link, .cta-box) { --text: var(--text-base); --text-mid: var(--text-mid-base); --text-soft: var(--text-soft-base); }
 :is(.fxdark, .fxlight) { border-bottom-color: transparent; }
 
 /* Menú ramificado */
@@ -558,6 +566,72 @@ body:not(.editing) .note-open-item .note-full:empty { display: none; }
 .priv-banner button { all: unset; cursor: pointer; font-weight: 500; color: var(--accent); white-space: nowrap; }
 
 /* ───────────── Editor (solo visible en modo edición) ───────────── */
+.editing .ed-picked { outline: 2px solid var(--accent) !important; outline-offset: 3px; }
+.editing [data-block].ed-picked { outline-offset: -3px; }
+.ed-resize { position: absolute; left: 0; right: 0; bottom: -5px; height: 10px; cursor: ns-resize; z-index: 6; display: none; }
+.ed-resize::after { content: ''; position: absolute; left: 50%; top: 3px; width: 48px; height: 4px; margin-left: -24px; border-radius: 4px; background: var(--accent); opacity: .65; }
+.editing [data-block]:hover > .ed-resize, .ed-resizing .ed-resize { display: block; }
+.ed-resizing, .ed-resizing * { cursor: ns-resize !important; user-select: none; }
+body.ed-dock { padding-right: 340px; }
+body.ed-dock .ed-toolbar { left: calc(50% - 170px); }
+@media (max-width: 900px) { body.ed-dock { padding-right: 0; } body.ed-dock .ed-toolbar { left: 50%; } }
+.ed-insp { position: fixed; top: 0; right: 0; bottom: 0; width: 340px; max-width: 100vw; z-index: 64; display: none; flex-direction: column; background: var(--card); color: var(--text-base, var(--text)); border-left: 1px solid var(--border); box-shadow: -10px 0 30px rgba(0,0,0,.06); font-size: 13.5px; }
+.ed-insp.open { display: flex; }
+.ins-head { display: flex; align-items: center; gap: 6px; padding: 12px 12px 10px 14px; border-bottom: 1px solid var(--border); }
+.ins-tabs { flex: 1; display: flex; background: var(--bg-alt); border-radius: 9px; padding: 3px; }
+.ins-tabs button { all: unset; flex: 1; text-align: center; cursor: pointer; padding: 6px 0; border-radius: 7px; font-size: 13px; color: var(--text-mid-base, var(--text-mid)); }
+.ins-tabs button.on { background: var(--card); color: var(--text-base, var(--text)); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.ins-x { all: unset; cursor: pointer; font-size: 22px; padding: 0 4px; color: var(--text-soft-base, var(--text-soft)); }
+.ins-body { flex: 1; overflow-y: auto; padding: 14px 16px 120px; }
+.ins-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.ins-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 12px; font-size: 12px; color: var(--text-soft-base, var(--text-soft)); }
+.ins-crumbs button { all: unset; cursor: pointer; padding: 2px 8px; border-radius: 6px; background: var(--bg-alt); }
+.ins-crumbs button.on { background: var(--accent); color: #fff; }
+.ins-empty { color: var(--text-mid-base, var(--text-mid)); line-height: 1.6; }
+.ins-empty b:first-child { display: block; font-size: 15px; color: var(--text-base, var(--text)); margin-bottom: 6px; }
+.ins-empty p + p { margin-top: 8px; }
+.ins-g { border-top: 1px solid var(--border); padding: 10px 0 4px; }
+.ins-g summary { cursor: pointer; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-soft-base, var(--text-soft)); margin-bottom: 10px; list-style: none; }
+.ins-g summary::-webkit-details-marker { display: none; }
+.ins-g summary::after { content: '▾'; float: right; }
+.ins-g:not([open]) summary::after { content: '▸'; }
+.ins-f { display: block; margin-bottom: 12px; }
+.ins-f > span { display: flex; align-items: center; gap: 6px; color: var(--text-mid-base, var(--text-mid)); margin-bottom: 5px; font-weight: 500; }
+.ins-f > span b { margin-left: auto; font-weight: 500; color: var(--text-base, var(--text)); font-variant-numeric: tabular-nums; }
+.ins-reset { all: unset; cursor: pointer; font-size: 11px; padding: 1px 7px; border-radius: 5px; border: 1px solid var(--border); color: var(--text-soft-base, var(--text-soft)); }
+.ins-f > span .ins-reset:only-of-type { margin-left: auto; }
+.ins-f > span b + .ins-reset { margin-left: 0; }
+.ins-f input[type=range] { width: 100%; accent-color: var(--accent); }
+.ins-f select { width: 100%; font: 13.5px system-ui, sans-serif; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text-base, var(--text)); }
+.ins-crow { display: flex; align-items: center; gap: 8px; }
+.ins-crow input[type=color] { width: 38px; height: 30px; border: none; background: none; padding: 0; cursor: pointer; }
+.ins-crow small { color: var(--text-soft-base, var(--text-soft)); }
+.ins-seg { display: flex; flex-wrap: wrap; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.ins-seg button { all: unset; flex: 1 1 auto; text-align: center; cursor: pointer; padding: 6px 8px; font-size: 12.5px; display: inline-flex; justify-content: center; align-items: center; min-width: 30px; }
+.ins-seg button + button { border-left: 1px solid var(--border); }
+.ins-seg button.on { background: var(--accent); color: #fff; }
+.ins-seg svg { width: 16px; height: 16px; }
+.ins-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.ins-btns button { all: unset; cursor: pointer; padding: 7px 11px; border: 1px solid var(--border); border-radius: 8px; font-size: 12.5px; }
+.ins-btns button:hover { border-color: var(--accent); }
+.ins-btns button.on { background: var(--accent-light); border-color: var(--accent); color: var(--accent-text); }
+.ins-btns button[disabled] { opacity: .45; cursor: default; }
+.ins-note { font-size: 12px; color: var(--text-soft-base, var(--text-soft)); line-height: 1.5; margin: 8px 0 6px; }
+.ins-wide { display: block; width: 100%; text-align: center; margin-bottom: 12px; }
+.ins-tab { margin-bottom: 12px; }
+.ins-tabh { all: unset; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 4px 2px; }
+.ins-tabh svg { width: 14px; height: 14px; }
+.ins-tabh small { font-weight: 400; color: var(--text-soft-base, var(--text-soft)); }
+.ins-row { display: flex; align-items: center; border-radius: 8px; margin-left: 10px; }
+.ins-row:hover { background: var(--bg-alt); }
+.ins-row.on { background: var(--accent-light); }
+.ins-row.hid .ins-rname { opacity: .45; text-decoration: line-through; }
+.ins-rname { all: unset; cursor: pointer; flex: 1; padding: 6px 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ins-eye { all: unset; cursor: pointer; padding: 4px 8px; color: var(--text-soft-base, var(--text-soft)); display: inline-flex; }
+.ins-eye svg { width: 15px; height: 15px; }
+.ed-insp .ed-panel.ed-embedded { position: static; transform: none; width: auto; max-width: none; box-shadow: none; border: 0; padding: 0; overflow: visible; background: none; z-index: auto; }
+.ed-insp .ed-panel.ed-embedded > h3 { display: none; }
+
 .ed-ui { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.4; }
 body.editing { padding-bottom: 96px; }
 .editing [data-e] { outline: none; border-radius: 4px; transition: background .15s, box-shadow .15s; cursor: text; }
@@ -708,117 +782,161 @@ body.ed-typing .ed-bar { display: none !important; }
 .ed-toast.show { display: flex; }
 .ed-toast button { all: unset; cursor: pointer; color: #F0B28E; font-weight: 600; white-space: nowrap; }
 </style>
-<style id="theme-style" data-json="{&quot;accent&quot;:&quot;#2F6F62&quot;,&quot;font&quot;:&quot;lora&quot;,&quot;radius&quot;:24,&quot;mode&quot;:&quot;auto&quot;}">:root{--accent:#2F6F62;--accent-hover:color-mix(in srgb,#2F6F62 82%,#000);--accent-light:color-mix(in srgb,#2F6F62 12%,#fff);--accent-text:color-mix(in srgb,#2F6F62 75%,#000);--r:24px;--font-head:'Lora', Georgia, serif;--font-body:'DM Sans', system-ui, sans-serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:color-mix(in srgb,#2F6F62 72%,#fff);--accent-hover:color-mix(in srgb,#2F6F62 62%,#fff);--accent-light:color-mix(in srgb,#2F6F62 20%,#141210);--accent-text:color-mix(in srgb,#2F6F62 72%,#fff);}}
-:root[data-theme="dark"]{--accent:color-mix(in srgb,#2F6F62 72%,#fff);--accent-hover:color-mix(in srgb,#2F6F62 62%,#fff);--accent-light:color-mix(in srgb,#2F6F62 20%,#141210);--accent-text:color-mix(in srgb,#2F6F62 72%,#fff);}</style>
+<style id="theme-style" data-json='{"accent":"#B5623A","font":"lora","radius":12,"mode":"auto"}'></style>
 </head>
 <body>
 <div id="site">
 
 <nav>
   <div class="inner">
-    <a href="#" class="logo" data-e="">¡Hola!</a>
-    <ul><li><a href="#inicio">Inicio</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li><li class="corner" data-vis="owner"><a href="#notas" title="Notas" aria-label="Notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg></a></li></ul>
+    <a href="#" class="logo" data-e>Abril Romero</a>
+    <ul><li><a href="#servicios">Servicios</a></li><li><a href="#notas">Notas</a></li><li><a href="#experiencia">Experiencia</a></li><li><a href="#contacto">Contacto</a></li></ul>
   </div>
 </nav>
 
-<section class="hero" data-block=""><div class="fx-bg" data-fx="grainient" data-fx-cfg="{&quot;palette&quot;:&quot;theme&quot;,&quot;count&quot;:5,&quot;c1&quot;:&quot;#120f17&quot;,&quot;c2&quot;:&quot;#2a0f0a&quot;,&quot;c3&quot;:&quot;#9a3412&quot;,&quot;c4&quot;:&quot;#f97316&quot;,&quot;c5&quot;:&quot;#fed7aa&quot;,&quot;angle&quot;:55,&quot;flow&quot;:0.8,&quot;silk&quot;:1,&quot;grainAmount&quot;:0,&quot;type&quot;:&quot;linear&quot;,&quot;bands&quot;:1,&quot;softness&quot;:1,&quot;scale&quot;:1.05,&quot;speed&quot;:1,&quot;grainSize&quot;:1.2,&quot;grainAnimated&quot;:true,&quot;contrast&quot;:1,&quot;saturation&quot;:1,&quot;variation&quot;:0,&quot;interactive&quot;:true,&quot;stir&quot;:1.4,&quot;clickSwirl&quot;:true,&quot;intro&quot;:true,&quot;lightMode&quot;:true,&quot;textMode&quot;:&quot;auto&quot;}"></div>
+<section class="hero" data-block>
   <div class="wrap hero-wrap">
   <div class="hero-text">
-    <span class="label" data-e="">Auditora interna Jr. ISO 9001</span>
-    <h1 data-e="">Ayudo a las PyMEs a construir sistemas de calidad&nbsp;</h1>
-    <p class="sub" data-e="" data-ml="">Auditorias internas, preparación para certificaciones y documentación de SGC. Un enfoque real.&nbsp;</p>
+    <span class="label" data-e>ISO 9001 internal auditor</span>
+    <h1 data-e data-fx="split" data-fx-cfg="{&quot;effect&quot;: &quot;rise&quot;, &quot;splitType&quot;: &quot;chars&quot;, &quot;delay&quot;: 50, &quot;duration&quot;: 1.25, &quot;staggerFrom&quot;: &quot;start&quot;, &quot;trigger&quot;: &quot;view&quot;, &quot;hoverEffect&quot;: &quot;lift&quot;, &quot;loop&quot;: false, &quot;loopDelay&quot;: 1.5, &quot;mask&quot;: false, &quot;threshold&quot;: 0.1, &quot;rootMargin&quot;: -100}">Ayudo a las organizaciones a construir sistemas de calidad que realmente funcionan</h1>
+    <p class="sub" data-e data-ml>Auditorias internas, preparacion para certificaciones, documentacion de SGC y capacitacion. Trabajo con empresas que quieren mejorar sus procesos, no solo cumplir un requisito.</p>
     <div class="creds" data-list="cred">
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 9001</span></span>
-      <span class="cred" data-item=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="t" data-e="">ISO 19011</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Auditora interna ISO 9001</span></span>
+      <span class="cred" data-item><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="t" data-e>Introduccion a ISO 9001:2015</span></span>
     </div>
   </div>
-    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;:&quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;,&quot;onHover&quot;:&quot;speedUp&quot;,&quot;direction&quot;:&quot;clockwise&quot;,&quot;spinDuration&quot;:20,&quot;size&quot;:200,&quot;fontSize&quot;:24,&quot;draggable&quot;:true,&quot;hoverTilt&quot;:20,&quot;tilt&quot;:0,&quot;fontWeight&quot;:900,&quot;letterSpacing&quot;:0,&quot;startAngle&quot;:0,&quot;repeat&quot;:1,&quot;fill&quot;:true,&quot;ring&quot;:false,&quot;center&quot;:&quot;IRAM&quot;,&quot;color&quot;:&quot;&quot;}"></div>
+    <div class="circ" data-fx="circular" data-fx-cfg="{&quot;text&quot;: &quot;AUDITORA INTERNA ✦ ISO 9001 ✦ &quot;, &quot;onHover&quot;: &quot;speedUp&quot;, &quot;direction&quot;: &quot;clockwise&quot;, &quot;spinDuration&quot;: 20, &quot;size&quot;: 200, &quot;fontSize&quot;: 24, &quot;draggable&quot;: true, &quot;hoverTilt&quot;: 20, &quot;tilt&quot;: 0, &quot;fontWeight&quot;: 900, &quot;letterSpacing&quot;: 0, &quot;startAngle&quot;: 0, &quot;repeat&quot;: 1, &quot;fill&quot;: true, &quot;ring&quot;: false, &quot;center&quot;: &quot;&quot;, &quot;color&quot;: &quot;&quot;}"></div>
   </div>
-</section><section class="text-section" data-block=""><div class="fx-overlay" data-fx="glow" data-fx-cfg="{&quot;color&quot;:&quot;#c0c0c0&quot;,&quot;intensity&quot;:2,&quot;trailWidth&quot;:2,&quot;linger&quot;:0.5,&quot;glow&quot;:1.8,&quot;clickBurst&quot;:true,&quot;theme&quot;:&quot;light&quot;}"></div><div class="wrap"><div class="cta-box"><p data-e="">Existe una forma de ver que es también una forma de pensar: el visualizar las conexiones.</p><span class="small" data-e="" data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;:false,&quot;focusStyle&quot;:&quot;brackets&quot;,&quot;easing&quot;:&quot;smooth&quot;,&quot;order&quot;:&quot;sequential&quot;,&quot;blurAmount&quot;:5,&quot;focusScale&quot;:1,&quot;unfocusedOpacity&quot;:1,&quot;borderColor&quot;:&quot;&quot;,&quot;cornerSize&quot;:16,&quot;borderWidth&quot;:3,&quot;animationDuration&quot;:0.5,&quot;pauseBetweenAnimations&quot;:1,&quot;highlightColor&quot;:&quot;&quot;}">Ray Monk</span></div></div></section><section class="text-section" data-block=""><div class="fx-overlay" data-fx="glow" data-fx-cfg="{&quot;color&quot;:&quot;&quot;,&quot;intensity&quot;:1.3,&quot;trailWidth&quot;:3,&quot;linger&quot;:1.4,&quot;glow&quot;:1.2,&quot;clickBurst&quot;:true,&quot;theme&quot;:&quot;auto&quot;}"></div><div class="wrap"><div class="cta-box"><p data-e="">Una frase destacada</p><span class="small" data-e="">Un detalle que la complemente</span></div></div></section>
+</section>
 
+<section class="curve-section" data-block>
+  <div class="curve" data-fx="curved" data-fx-cfg="{&quot;text&quot;: &quot;Calidad ✦ Procesos ✦ Mejora continua ✦ ISO 9001 ✦&quot;, &quot;shape&quot;: &quot;arc&quot;, &quot;speed&quot;: 2, &quot;curveAmount&quot;: 400, &quot;direction&quot;: &quot;left&quot;, &quot;fontSize&quot;: 96, &quot;fontWeight&quot;: 700, &quot;letterSpacing&quot;: 0, &quot;separator&quot;: &quot;&quot;, &quot;outline&quot;: false, &quot;scrollBoost&quot;: 0, &quot;edgeFade&quot;: 0, &quot;interactive&quot;: true, &quot;pauseOnHover&quot;: false, &quot;color&quot;: &quot;&quot;}"></div>
+</section>
 
-
-<section class="services-section" id="servicios" data-block="" data-nav="Servicios">
+<section class="services-section" id="servicios" data-block data-nav="Servicios">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Servicios</h2>
-    <p class="s-desc" data-e="" data-ml="">Lo que puedo hacer por tu organizacion.</p>
+    <h2 class="s-title" data-e>Servicios</h2>
+    <p class="s-desc" data-e data-ml>Lo que puedo hacer por tu organizacion.</p>
     <div class="services-grid" data-list="service">
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="M9 14l2 2 4-4"></path></svg></div>
-        <h3 data-e="">Auditorias internas</h3>
-        <p data-e="" data-ml="">Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg></div>
+        <h3 data-e>Auditorias internas</h3>
+        <p data-e data-ml>Evaluacion sistematica de tus procesos contra los requisitos de ISO 9001. Identifico lo que funciona y lo que necesita atencion.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
-        <h3 data-e="">Preparacion para certificacion</h3>
-        <p data-e="" data-ml="">Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="pen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3 data-e>Preparacion para certificacion</h3>
+        <p data-e data-ml>Te acompano paso a paso para que tu empresa llegue lista al dia de la auditoria de certificacion, sin sorpresas.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
-        <h3 data-e="">Documentacion del SGC</h3>
-        <p data-e="" data-ml="">Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 data-e>Documentacion del SGC</h3>
+        <p data-e data-ml>Manuales, procedimientos, instructivos y registros. Documentacion clara que la gente realmente usa.</p>
       </div>
-      <div class="service-card" data-item="">
-        <div class="icon-wrap" data-slot="" data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg></div>
-        <h3 data-e="">Capacitacion</h3>
-        <p data-e="" data-ml="">Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
+      <div class="service-card" data-item>
+        <div class="icon-wrap" data-slot data-icon="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3 data-e>Capacitacion</h3>
+        <p data-e data-ml>Talleres y formacion para tu equipo sobre ISO 9001, auditorias internas y herramientas de calidad.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="notes-section" id="notas" data-block="" data-nav="Notas" data-corner="" data-vis="owner">
+<section class="notes-section" id="notas" data-block data-nav="Notas" data-corner data-vis="owner">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Notas de estudio</h2>
-    <p class="s-desc" data-e="" data-ml="">Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
-    <div class="notes-grid" data-list="note" data-gid="gnotas"></div>
+    <h2 class="s-title" data-e>Notas de estudio</h2>
+    <p class="s-desc" data-e data-ml>Apuntes de mis cursos y formacion en calidad. Los comparto porque creo que el conocimiento es mejor cuando se comparte.</p>
+    <div class="notes-grid" data-list="note" data-gid="gnotas">
+      <div class="note" data-item data-nid="n01" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>Los 7 principios de calidad</h3>
+        <p data-e data-ml>Enfoque al cliente, liderazgo, compromiso, enfoque a procesos, mejora, decisiones basadas en evidencia, gestion de relaciones.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n02" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Planificacion de auditorias</h3>
+        <p data-e data-ml>Como definir el alcance, armar un checklist, seleccionar muestras y programar entrevistas con los duenos de proceso.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n03" data-private>
+        <span class="tag" data-e>ISO 9001</span>
+        <h3 data-e>No conformidades y acciones correctivas</h3>
+        <p data-e data-ml>Identificacion de hallazgos, redaccion clara, analisis de causa raiz y verificacion de acciones correctivas.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n04" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Tecnicas de entrevista</h3>
+        <p data-e data-ml>Preguntas abiertas, escucha activa, triangulacion de evidencia y como manejar situaciones dificiles.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n05" data-private>
+        <span class="tag" data-e>Calidad</span>
+        <h3 data-e>Mapeo de procesos</h3>
+        <p data-e data-ml>Flujogramas, diagramas tortuga, SIPOC y como documentar un proceso de forma clara y auditable.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+      <div class="note" data-item data-nid="n06" data-private>
+        <span class="tag" data-e>Auditoria</span>
+        <h3 data-e>Informes y seguimiento</h3>
+        <p data-e data-ml>Estructura de un informe de auditoria, clasificacion de hallazgos, presentacion a la direccion y seguimiento al cierre.</p>
+        <div class="note-full" data-e data-doc></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="exp-section" id="experiencia" data-block="" data-nav="Experiencia">
+<section class="exp-section" id="experiencia" data-block data-nav="Experiencia">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Experiencia</h2>
-    <p class="s-desc" data-e="" data-ml="">Mi recorrido profesional.</p>
+    <h2 class="s-title" data-e>Experiencia</h2>
+    <p class="s-desc" data-e data-ml>Mi recorrido profesional.</p>
     <div class="timeline" data-list="job">
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2024 – hoy</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2024 – hoy</span>
         <div class="info">
-          <p class="role" data-e="">Auditora interna</p>
-          <p class="co" data-e="">VTI S.A.</p>
-          <p class="desc" data-e="" data-ml="">Apoyo en auditorias del sistema de gestión de calidad</p>
+          <p class="role" data-e>Auditora interna (intern)</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Apoyo en auditorias del sistema de gestion de calidad, preparacion de checklists, documentacion de no conformidades y seguimiento de acciones correctivas hasta su cierre.</p>
         </div>
       </div>
-      <div class="t-item" data-item="">
-        <span class="dates" data-e="">2023 – 2024</span>
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2023 – 2024</span>
         <div class="info">
-          <p class="role" data-e="">Auditora líder</p>
-          <p class="co" data-e="">RTO Bomberos</p>
-          <p class="desc" data-e="" data-ml="">Agregar una breve descripción de tus responsabilidades y logros en este puesto.</p>
+          <p class="role" data-e>[Tu rol anterior]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
         </div>
       </div>
-      
+      <div class="t-item" data-item>
+        <span class="dates" data-e>2022 – 2023</span>
+        <div class="info">
+          <p class="role" data-e>[Otro rol]</p>
+          <p class="co" data-e>[Nombre de la empresa]</p>
+          <p class="desc" data-e data-ml>Agrega una breve descripcion de tus responsabilidades y logros en este puesto.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="contact-section" id="contacto" data-block="" data-nav="Contacto">
+<section class="contact-section" id="contacto" data-block data-nav="Contacto">
   <div class="wrap">
-    <h2 class="s-title" data-e="">Contacto</h2>
-    <p class="contact-intro" data-e="" data-ml="">Si necesitas ayuda con tu sistema de gestión de calidad o querés prepararte para una certificación, escribime.</p>
+    <h2 class="s-title" data-e>Contacto</h2>
+    <p class="contact-intro" data-e data-ml>Si necesitas ayuda con tu sistema de gestion de calidad o queres prepararte para una certificacion, escribime.</p>
     <div class="contact-row" data-list="contact">
-      <a href="mailto:tu@email.com" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 7l-10 6L2 7"></path></svg></span><span class="t" data-e="">romeroabril2019@gmail.com</span></a>
-      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></span><span class="t" data-e="">LinkedIn</span></a>
-      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item=""><span class="ic" data-slot="" data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg></span><span class="t" data-e="">WhatsApp</span></a>
+      <a href="mailto:tu@email.com" class="c-link" data-item><span class="ic" data-slot data-icon="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></span><span class="t" data-e>tu@email.com</span></a>
+      <a href="https://linkedin.com/in/tu-perfil" class="c-link" data-item><span class="ic" data-slot data-icon="linkedin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></span><span class="t" data-e>LinkedIn</span></a>
+      <a href="https://wa.me/54XXXXXXXXXX" class="c-link" data-item><span class="ic" data-slot data-icon="whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></span><span class="t" data-e>WhatsApp</span></a>
     </div>
     <div class="cta-box">
-      <p data-e="" data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultas sin compromiso</p>
-      <span class="small" data-e="">Respondo en menos de 24 horas</span>
+      <p data-e data-fx="focus" data-fx-cfg="{&quot;manualMode&quot;: false, &quot;focusStyle&quot;: &quot;brackets&quot;, &quot;easing&quot;: &quot;smooth&quot;, &quot;order&quot;: &quot;sequential&quot;, &quot;blurAmount&quot;: 5, &quot;focusScale&quot;: 1, &quot;unfocusedOpacity&quot;: 1, &quot;borderColor&quot;: &quot;&quot;, &quot;cornerSize&quot;: 16, &quot;borderWidth&quot;: 3, &quot;animationDuration&quot;: 0.5, &quot;pauseBetweenAnimations&quot;: 1, &quot;highlightColor&quot;: &quot;&quot;}">Consultame sin compromiso</p>
+      <span class="small" data-e>Respondo en menos de 24 horas</span>
     </div>
   </div>
 </section>
 
-<footer><span data-e="">Abril Romero · 2026</span></footer>
+<footer><span data-e>Abril Romero · 2026</span></footer>
 
 </div>
 
@@ -904,7 +1022,7 @@ body.ed-typing .ed-bar { display: none !important; }
     outfit:    { name: 'Outfit', note: 'limpia', head: "'Outfit', system-ui, sans-serif", body: "'Outfit', system-ui, sans-serif", url: 'family=Outfit:wght@400;500' }
   };
   const PRESETS = ['#B5623A', '#2F6F62', '#2B5C8A', '#7A4E9C', '#B0475B', '#4A4540'];
-  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto' };
+  const DEFAULT_THEME = { accent: '#B5623A', font: 'lora', radius: 12, mode: 'auto', wrap: 800, bg: 'theme', bgColor: '#F2EDE7', bgC1: '#FAF8F5', bgC2: '#F5E8E0', bgAngle: 160, bgText: 'auto', bgGrain: null };
   const normTheme = t => Object.fromEntries(Object.keys(DEFAULT_THEME).map(k => [k, t && t[k] !== undefined ? t[k] : DEFAULT_THEME[k]]));
 
   /* ── Efectos: valores iniciales (los mismos de los componentes originales) ── */
@@ -979,7 +1097,7 @@ body.ed-typing .ed-bar { display: none !important; }
     node.querySelectorAll('[contenteditable],[spellcheck],[draggable],[data-ph]').forEach(n => {
       n.removeAttribute('contenteditable'); n.removeAttribute('spellcheck'); n.removeAttribute('draggable'); n.removeAttribute('data-ph');
     });
-    node.querySelectorAll('.ed-sel,.ed-dragging,.tab-off,.note-open-item,.has-open-note,.fxdark,.fxlight').forEach(n => { n.classList.remove('ed-sel', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note', 'fxdark', 'fxlight'); if (!n.classList.length) n.removeAttribute('class'); });
+    node.querySelectorAll('.ed-sel,.ed-picked,.ed-dragging,.tab-off,.note-open-item,.has-open-note,.fxdark,.fxlight').forEach(n => { n.classList.remove('ed-sel', 'ed-picked', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note', 'fxdark', 'fxlight'); if (!n.classList.length) n.removeAttribute('class'); });
   }
   function rid() { return Math.random().toString(36).slice(2, 9); }
   function normGrids(rootEl) {   // sin espacios sueltos entre notas: así la página pública y la privada se comparan bien
@@ -1003,9 +1121,22 @@ body.ed-typing .ed-bar { display: none !important; }
     const a = t.accent, f = FONTS[t.font] || FONTS.lora;
     const light = `--accent:${a};--accent-hover:color-mix(in srgb,${a} 82%,#000);--accent-light:color-mix(in srgb,${a} 12%,#fff);--accent-text:color-mix(in srgb,${a} 75%,#000);`;
     const dark = `--accent:color-mix(in srgb,${a} 72%,#fff);--accent-hover:color-mix(in srgb,${a} 62%,#fff);--accent-light:color-mix(in srgb,${a} 20%,#141210);--accent-text:color-mix(in srgb,${a} 72%,#fff);`;
-    return `:root{${light}--r:${t.radius}px;--font-head:${f.head};--font-body:${f.body}}\n` +
+    return `:root{${light}--r:${t.radius}px;--font-head:${f.head};--font-body:${f.body};--page-wrap:${t.wrap}px}\n` + pageBgCSS(t) +
            `@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){${dark}}}\n` +
            `:root[data-theme="dark"]{${dark}}`;
+  }
+  function pageBgCSS(t) {   // fondo único para toda la página
+    if (!t.bg || t.bg === 'theme') return '';
+    let c = 'nav{background:color-mix(in srgb,var(--bg) 72%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}nav li.corner{background:transparent}.notes-section{background:transparent}\n';
+    if (t.bg === 'color') c += `body{background:${t.bgColor}}\n`;
+    if (t.bg === 'grad') c += `body{background:linear-gradient(${t.bgAngle}deg,${t.bgC1},${t.bgC2}) fixed}\n`;
+    if (t.bg !== 'grainient') {
+      let tone = t.bgText;
+      if (tone === 'auto') { const cols = t.bg === 'color' ? [t.bgColor] : [t.bgC1, t.bgC2]; tone = cols.map(hex3).reduce((a, x) => a + lum3(x), 0) / cols.length < 0.45 ? 'light' : 'dark'; }
+      const reset = '#site :is(.service-card,.note,.t-item .info,.c-link,.cta-box){--text:var(--text-base);--text-mid:var(--text-mid-base);--text-soft:var(--text-soft-base)}';
+      c += tone === 'light' ? `#site{--text:#F7F1EA;--text-mid:rgba(247,241,234,.84);--text-soft:rgba(247,241,234,.68);color:var(--text)}${reset}\n` : `#site{--text:#1E1B18;--text-mid:#4A433C;--text-soft:#6A6158;color:var(--text)}${reset}\n`;
+    }
+    return c;
   }
   function applyTheme() {
     themeEl.textContent = themeCSS(theme);
@@ -1014,7 +1145,7 @@ body.ed-typing .ed-bar { display: none !important; }
     const href = `https://fonts.googleapis.com/css2?${f.url}&display=swap`;
     if (fontLink.getAttribute('href') !== href) fontLink.setAttribute('href', href);
     if (theme.mode === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', theme.mode);
-    if (fxReady) renderFx();
+    if (fxReady) { renderFx(); renderPageBg(); }
   }
 
   /* ── Efectos: motor ──
@@ -1022,6 +1153,7 @@ body.ed-typing .ed-bar { display: none !important; }
      el contenido original se guarda en data-fx-src y se restaura antes de guardar o publicar. */
   const OLD_FX_ATTRS = ['data-reveal', 'data-glow', 'data-sparkle', 'data-shine', 'data-spot', 'data-lift'];
   const fxLive = new Map();
+  let pageBg = null;   // capa de fondo de toda la página (no forma parte del contenido)
   let fxReady = false, fxUid = 0;
   const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
   const stillFx = type => !!(FX_INFO[type] && (FX_INFO[type].text || FX_INFO[type].still));
@@ -1034,7 +1166,7 @@ body.ed-typing .ed-bar { display: none !important; }
     n.classList.remove(...FX_CLASSES); if (!n.classList.length) n.removeAttribute('class');
   }
   function unrender(el) { const t = fxLive.get(el); if (t) { try { t(); } catch (e) {} fxLive.delete(el); } restoreFx(el); }
-  function stopFx() { fxLive.forEach(t => { try { t(); } catch (e) {} }); fxLive.clear(); }
+  function stopFx() { fxLive.forEach((t, el) => { if (el === pageBg) return; try { t(); } catch (e) {} fxLive.delete(el); }); }
   function renderFx(only) {
     const list = only ? [only] : [...site.querySelectorAll('[data-fx]')];
     list.forEach(el => {
@@ -1760,13 +1892,26 @@ void main(){
       `<div class="ed-fx-actions" style="margin-top:14px"><button type="button" class="ed-btn danger" data-remove>${info.text || info.kind ? 'Quitar efecto' : 'Eliminar este bloque'}</button></div>`;
     fxPanel.scrollTop = top;
   }
+  function linkedFx() {   // otros elementos seleccionados con el mismo efecto: se ajustan juntos
+    if (!fxTarget || typeof picked === 'undefined') return [];
+    const type = fxTarget.dataset.fx;
+    if (FX_INFO[type] && FX_INFO[type].text) return picked.includes(fxTarget) ? picked.filter(p => p !== fxTarget && p.dataset.fx === type) : [];
+    const sec = fxTarget.parentElement;
+    if (FX_INFO[type] && FX_INFO[type].kind && picked.includes(sec)) return picked.filter(p => p !== sec && p.matches('[data-block]')).map(p => p.querySelector(`:scope > [data-fx="${type}"]`)).filter(Boolean);
+    return [];
+  }
   function fxChange(mut, redraw) {
     if (!fxTarget) return;
     if (!fxDirty) { hist.push(fxSnap); fut = []; fxDirty = true; }
-    mut(); if (redraw) drawFx(); scheduleSave();
+    const links = linkedFx();
+    mut();
+    links.forEach(x => { x.dataset.fx = fxTarget.dataset.fx; x.setAttribute('data-fx-cfg', fxTarget.getAttribute('data-fx-cfg')); });
+    if (fxTarget === pageBg) { const c = fxCfg(pageBg); delete c.textMode; theme.bgGrain = c; themeEl.dataset.json = JSON.stringify(theme); }
+    if (redraw) drawFx(); scheduleSave();
     clearTimeout(fxT);
     fxT = setTimeout(() => {
       const el = fxTarget; if (!el || !el.isConnected) return;
+      if (!stillFx(el.dataset.fx)) links.forEach(x => x.isConnected && renderFx(x));
       if (stillFx(el.dataset.fx)) previewFx(el); else renderFx(el);
     }, FX_INFO[fxTarget.dataset.fx].text ? 350 : 80);
   }
@@ -1811,6 +1956,7 @@ void main(){
       const el = fxTarget, text = FX_INFO[el.dataset.fx].text;
       fxTarget = null; fxPanel.classList.remove('open'); unrender(el);
       if (text) { el.removeAttribute('data-fx'); el.removeAttribute('data-fx-cfg'); }
+      else if (el === pageBg) { theme.bg = 'theme'; applyTheme(); syncPanel(); if (typeof drawInsp === 'function' && insp.classList.contains('open')) drawInsp(); }
       else if (FX_INFO[el.dataset.fx].kind) el.remove();
       else { const sec = el.closest('[data-block]'); if (sec && !sec.querySelector('[data-e]')) sec.remove(); else el.remove(); }
       refresh(); toast(text || (FX_INFO[el.dataset.fx] && FX_INFO[el.dataset.fx].kind) ? 'Efecto quitado' : 'Bloque eliminado', [{ label: 'Deshacer', fn: undo }]); return;
@@ -1855,7 +2001,7 @@ void main(){
     }, 350);
   }
   function commit() { hist.push(cur()); if (hist.length > 150) hist.shift(); fut = []; }
-  function restore(s) { stopFx(); site.innerHTML = s.html; theme = normTheme(s.theme); applyTheme(); syncPanel(); closeFx(); refresh(); }
+  function restore(s) { stopFx(); picked = []; site.innerHTML = s.html; theme = normTheme(s.theme); applyTheme(); syncPanel(); closeFx(); refresh(); if (insp.classList.contains('open')) drawInsp(); }
   function undo() { if (!hist.length) return toast('No hay nada para deshacer'); fut.push(cur()); restore(hist.pop()); }
   function redo() { if (!fut.length) return toast('No hay nada para rehacer'); hist.push(cur()); restore(fut.pop()); }
 
@@ -1967,7 +2113,8 @@ void main(){
   }
   function decorate() {
     site.querySelectorAll('[data-e]').forEach(el => { el.contentEditable = 'true'; el.spellcheck = true; el.setAttribute('data-ph', phFor(el)); });
-    site.querySelectorAll('[data-block]').forEach(s => s.appendChild(sectionBar(s)));
+    site.querySelectorAll('[data-block]').forEach(s => { s.appendChild(sectionBar(s)); const h = mk('div', 'ed-resize ed-x'); h.title = 'Arrastrá para cambiar el alto · doble clic: alto automático'; h.contentEditable = 'false'; s.appendChild(h); });
+    picked = picked.filter(n => n.isConnected); picked.forEach(n => n.classList.add('ed-picked'));
     site.querySelectorAll('[data-item]').forEach(it => it.appendChild(itemBar(it)));
     site.querySelectorAll('.note[data-item]').forEach(n => { const b = mk('button', 'ed-open ed-x', 'Abrir nota ↗'); b.type = 'button'; b.dataset.act = 'open'; b.contentEditable = 'false'; n.appendChild(b); });
     site.querySelectorAll('[data-list]').forEach(l => {
@@ -2019,6 +2166,7 @@ void main(){
     }
     if (it.matches('a')) m.push({ label: 'Cambiar enlace', hint: it.getAttribute('href') || '', fn: () => run('link', it, null, b) });
     if (it.querySelector('[data-slot]')) m.push({ label: 'Cambiar ícono', fn: () => run('icon', it, null, b) });
+    m.push({ label: 'Estilo y forma…', hint: 'Abre el panel de edición', fn: () => { setPicked([it]); openInsp('sel'); } });
     m.push({ label: 'Eliminar', danger: true, fn: () => run('del', it, null, b) });
     return m;
   }
@@ -2038,6 +2186,7 @@ void main(){
     const bgEl = sec.querySelector(':scope > [data-fx="grainient"]'), glEl = sec.querySelector(':scope > [data-fx="glow"]');
     m.push({ label: bgEl ? 'Ajustar fondo Grainient' : 'Fondo animado (Grainient)', hint: bgEl ? 'El fondo de esta sección' : 'Degradado animado con grano, con tus colores', fn: () => bgEl ? openFxPanel(bgEl) : addSecFx(sec, 'grainient') },
            { label: glEl ? 'Ajustar cursor luminoso' : 'Cursor luminoso', hint: glEl ? 'El efecto de esta sección' : 'Una estela de luz sigue al mouse', fn: () => glEl ? openFxPanel(glEl) : addSecFx(sec, 'glow') });
+    m.push({ label: 'Tamaño, fondo y estilo…', hint: 'Abre el panel de edición', fn: () => { setPicked([sec]); openInsp('sel'); } });
     m.push({ label: 'Duplicar sección', fn: () => run('dup', sec, sec, b, true) },
            { label: 'Eliminar sección', danger: true, fn: () => run('del', sec, sec, b, true) });
     return m;
@@ -2165,7 +2314,7 @@ void main(){
     if (!editing) return;
     const s = getSelection();
     const host = s.rangeCount ? hostOf(s.anchorNode) : null;
-    if (!host || host.classList.contains('fx-prev')) { if (!pop.contains(document.activeElement) && pop.style.display !== 'block') fmt.style.display = 'none'; return; }
+    if (!host || host.classList.contains('fx-prev') || s.isCollapsed) { if (!pop.contains(document.activeElement) && pop.style.display !== 'block') fmt.style.display = 'none'; return; }   // solo con texto seleccionado, para no tapar nada
     const r = s.isCollapsed ? host.getBoundingClientRect() : s.getRangeAt(0).getBoundingClientRect(); if (!r.width && !s.isCollapsed) return;
     fmt.classList.toggle('doc', host.hasAttribute('data-doc'));
     fmt.style.display = 'flex';
@@ -2174,12 +2323,289 @@ void main(){
     fmt.style.left = left + 'px'; fmt.style.top = (r.top + scrollY - fmt.offsetHeight - 8) + 'px';
   });
 
+
+  /* ── Panel de edición: Selección · Página · Estructura ── */
+  let picked = [], inspTab = 'sel', styleClip = null, inspSnap = null;
+  const insp = mk('div', 'ed-insp ed-ui');
+  const SEC_NAMES = { hero: 'Portada', 'curve-section': 'Texto en curva', 'services-section': 'Tarjetas', 'notes-section': 'Notas', 'exp-section': 'Línea de tiempo', 'contact-section': 'Contacto', 'text-section': 'Texto', 'circ-section': 'Texto circular', 'branch-section': 'Menú ramificado', 'folder-section': 'Carpeta flotante' };
+  const ITEM_NAMES = { 'service-card': 'Tarjeta', note: 'Nota', 't-item': 'Puesto', cred: 'Credencial', 'c-link': 'Enlace', para: 'Párrafo' };
+  const RUNTIME_CLS = new Set(['ed-sel', 'ed-picked', 'ed-dragging', 'tab-off', 'note-open-item', 'has-open-note', 'fxdark', 'fxlight', 'fx-prev', 'st', 'tf']);
+  function secName(s) { const t = s.querySelector('.s-title'); return s.dataset.nav || (t && t.textContent.trim()) || SEC_NAMES[[...s.classList].find(c => SEC_NAMES[c])] || 'Sección'; }
+  function elName(el) {
+    if (el.matches('[data-block]')) return 'Sección «' + secName(el) + '»';
+    if (el.dataset.fx && FX_INFO[el.dataset.fx] && !FX_INFO[el.dataset.fx].text) return FX_INFO[el.dataset.fx].name;
+    if (el.matches('[data-item]')) return ITEM_NAMES[[...el.classList].find(c => ITEM_NAMES[c])] || 'Elemento';
+    if (el.matches('h1')) return 'Título principal'; if (el.matches('h2')) return 'Título'; if (el.matches('h3')) return 'Subtítulo';
+    if (el.matches('.label, .tag')) return 'Etiqueta'; if (el.matches('.note-full')) return 'Nota completa'; if (el.matches('.logo')) return 'Tu nombre';
+    return 'Texto';
+  }
+  const PICK_SEL = '[data-e], [data-fx]:not(.fx-bg):not(.fx-overlay), [data-item], [data-block]';
+  function pickableOf(t) { const el = t && t.closest && t.closest(PICK_SEL); return el && site.contains(el) ? el : null; }
+  function setPicked(list) {
+    site.querySelectorAll('.ed-picked').forEach(n => n.classList.remove('ed-picked'));
+    picked = [...new Set(list)].filter(x => x && x.isConnected);
+    picked.forEach(n => n.classList.add('ed-picked'));
+    if (insp.classList.contains('open') && inspTab !== 'page') drawInsp();
+  }
+  const sig = el => el.matches('[data-block]') ? 'SECTION' : el.tagName + '.' + [...el.classList].filter(c => !RUNTIME_CLS.has(c) && !c.startsWith('st-hv-')).sort().join('.');
+  const toHexColor = v => { if (!v) return ''; if (v[0] === '#') return v.length === 7 ? v : ''; const m = String(v).match(/[\d.]+/g); if (!m || m.length < 3) return ''; return '#' + m.slice(0, 3).map(x => Math.round(+x).toString(16).padStart(2, '0')).join(''); };
+  const num = v => v === '' || v == null ? '' : parseFloat(v);
+  const px = v => v === '' || v == null ? '' : v + 'px';
+  const isT = el => el.matches('[data-e]'), isS = el => el.matches('[data-block]'), isB = el => !isS(el);
+  const SHADOW = { '': 'Auto', none: 'Ninguna', soft: 'Suave', strong: 'Fuerte' };
+  const ALIGN_IC = {
+    left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 10h10M4 14h16M4 18h10"/></svg>',
+    center: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 10h10M4 14h16M7 18h10"/></svg>',
+    right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M10 10h10M4 14h16M10 18h10"/></svg>',
+    justify: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>'
+  };
+  const cs = el => getComputedStyle(el);
+  const FIELDS = [
+    // Texto
+    { g: 'Texto', when: isT, k: 'textAlign', l: 'Alineación', t: 'seg', o: [['', 'Auto'], ['left', ALIGN_IC.left], ['center', ALIGN_IC.center], ['right', ALIGN_IC.right], ['justify', ALIGN_IC.justify]], get: el => el.style.textAlign, set: (el, v) => el.style.textAlign = v },
+    { g: 'Texto', when: isT, k: 'orient', l: 'Orientación', t: 'seg', o: [['', 'Horizontal'], ['down', 'Vertical ↓'], ['up', 'Vertical ↑']],
+      get: el => el.style.writingMode ? (el.style.transform.includes('180') ? 'up' : 'down') : '', set: (el, v) => { el.style.writingMode = v ? 'vertical-rl' : ''; el.style.transform = v === 'up' ? 'rotate(180deg)' : ''; } },
+    { g: 'Texto', when: isT, k: 'fontSize', l: 'Tamaño', t: 'range', min: 10, max: 120, step: 1, u: ' px', get: el => num(el.style.fontSize), auto: el => Math.round(parseFloat(cs(el).fontSize)), set: (el, v) => el.style.fontSize = px(v) },
+    { g: 'Texto', when: isT, k: 'fontFamily', l: 'Tipografía', t: 'select', o: [['', 'Automática'], ['var(--font-head)', 'La de los títulos'], ['var(--font-body)', 'La de los textos']], get: el => el.style.fontFamily, set: (el, v) => el.style.fontFamily = v },
+    { g: 'Texto', when: isT, k: 'fontWeight', l: 'Grosor', t: 'range', min: 300, max: 900, step: 100, get: el => num(el.style.fontWeight), auto: el => +cs(el).fontWeight || 400, set: (el, v) => el.style.fontWeight = v === '' ? '' : String(v) },
+    { g: 'Texto', when: isT, k: 'color', l: 'Color', t: 'color', get: el => el.style.color, auto: el => toHexColor(cs(el).color), set: (el, v) => el.style.color = v },
+    { g: 'Texto', when: isT, k: 'lineHeight', l: 'Interlineado', t: 'range', min: 0.8, max: 2.6, step: 0.05, get: el => num(el.style.lineHeight), auto: el => +((parseFloat(cs(el).lineHeight) / parseFloat(cs(el).fontSize)) || 1.5).toFixed(2), set: (el, v) => el.style.lineHeight = v === '' ? '' : String(v) },
+    { g: 'Texto', when: isT, k: 'letterSpacing', l: 'Espacio entre letras', t: 'range', min: -3, max: 16, step: 0.5, u: ' px', get: el => num(el.style.letterSpacing), auto: () => 0, set: (el, v) => el.style.letterSpacing = px(v) },
+    { g: 'Texto', when: isT, k: 'maxWidth', l: 'Ancho máximo', t: 'range', min: 120, max: 1400, step: 10, u: ' px', get: el => num(el.style.maxWidth), auto: el => Math.round(el.getBoundingClientRect().width), set: (el, v) => el.style.maxWidth = px(v) },
+    { g: 'Texto', when: isT, k: 'upper', l: 'Todo en mayúsculas', t: 'toggle', get: el => el.style.textTransform === 'uppercase', set: (el, v) => el.style.textTransform = v ? 'uppercase' : '' },
+    { g: 'Texto', when: isT, k: 'italic', l: 'Cursiva', t: 'toggle', get: el => el.style.fontStyle === 'italic', set: (el, v) => el.style.fontStyle = v ? 'italic' : '' },
+    // Forma y caja
+    { g: 'Forma', when: isB, k: 'shape', l: 'Forma', t: 'seg', o: [['', 'Auto'], ['0', 'Recta'], ['14', 'Redondeada'], ['999', 'Píldora']], get: el => el.style.borderRadius ? String(parseFloat(el.style.borderRadius)) : '', set: (el, v) => el.style.borderRadius = v === '' ? '' : v + 'px' },
+    { g: 'Forma', when: isB, k: 'borderRadius', l: 'Redondeo', t: 'range', min: 0, max: 80, step: 1, u: ' px', get: el => num(el.style.borderRadius), auto: el => parseFloat(cs(el).borderTopLeftRadius) || 0, set: (el, v) => el.style.borderRadius = px(v) },
+    { g: 'Forma', when: isB, k: 'backgroundColor', l: 'Fondo', t: 'color', get: el => el.style.backgroundColor, auto: el => toHexColor(cs(el).backgroundColor) || '#ffffff', set: (el, v) => el.style.backgroundColor = v },
+    { g: 'Forma', when: isB, k: 'padding', l: 'Relleno', t: 'range', min: 0, max: 80, step: 1, u: ' px', get: el => num(el.style.padding), auto: el => parseFloat(cs(el).paddingTop) || 0, set: (el, v) => el.style.padding = px(v) },
+    { g: 'Forma', when: isB, k: 'borderWidth', l: 'Borde', t: 'range', min: 0, max: 8, step: 0.5, u: ' px', get: el => num(el.style.borderWidth), auto: el => parseFloat(cs(el).borderTopWidth) || 0, set: (el, v) => { el.style.borderWidth = px(v); el.style.borderStyle = v === '' ? '' : 'solid'; } },
+    { g: 'Forma', when: isB, k: 'borderColor', l: 'Color del borde', t: 'color', get: el => el.style.borderColor, auto: el => toHexColor(cs(el).borderTopColor) || '#e5ddd4', set: (el, v) => el.style.borderColor = v },
+    { g: 'Forma', when: isB, k: 'shadow', l: 'Sombra', t: 'seg', o: Object.entries(SHADOW), get: el => el.dataset.shadow || '', set: (el, v) => { if (v) el.dataset.shadow = v; else delete el.dataset.shadow; } },
+    { g: 'Forma', when: isB, k: 'rotate', l: 'Rotación', t: 'range', min: -45, max: 45, step: 1, u: '°', get: el => num(el.style.rotate), auto: () => 0, set: (el, v) => el.style.rotate = v === '' || v === 0 ? '' : v + 'deg' },
+    { g: 'Forma', when: isB, k: 'opacity', l: 'Opacidad', t: 'range', min: 0.1, max: 1, step: 0.05, pct: true, get: el => num(el.style.opacity), auto: () => 1, set: (el, v) => el.style.opacity = v === '' ? '' : String(v) },
+    // Sección
+    { g: 'Tamaño de la sección', when: isS, k: 'minh', l: 'Alto mínimo', t: 'range', min: 0, max: 100, step: 1, u: '% de la pantalla', get: el => num(el.style.getPropertyValue('--sec-minh')), auto: el => Math.round(el.getBoundingClientRect().height / innerHeight * 100),
+      set: (el, v) => v === '' ? el.style.removeProperty('--sec-minh') : el.style.setProperty('--sec-minh', v + 'vh') },
+    { g: 'Tamaño de la sección', when: isS, k: 'valign', l: 'Contenido', t: 'seg', o: [['', 'Centrado'], ['flex-start', 'Arriba'], ['flex-end', 'Abajo']], show: el => !!el.style.getPropertyValue('--sec-minh'),
+      get: el => el.style.getPropertyValue('--sec-valign').trim(), set: (el, v) => v ? el.style.setProperty('--sec-valign', v) : el.style.removeProperty('--sec-valign') },
+    { g: 'Tamaño de la sección', when: isS, k: 'paddingTop', l: 'Espacio arriba', t: 'range', min: 0, max: 240, step: 2, u: ' px', get: el => num(el.style.paddingTop), auto: el => parseFloat(cs(el).paddingTop) || 0, set: (el, v) => el.style.paddingTop = px(v) },
+    { g: 'Tamaño de la sección', when: isS, k: 'paddingBottom', l: 'Espacio abajo', t: 'range', min: 0, max: 240, step: 2, u: ' px', get: el => num(el.style.paddingBottom), auto: el => parseFloat(cs(el).paddingBottom) || 0, set: (el, v) => el.style.paddingBottom = px(v) },
+    { g: 'Tamaño de la sección', when: isS, k: 'wrap', l: 'Ancho del contenido', t: 'range', min: 320, max: 1400, step: 10, u: ' px', get: el => num(el.style.getPropertyValue('--sec-wrap')), auto: () => theme.wrap,
+      set: (el, v) => v === '' ? el.style.removeProperty('--sec-wrap') : el.style.setProperty('--sec-wrap', v + 'px') },
+    { g: 'Fondo de la sección', when: isS, k: 'secBg', l: 'Fondo', t: 'seg', o: [['', 'Ninguno'], ['color', 'Color'], ['grad', 'Degradado']],
+      get: el => el.style.getPropertyValue('--sb1') ? 'grad' : el.style.backgroundColor ? 'color' : '',
+      set: (el, v) => {
+        if (v !== 'color') el.style.backgroundColor = '';
+        if (v !== 'grad') ['--sb1', '--sb2', '--sba'].forEach(p => el.style.removeProperty(p));
+        const acc = hex3(theme.accent), bgc = rgb3(getComputedStyle(body).backgroundColor);
+        if (v === 'color' && !el.style.backgroundColor) el.style.backgroundColor = toHex(mix3(bgc, acc, 0.12));
+        if (v === 'grad' && !el.style.getPropertyValue('--sb1')) { el.style.setProperty('--sb1', toHex(mix3(bgc, acc, 0.08))); el.style.setProperty('--sb2', toHex(mix3(bgc, acc, 0.35))); el.style.setProperty('--sba', '135deg'); }
+      } },
+    { g: 'Fondo de la sección', when: isS, k: 'secBgColor', l: 'Color', t: 'color', show: el => !!el.style.backgroundColor, get: el => el.style.backgroundColor, set: (el, v) => el.style.backgroundColor = v },
+    { g: 'Fondo de la sección', when: isS, k: 'sb1', l: 'Color 1', t: 'color', show: el => !!el.style.getPropertyValue('--sb1'), get: el => el.style.getPropertyValue('--sb1').trim(), set: (el, v) => el.style.setProperty('--sb1', v) },
+    { g: 'Fondo de la sección', when: isS, k: 'sb2', l: 'Color 2', t: 'color', show: el => !!el.style.getPropertyValue('--sb1'), get: el => el.style.getPropertyValue('--sb2').trim(), set: (el, v) => el.style.setProperty('--sb2', v) },
+    { g: 'Fondo de la sección', when: isS, k: 'sba', l: 'Ángulo', t: 'range', min: 0, max: 360, step: 5, u: '°', show: el => !!el.style.getPropertyValue('--sb1'), get: el => num(el.style.getPropertyValue('--sba')), auto: () => 135, set: (el, v) => el.style.setProperty('--sba', (v === '' ? 135 : v) + 'deg') },
+    { g: 'Fondo de la sección', when: isS, k: 'tone', l: 'Color del texto', t: 'seg', o: [['', 'Automático'], ['light', 'Claro'], ['dark', 'Oscuro']], get: el => el.dataset.tone || '', set: (el, v) => { if (v) el.dataset.tone = v; else delete el.dataset.tone; } },
+    { g: 'Fondo de la sección', when: isS, k: 'divider', l: 'Línea divisoria abajo', t: 'toggle', get: el => el.style.borderBottomStyle !== 'none', set: (el, v) => el.style.borderBottomStyle = v ? '' : 'none' }
+  ];
+  const FIELD = Object.fromEntries(FIELDS.map(f => [f.k, f]));
+  const fmtI = (f, v) => f.pct ? Math.round(v * 100) + '%' : (Math.round(v * 100) / 100) + (f.u || '');
+  const targetsFor = f => picked.filter(el => f.when(el));
+
+  function fieldHTML(f, el) {
+    const v = f.get(el), has = v !== '' && v != null && v !== false && !(typeof v === 'number' && isNaN(v));
+    const reset = `<button type="button" class="ins-reset" data-reset="${f.k}"${has ? '' : ' hidden'}>Auto</button>`;
+    if (f.t === 'seg') return `<div class="ins-f"><span>${f.l}</span><div class="ins-seg">${f.o.map(([a, b]) => `<button type="button" data-seg="${f.k}" data-v="${a}" class="${String(v || '') === a ? 'on' : ''}" title="${a || 'Auto'}">${b}</button>`).join('')}</div></div>`;
+    if (f.t === 'toggle') return `<button type="button" class="ed-tg${v ? ' on' : ''}" data-tgl="${f.k}"><span>${f.l}</span><i></i></button>`;
+    if (f.t === 'select') return `<label class="ins-f"><span>${f.l}${reset}</span><select data-k="${f.k}">${f.o.map(([a, b]) => `<option value="${a}"${a === (v || '') ? ' selected' : ''}>${b}</option>`).join('')}</select></label>`;
+    if (f.t === 'range') { const shown = has ? v : (f.auto ? f.auto(el) : f.min); return `<label class="ins-f"><span>${f.l}<b>${has ? fmtI(f, v) : 'auto · ' + fmtI(f, shown)}</b>${reset}</span><input type="range" data-k="${f.k}" min="${f.min}" max="${f.max}" step="${f.step}" value="${shown}"></label>`; }
+    const hx = toHexColor(v) || (f.auto ? f.auto(el) : '') || '#000000';
+    return `<div class="ins-f"><span>${f.l}${reset}</span><div class="ins-crow"><input type="color" data-k="${f.k}" value="${hx}"><small>${has ? hx : 'automático'}</small></div></div>`;
+  }
+  function chainOf(el) { const out = []; let n = el; while (n && n !== site) { if (n.matches && n.matches(PICK_SEL)) out.unshift(n); n = n.parentElement; } return out; }
+
+  function selHTML() {
+    if (!picked.length) return `<div class="ins-empty"><b>Elegí algo para editar</b><p>Hacé clic en cualquier texto, tarjeta o sección de la página. Con <b>Ctrl</b> (o <b>Cmd</b>) + clic sumás varias cosas y todo lo que cambies se aplica a todas.</p><p>También podés elegir secciones desde la pestaña <b>Estructura</b>.</p></div>`;
+    const el0 = picked[0];
+    let h = `<div class="ins-title">${picked.length > 1 ? `${picked.length} elementos seleccionados` : escH(elName(el0))}</div>`;
+    if (picked.length === 1) {
+      const ch = chainOf(el0);
+      if (ch.length > 1) h += `<div class="ins-crumbs">${ch.map((n, i) => `<button type="button" data-crumb="${i}" class="${n === el0 ? 'on' : ''}">${escH(elName(n).replace(/^Sección «(.*)»$/, '$1'))}</button>`).join('<span>›</span>')}</div>`;
+    } else h += `<div class="ins-crumbs"><button type="button" data-unpick>Quitar la selección</button></div>`;
+    const groups = [...new Set(FIELDS.map(f => f.g))];
+    groups.forEach(g => {
+      const fs = FIELDS.filter(f => f.g === g && targetsFor(f).length);
+      if (!fs.length) return;
+      const first = targetsFor(fs[0])[0];
+      h += `<details class="ins-g" open><summary>${g}</summary>${fs.filter(f => !f.show || f.show(first)).map(f => fieldHTML(f, first)).join('')}</details>`;
+    });
+    const texts = picked.filter(isT), secs = picked.filter(isS);
+    if (texts.length || secs.length) {
+      h += `<details class="ins-g" open><summary>Efectos</summary><div class="ins-btns">`;
+      if (texts.length) {
+        const cur = texts[0].dataset.fx;
+        h += `<button type="button" data-tfx="split" class="${cur === 'split' ? 'on' : ''}">Split Text</button><button type="button" data-tfx="focus" class="${cur === 'focus' ? 'on' : ''}">True Focus</button>`;
+        if (texts.some(t => t.dataset.fx)) h += `<button type="button" data-tfx="adjust">Ajustar efecto</button><button type="button" data-tfx="none">Quitar efecto</button>`;
+      }
+      if (secs.length) {
+        const has = t => secs.some(s => s.querySelector(`:scope > [data-fx="${t}"]`));
+        h += `<button type="button" data-sfx="grainient" class="${has('grainient') ? 'on' : ''}">Fondo Grainient</button><button type="button" data-sfx="glow" class="${has('glow') ? 'on' : ''}">Cursor luminoso</button>`;
+        if (has('grainient') || has('glow')) h += `<button type="button" data-sfx="none">Quitar efectos de fondo</button>`;
+      }
+      h += `</div>${picked.length > 1 ? '<p class="ins-note">Se aplica a todos los seleccionados, y al ajustarlo se ajustan todos juntos.</p>' : ''}</details>`;
+    }
+    h += `<details class="ins-g" open><summary>Acciones</summary><div class="ins-btns">
+      <button type="button" data-do="copy">Copiar estilo</button>
+      <button type="button" data-do="paste"${styleClip ? '' : ' disabled'}>Pegar estilo</button>
+      <button type="button" data-do="similar">Aplicar a todos los parecidos</button>
+      <button type="button" data-do="reset">Quitar estilos</button></div>
+      <p class="ins-note">«Aplicar a todos los parecidos» copia este estilo (y su efecto de texto) a todos los elementos del mismo tipo de la página, por ejemplo todos los títulos de sección.</p></details>`;
+    return h;
+  }
+  function pageHTML() {
+    const t = theme, bgSeg = [['theme', 'Del tema'], ['color', 'Color'], ['grad', 'Degradado'], ['grainient', 'Grainient']];
+    let h = `<details class="ins-g" open><summary>Fondo de toda la página</summary>
+      <div class="ins-f"><span>Tipo</span><div class="ins-seg">${bgSeg.map(([a, b]) => `<button type="button" data-pbg="${a}" class="${t.bg === a ? 'on' : ''}">${b}</button>`).join('')}</div></div>`;
+    if (t.bg === 'color') h += `<div class="ins-f"><span>Color</span><div class="ins-crow"><input type="color" data-pk="bgColor" value="${t.bgColor}"></div></div>`;
+    if (t.bg === 'grad') h += `<div class="ins-f"><span>Color 1</span><div class="ins-crow"><input type="color" data-pk="bgC1" value="${t.bgC1}"></div></div><div class="ins-f"><span>Color 2</span><div class="ins-crow"><input type="color" data-pk="bgC2" value="${t.bgC2}"></div></div>
+      <label class="ins-f"><span>Ángulo<b>${t.bgAngle}°</b></span><input type="range" data-pk="bgAngle" min="0" max="360" step="5" value="${t.bgAngle}"></label>`;
+    if (t.bg === 'grainient') h += `<button type="button" class="ed-btn ghost ins-wide" data-do="pagegrain">Ajustar el Grainient de la página</button>`;
+    if (t.bg !== 'theme') h += `<div class="ins-f"><span>Color del texto</span><div class="ins-seg">${[['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Oscuro']].map(([a, b]) => `<button type="button" data-ptext="${a}" class="${t.bgText === a ? 'on' : ''}">${b}</button>`).join('')}</div></div>
+      <p class="ins-note">Con un fondo para toda la página, las secciones quedan transparentes para que se vea. Si a una sección le ponés su propio fondo, ese tiene prioridad.</p>`;
+    h += `</details><details class="ins-g" open><summary>Medidas</summary><label class="ins-f"><span>Ancho del contenido<b>${t.wrap} px</b></span><input type="range" data-pk="wrap" min="560" max="1400" step="10" value="${t.wrap}"></label></details>
+      <details class="ins-g" open><summary>Colores, tipografía y bordes</summary><div class="ins-embed"></div></details>`;
+    return h;
+  }
+  function treeHTML() {
+    const list = [...site.querySelectorAll(':scope > [data-block]')];
+    return `<p class="ins-note" style="margin-top:0">Tocá una sección para elegirla. Con Ctrl (o Cmd) + clic elegís varias. El ojo la oculta para los visitantes.</p>` +
+      tabGroups().map(g => `<div class="ins-tab"><button type="button" class="ins-tabh" data-go="${escA(g.id)}">${g.corner ? svg('book') : ''}<span>${escH(g.label)}</span>${g.vis === 'owner' ? '<small>solo vos</small>' : ''}</button>` +
+        g.sections.map(sec => { const i = list.indexOf(sec), hid = sec.hasAttribute('data-hidden');
+          return `<div class="ins-row${picked.includes(sec) ? ' on' : ''}${hid ? ' hid' : ''}"><button type="button" class="ins-rname" data-pick="${i}">${escH(secName(sec))}</button><button type="button" class="ins-eye" data-eye="${i}" title="${hid ? 'Mostrar a visitantes' : 'Ocultar a visitantes'}">${ui(hid ? 'eyeoff' : 'eye')}</button></div>`; }).join('') + '</div>').join('');
+  }
+  function drawInsp() {
+    const top = insp.querySelector('.ins-body') ? insp.querySelector('.ins-body').scrollTop : 0;
+    insp.innerHTML = `<div class="ins-head"><div class="ins-tabs">${[['sel', 'Selección'], ['page', 'Página'], ['tree', 'Estructura']].map(([a, b]) => `<button type="button" data-tab="${a}" class="${inspTab === a ? 'on' : ''}">${b}</button>`).join('')}</div><button type="button" class="ins-x" data-close title="Cerrar">×</button></div><div class="ins-body">${inspTab === 'sel' ? selHTML() : inspTab === 'page' ? pageHTML() : treeHTML()}</div>`;
+    if (inspTab === 'page') { panel.classList.add('ed-embedded'); insp.querySelector('.ins-embed').appendChild(panel); syncPanel(); }
+    insp.querySelector('.ins-body').scrollTop = top;
+  }
+  function openInsp(tab) {
+    buildUI(); if (tab) inspTab = tab; closeFx();
+    insp.classList.add('open'); body.classList.add('ed-dock'); drawInsp(); store.set('ed-insp', '1');
+  }
+  function closeInsp() { insp.classList.remove('open'); body.classList.remove('ed-dock'); store.del('ed-insp'); }
+
+  const inspCommit = () => { if (inspSnap) { hist.push(inspSnap); fut = []; inspSnap = null; } };
+  function applyField(f, v) { targetsFor(f).forEach(el => f.set(el, v)); scheduleSave(); }
+  function clipOf(el) { return { style: el.getAttribute('style') || '', shadow: el.dataset.shadow || '', tone: el.dataset.tone || '', fx: el.dataset.fx && FX_INFO[el.dataset.fx] && FX_INFO[el.dataset.fx].text ? [el.dataset.fx, el.getAttribute('data-fx-cfg')] : null }; }
+  function pasteClip(el, c) {
+    if (c.style) el.setAttribute('style', c.style); else el.removeAttribute('style');
+    if (c.shadow) el.dataset.shadow = c.shadow; else delete el.dataset.shadow;
+    if (el.matches('[data-block]')) { if (c.tone) el.dataset.tone = c.tone; else delete el.dataset.tone; }
+    if (c.fx && el.matches('[data-e]')) { el.dataset.fx = c.fx[0]; el.setAttribute('data-fx-cfg', c.fx[1]); }
+  }
+  insp.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    const d = b.dataset;
+    if (d.close !== undefined) return closeInsp();
+    if (d.tab) { inspTab = d.tab; return drawInsp(); }
+    if (d.crumb !== undefined) return setPicked([chainOf(picked[0])[+d.crumb]]);
+    if (d.unpick !== undefined) return setPicked([]);
+    if (d.seg) { commit(); applyField(FIELD[d.seg], d.v); return drawInsp(); }
+    if (d.tgl) { const f = FIELD[d.tgl]; commit(); applyField(f, !f.get(targetsFor(f)[0])); return drawInsp(); }
+    if (d.reset) { commit(); applyField(FIELD[d.reset], ''); return drawInsp(); }
+    if (d.tfx) {
+      const texts = picked.filter(isT);
+      if (d.tfx === 'adjust') return openFxPanel(texts.find(t => t.dataset.fx));
+      commit();
+      if (d.tfx === 'none') { texts.forEach(t => { t.removeAttribute('data-fx'); t.removeAttribute('data-fx-cfg'); }); refresh(); drawInsp(); return toast('Efecto quitado de ' + texts.length + (texts.length === 1 ? ' texto' : ' textos')); }
+      const src = texts.find(t => t.dataset.fx === d.tfx), cfg = src ? src.getAttribute('data-fx-cfg') : JSON.stringify(FX_DEF[d.tfx]);
+      texts.forEach(t => { t.dataset.fx = d.tfx; t.setAttribute('data-fx-cfg', cfg); });
+      refresh(); drawInsp(); openFxPanel(texts[0]); fxDirty = true; return;
+    }
+    if (d.sfx) {
+      const secs = picked.filter(isS); commit();
+      if (d.sfx === 'none') { secs.forEach(s => s.querySelectorAll(':scope > .fx-bg, :scope > .fx-overlay').forEach(x => x.remove())); refresh(); return drawInsp(); }
+      const src = secs.map(s => s.querySelector(`:scope > [data-fx="${d.sfx}"]`)).find(Boolean), cfg = src ? src.getAttribute('data-fx-cfg') : JSON.stringify(FX_DEF[d.sfx]);
+      secs.forEach(s => { let x = s.querySelector(`:scope > [data-fx="${d.sfx}"]`); if (!x) { x = mk('div', FX_INFO[d.sfx].kind === 'bg' ? 'fx-bg' : 'fx-overlay'); x.dataset.fx = d.sfx; s.prepend(x); } x.setAttribute('data-fx-cfg', cfg); });
+      refresh(); drawInsp(); openFxPanel(secs[0].querySelector(`:scope > [data-fx="${d.sfx}"]`)); fxDirty = true; return;
+    }
+    if (d.do === 'copy') { styleClip = clipOf(picked[0]); drawInsp(); return toast('Estilo copiado. Elegí otras cosas y tocá «Pegar estilo».'); }
+    if (d.do === 'paste' && styleClip) { commit(); picked.forEach(el => pasteClip(el, styleClip)); refresh(); drawInsp(); return toast('Estilo pegado en ' + picked.length + (picked.length === 1 ? ' elemento' : ' elementos'), [{ label: 'Deshacer', fn: undo }]); }
+    if (d.do === 'similar') {
+      const s0 = sig(picked[0]), all = [...site.querySelectorAll(PICK_SEL)].filter(el => el !== picked[0] && sig(el) === s0), c = clipOf(picked[0]);
+      if (!all.length) return toast('No hay otros elementos de este tipo en la página.');
+      commit(); all.forEach(el => pasteClip(el, c)); refresh(); setPicked([picked[0], ...all]);
+      return toast(`Estilo aplicado a ${all.length} ${all.length === 1 ? 'elemento parecido' : 'elementos parecidos'}`, [{ label: 'Deshacer', fn: undo }], 5000);
+    }
+    if (d.do === 'reset') { commit(); picked.forEach(el => { el.removeAttribute('style'); delete el.dataset.shadow; delete el.dataset.tone; }); refresh(); return drawInsp(); }
+    if (d.do === 'pagegrain') { if (pageBg) openFxPanel(pageBg); return; }
+    if (d.pbg) { themeEdit(() => theme.bg = d.pbg); return drawInsp(); }
+    if (d.ptext) { themeEdit(() => theme.bgText = d.ptext); return drawInsp(); }
+    if (d.go !== undefined) { location.hash = '#' + d.go; return; }
+    if (d.pick !== undefined) {
+      const sec = site.querySelectorAll(':scope > [data-block]')[+d.pick]; if (!sec) return;
+      if (e.ctrlKey || e.metaKey || e.shiftKey) setPicked(picked.includes(sec) ? picked.filter(x => x !== sec) : [...picked, sec]);
+      else { const g = tabGroups().find(x => x.sections.includes(sec)); if (g) location.hash = '#' + g.id; setPicked([sec]); setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); }
+      return drawInsp();
+    }
+    if (d.eye !== undefined) { const sec = site.querySelectorAll(':scope > [data-block]')[+d.eye]; if (!sec) return; commit(); sec.toggleAttribute('data-hidden'); refresh(); return drawInsp(); }
+  });
+  insp.addEventListener('input', e => {
+    const t = e.target;
+    if (t.dataset.pk) { const k = t.dataset.pk, v = t.type === 'range' ? +t.value : t.value; themeEdit(() => theme[k] = v, false); const lb = t.closest('.ins-f') && t.closest('.ins-f').querySelector('b'); if (lb) lb.textContent = v + (k === 'wrap' ? ' px' : '°'); return; }
+    const f = FIELD[t.dataset.k]; if (!f) return;
+    if (!inspSnap) inspSnap = cur();
+    const v = t.type === 'range' ? +t.value : t.value;
+    applyField(f, v);
+    const row = t.closest('.ins-f');
+    if (row) { const lb = row.querySelector('b'); if (lb) lb.textContent = fmtI(f, v); const sm = row.querySelector('small'); if (sm) sm.textContent = v; const rs = row.querySelector('.ins-reset'); if (rs) rs.hidden = false; }
+  });
+  insp.addEventListener('change', e => {
+    const t = e.target;
+    if (t.dataset.pk) { themeEdit(() => {}, true); return; }
+    if (FIELD[t.dataset.k]) { inspCommit(); if (t.tagName === 'SELECT') drawInsp(); }
+  });
+
+  /* Fondo de toda la página (Grainient): una capa fija detrás de todo, que no se guarda en el contenido */
+  function renderPageBg() {
+    if (theme.bg === 'grainient') {
+      if (!pageBg) { pageBg = mk('div', 'page-bg'); pageBg.dataset.fx = 'grainient'; pageBg.setAttribute('aria-hidden', 'true'); }
+      if (!pageBg.isConnected) body.prepend(pageBg);
+      const c = Object.assign({}, FX_DEF.grainient, theme.bgGrain || {});
+      if (theme.bgText !== 'auto') c.textMode = theme.bgText;
+      pageBg.setAttribute('data-fx-cfg', JSON.stringify(c));
+      renderFx(pageBg);
+    } else if (pageBg) { unrender(pageBg); pageBg.remove(); }
+  }
+
+  /* Cambiar el alto de una sección arrastrando su borde inferior */
+  let rz = null;
+  site.addEventListener('pointerdown', e => {
+    const h = e.target.closest('.ed-resize'); if (!h || !editing) return;
+    e.preventDefault(); e.stopPropagation();
+    const sec = h.closest('[data-block]'); commit();
+    rz = { sec, y: e.clientY, h: sec.getBoundingClientRect().height }; h.setPointerCapture(e.pointerId); body.classList.add('ed-resizing');
+  });
+  site.addEventListener('pointermove', e => {
+    if (!rz) return;
+    const hpx = Math.max(60, rz.h + e.clientY - rz.y);
+    rz.sec.style.setProperty('--sec-minh', (hpx / innerHeight * 100).toFixed(1) + 'vh');
+  });
+  const rzEnd = () => { if (!rz) return; rz = null; body.classList.remove('ed-resizing'); scheduleSave(); if (insp.classList.contains('open')) drawInsp(); };
+  site.addEventListener('pointerup', rzEnd); site.addEventListener('pointercancel', rzEnd);
+  site.addEventListener('dblclick', e => {
+    const h = e.target.closest('.ed-resize'); if (!h || !editing) return;
+    commit(); h.closest('[data-block]').style.removeProperty('--sec-minh'); h.closest('[data-block]').style.removeProperty('--sec-valign'); scheduleSave(); toast('Alto automático');
+  });
+
   /* ── Barra inferior, panel de diseño, avisos ── */
   const toolbar = mk('div', 'ed-toolbar ed-ui',
     '<span class="ed-status">Sin cambios</span><span class="ed-sep"></span>' +
     `<button type="button" data-t="undo" title="Deshacer (Ctrl+Z)">${ui('undo')}</button>` +
     `<button type="button" data-t="redo" title="Rehacer (Ctrl+Shift+Z)">${ui('redo')}</button>` +
-    `<button type="button" data-t="design">${ui('palette')}<span class="lbl">Diseño</span></button>` +
+    `<button type="button" data-t="design">${ui('palette')}<span class="lbl">Panel de edición</span></button>` +
     `<button type="button" data-t="view">${ui('eye')}<span class="lbl">Ver como visitante</span></button>` +
     `<button type="button" data-t="publish" class="primary" title="Publicar en GitHub Pages">${ui('upload')}<span class="lbl">Publicar</span></button>` +
     `<button type="button" data-t="more" title="Más opciones">${ui('more')}</button>`);
@@ -2188,14 +2614,14 @@ void main(){
   toolbar.addEventListener('click', e => {
     const b = e.target.closest('[data-t]'); if (!b) return;
     ({ undo, redo, publish, view: exitEdit,
-       design: () => { closeFx(); panel.classList.toggle('open'); },
+       design: () => { closeFx(); if (insp.classList.contains('open')) closeInsp(); else openInsp(); },
        more: () => showMenu(b, [
          { label: 'Conexión con GitHub', hint: gh ? `${gh.owner}/${gh.repo} · ${gh.branch}` : 'Todavía no está configurada', fn: openSetup },
          { label: 'Descargar HTML', hint: 'Copia de respaldo en tu computadora', fn: exportHTML },
          { label: 'Descartar cambios no descargados', hint: 'Vuelve a la versión del archivo', fn: discard },
          ...(store.get(KEY + '-prev') ? [{ label: 'Recuperar borrador anterior', hint: 'El último que no coincidía con el archivo', fn: recoverPrev }] : []),
          { label: 'Ocultar el botón «Editar» en este navegador', hint: 'Seguís pudiendo entrar con ?editar', fn: () => { store.del(OWNER); toast('Listo. Entrá con ?editar cuando quieras.'); } },
-         { label: 'Cómo funciona', fn: () => { panel.classList.add('open'); panel.querySelector('.ed-hint').scrollIntoView(); } }
+         { label: 'Cómo funciona', fn: () => { openInsp('page'); setTimeout(() => { const h = insp.querySelector('.ed-hint'); if (h) h.scrollIntoView(); }, 50); } }
        ]) })[b.dataset.t]();
   });
 
@@ -2222,7 +2648,7 @@ void main(){
       '<button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Oscuro</button></div></div>' +
     '<div class="ed-hint"><b>Cómo funciona.</b> Hacé clic en cualquier texto para editarlo. Seleccioná texto para ponerlo en negrita, cursiva o agregar un enlace. Al pasar el mouse sobre una tarjeta aparece a su izquierda una manija <b>⋮⋮</b>: arrastrala para mover, o hacé clic para duplicar, cambiar el ícono o borrar. Con <b>+</b> agregás uno nuevo debajo. Las secciones tienen su barra arriba a la derecha.</div>' +
     '<div class="ed-hint"><b>Pestañas.</b> Cada sección con nombre es una pestaña del menú. Las secciones sin nombre forman parte de la pestaña anterior (las primeras, de «Inicio»). Desde ⋮⋮ de una sección podés renombrarla, moverla o mandarla al ícono de arriba a la derecha, como las Notas. Para abrir una nota y escribirla completa, tocá «Abrir nota».</div>' +
-    '<div class="ed-hint"><b>Efectos.</b> Hacé clic en un texto y tocá <b>✦</b> en la barrita negra para darle un efecto (Split Text o True Focus). Los textos con efecto tienen un subrayado punteado. El texto circular y el texto en curva se ajustan haciéndoles clic; para agregar más, usá «Agregar sección».</div>' +
+    '<div class="ed-hint"><b>Efectos.</b> Seleccioná un texto y tocá <b>✦</b> en la barrita negra, o usá la sección «Efectos» del <b>Panel de edición</b>, para darle un efecto (Split Text o True Focus). Los textos con efecto tienen un subrayado punteado. El texto circular y el texto en curva se ajustan haciéndoles clic; para agregar más, usá «Agregar sección».</div>' +
     '<div class="ed-hint"><b>Guardar y publicar.</b> Mientras editás, todo se guarda solo en este navegador. Para que lo vean los demás, tocá <b>Publicar</b>: se guarda en tu repositorio de GitHub y la página se actualiza en 1 o 2 minutos.</div>' +
     '<div class="ed-hint"><b>Volver a editar.</b> Agregá <b>?editar</b> al final de la dirección de tu página, o usá Ctrl/Cmd + Shift + E. Los visitantes nunca ven estas herramientas.</div>';
   const colorIn = panel.querySelector('input[type=color]'), radiusIn = panel.querySelector('input[type=range]');
@@ -2247,7 +2673,7 @@ void main(){
   radiusIn.addEventListener('change', () => themeEdit(() => theme.radius = +radiusIn.value, true));
 
   let uiBuilt = false;
-  function buildUI() { if (uiBuilt) return; uiBuilt = true; [toolbar, panel, fxPanel, pop, fmt, toastEl, modal].forEach(n => body.appendChild(n)); syncPanel(); }
+  function buildUI() { if (uiBuilt) return; uiBuilt = true; [toolbar, panel, insp, fxPanel, pop, fmt, toastEl, modal].forEach(n => body.appendChild(n)); syncPanel(); }
 
   /* ── Entrar / salir / exportar ── */
   function enterEdit() {
@@ -2255,6 +2681,7 @@ void main(){
     try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch (e) {}
     if (!gh) privState = 'nogh'; else if (privState !== 'ok') privState = 'loading';
     refresh();
+    if (store.get('ed-insp')) openInsp();
     if (gh) syncFromGitHub().then(showPending); else showPending();
   }
   function showPending() {
@@ -2502,15 +2929,15 @@ void main(){
     if (e.key === 'Escape') { e.stopPropagation(); closeSetup(); }
   });
   function exitEdit() {
-    editing = false; body.classList.remove('editing'); closePop(); panel.classList.remove('open'); closeFx();
+    editing = false; body.classList.remove('editing', 'ed-dock'); insp.classList.remove('open'); picked = []; closePop(); panel.classList.remove('open'); closeFx();
     fmt.style.display = 'none'; toastEl.classList.remove('show'); closeFx(); clean(site); applyTabs(false); renderFx(); fab.classList.add('show');
     if (document.activeElement) document.activeElement.blur();
   }
   function buildHTML(html) {
     const doc = root.cloneNode(true);
     doc.querySelector('#site').innerHTML = html;
-    doc.querySelectorAll('.ed-ui').forEach(n => n.remove());
-    const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev', 'note-open'); if (!b.classList.length) b.removeAttribute('class');
+    doc.querySelectorAll('.ed-ui, .page-bg').forEach(n => n.remove());
+    const b = doc.querySelector('body'); b.classList.remove('editing', 'ed-typing', 'ed-fxprev', 'note-open', 'ed-dock', 'ed-resizing', 'fxdark', 'fxlight'); if (!b.classList.length) b.removeAttribute('class');
     OLD_FX_ATTRS.forEach(a => doc.removeAttribute(a)); doc.classList.remove('anim-ready', 'owner'); if (!doc.classList.length) doc.removeAttribute('class');
     return '<!DOCTYPE html>\n' + doc.outerHTML + '\n';
   }
@@ -2532,6 +2959,10 @@ void main(){
     if (!editing) return;
     const b = e.target.closest('[data-act]');
     if (b && site.contains(b)) { e.preventDefault(); e.stopPropagation(); act(b.dataset.act, b); return; }
+    if (e.target.closest && e.target.closest('#site .ed-resize')) return;
+    const pk = site.contains(e.target) ? pickableOf(e.target) : null;   // selección (Ctrl/Cmd + clic suma)
+    if (pk && (e.ctrlKey || e.metaKey)) { e.preventDefault(); e.stopPropagation(); setPicked(picked.includes(pk) ? picked.filter(x => x !== pk) : [...picked, pk]); return; }
+    if (pk && !(picked.length === 1 && picked[0] === pk)) setPicked([pk]);
     const fb = e.target.closest('#site [data-fx="circular"], #site [data-fx="curved"], #site [data-fx="branch"], #site [data-fx="folder"], #site [data-fx="grainient"]');
     if (fb) { e.preventDefault(); openFxPanel(fb); return; }
     if (e.target.matches && e.target.matches('#site [data-block], #site [data-block] > .wrap, #site .hero-wrap')) {   // clic en el fondo vacío de una sección con Grainient
@@ -2560,7 +2991,7 @@ void main(){
     if (mod && k === 's') { e.preventDefault(); toast('Tus cambios se guardan solos. Cuando quieras que los vean los demás, tocá Publicar.'); return; }
     if (!field && mod && k === 'z') { if (e.target.closest && e.target.closest('input')) return; e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (!field && mod && k === 'y') { e.preventDefault(); redo(); return; }
-    if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); closeFx(); if (field) field.blur(); }
+    if (e.key === 'Escape') { closePop(); panel.classList.remove('open'); closeFx(); if (field) field.blur(); else if (picked.length && !e.target.closest('.ed-ui')) setPicked([]); }
     if (field && !mod && e.key.length === 1) body.classList.add('ed-typing');
     if (field && e.key === 'Enter') {
       if (field.hasAttribute('data-doc')) return;   // en la nota completa, Enter crea párrafos
@@ -2639,6 +3070,7 @@ void main(){
   OLD_FX_ATTRS.forEach(a => root.removeAttribute(a)); root.classList.remove('anim-ready'); if (!root.classList.length) root.removeAttribute('class');
   if (store.get(OWNER)) root.classList.add('owner');
   fxReady = true;
+  renderPageBg();
   if (new URLSearchParams(location.search).has('editar')) enterEdit();
   else {
     if (store.get(OWNER)) { fab.classList.add('show'); privState = gh ? 'loading' : 'nogh'; }
@@ -2647,235 +3079,5 @@ void main(){
   }
 })();
 </script>
-
-
-<script async="" src="/.netlify/scripts/hud?variant=owner-private" data-nf-variant="owner-private" data-netlify-site-id="bda6403e-b9b8-4f3f-8b10-d57778c7669f" data-app-host="app.netlify.com"></script>
-<iframe id="nl-hud-frame" title="Netlify" style="position: fixed; bottom: 0px; right: 0px; border: 0px; margin: 0px; padding: 0px; background: transparent; color-scheme: dark; z-index: 2147483645; width: 156px; height: 78px; clip-path: path(&quot;M 3 3 H 143 V 65 H 3 Z&quot;);" srcdoc="&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;color-scheme&quot; content=&quot;dark&quot;&gt;&lt;style&gt;
-    :root{--nl-vw:1879px;--nl-vh:920px}
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:transparent;overflow:hidden}
-    body{display:flex;align-items:flex-end;justify-content:flex-end;height:100vh;
-      padding:8px 18px 18px 8px;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#f4f9f9;-webkit-font-smoothing:antialiased}
-    .nl-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:10px;width:max-content;max-width:calc(var(--nl-vw,100vw) - 26px)}
-    button{font-family:inherit;cursor:pointer}
-    :focus-visible{outline:2px solid #32e6e2;outline-offset:2px;border-radius:6px}
-    .nl-icon-btn{position:relative;flex:none;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid transparent;background:transparent;color:#d5e3e6;transition:background .15s ease,color .15s ease}
-    .nl-icon-btn:hover{background:rgba(255,255,255,0.08);color:#f4f9f9}
-    .nl-tap::after{content:&quot;&quot;;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:max(100%,44px);height:max(100%,44px)}
-    @keyframes nl-rise{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
-    @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
-  
-      .nl-popover{display:none;width:min(320px,calc(var(--nl-vw,100vw) - 26px));max-height:calc(var(--nl-vh,100vh) - 90px);overflow-y:auto;background:linear-gradient(180deg,#132832 0%,#0e1e25 100%);border:1px solid rgba(255,255,255,0.09);border-radius:18px;transform-origin:bottom right;animation:nl-rise .28s cubic-bezier(.34,1.4,.4,1) both}
-      .nl-popover.open{display:block}
-      .nl-popover-head{display:flex;align-items:center;gap:9px;padding:13px 12px 5px 16px}
-      .nl-popover-icon{display:inline-flex;color:#32e6e2}
-      .nl-popover-title{flex:1;font-size:13.5px;font-weight:700;letter-spacing:-0.01em;color:#f4f9f9}
-      .nl-popover-body{padding:0 16px 12px}
-      .nl-task{display:flex;align-items:center;gap:10px;padding:11px 0}
-      .nl-task+.nl-task{border-top:1px solid rgba(255,255,255,0.06)}
-      .nl-task-meta{flex:1;min-width:0}
-      .nl-task-title{font-size:13.5px;font-weight:650;color:#f4f9f9}
-      .nl-task-desc{font-size:11.5px;color:#a9bdc2}
-      .nl-task-run{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid rgba(50,230,226,0.35);background:transparent;color:#32e6e2;font-size:12px;font-weight:700;border-radius:999px;padding:6px 13px;transition:background .15s ease,transform .15s cubic-bezier(.34,1.4,.4,1)}
-      .nl-task-run:hover{background:rgba(5,189,186,0.12);transform:translateY(-1px)}
-      .nl-bar,.nl-mini{-webkit-user-select:none;user-select:none}
-      .nl-bar{display:flex;align-items:center;gap:2px;white-space:nowrap;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,#142b34,#0e1e25);border-radius:999px;padding:7px 8px 7px 14px;color:#f4f9f9}
-      .nl-logo{flex:none;margin-right:8px;display:inline-flex}
-      .nl-status{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:0.01em;color:#fbbf24;padding:6px 5px;border-radius:8px;transition:background .15s ease}
-      .nl-status:hover,.nl-status[aria-expanded='true']{background:rgba(251,191,36,0.12)}
-      .nl-tip{display:none;align-self:flex-start;width:min(300px,calc(var(--nl-vw,100vw) - 26px));background:linear-gradient(180deg,#132832 0%,#0e1e25 100%);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.5;color:#d5e3e6;animation:nl-rise .2s cubic-bezier(.34,1.4,.4,1) both}
-      .nl-tip.open{display:block}
-      .nl-tip a{display:flex;width:fit-content;align-items:center;gap:4px;margin-top:8px;color:#32e6e2;text-decoration:none;font-weight:650}
-      .nl-tip a:hover{text-decoration:underline}
-      .nl-sep{width:1px;height:18px;background:rgba(255,255,255,0.09);margin:0 10px 0 12px;flex:none}
-      .nl-btn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;border:0;background:transparent;color:#d5e3e6;font-family:inherit;font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;transition:background .15s ease,color .15s ease}
-      .nl-btn svg{color:#32e6e2}
-      .nl-btn:hover{background:rgba(255,255,255,0.07);color:#f4f9f9}
-      .nl-btn[aria-expanded='true']{background:rgba(255,255,255,0.1);color:#f4f9f9}
-      .nl-publish{display:inline-flex;align-items:center;gap:7px;text-decoration:none;margin-left:6px;background:#05bdba;color:#02191b;font-size:13px;font-weight:700;padding:8px 15px;border-radius:999px;transition:background .15s ease,transform .15s cubic-bezier(.34,1.4,.4,1)}
-      .nl-publish:hover{background:#32e6e2;transform:translateY(-1px)}
-      .nl-min{margin-left:6px}
-
-      /* ——— Minimized ——— */
-      .nl-bar,.nl-mini{min-height:52px}
-      .nl-mini{display:none;align-items:center;gap:2px;border:1px solid rgba(255,255,255,0.09);background:linear-gradient(180deg,#142b34,#0e1e25);border-radius:999px;padding:5px 5px 5px 13px;cursor:pointer}
-      .nl-mini-state .nl-mini{display:flex}
-      .nl-mini-state .nl-bar,.nl-mini-state .nl-popover,.nl-mini-state .nl-tip{display:none}
-      .nl-mini-brand{display:inline-flex;align-items:center;gap:7px;padding-right:8px}
-      .nl-mini-lock{display:inline-flex;color:#fbbf24}
-
-      /* ——— Narrow layout ——— */
-      .nl-narrow .nl-shrinks{position:absolute;width:1px;height:1px;overflow:hidden;
-        clip-path:inset(50%);white-space:nowrap}
-      .nl-narrow .nl-status{gap:0}
-      .nl-narrow .nl-bar{padding:6px 6px 6px 10px}
-      .nl-narrow .nl-logo{margin-right:6px}
-      .nl-narrow .nl-sep{margin:0 6px 0 8px}
-      .nl-narrow .nl-btn{padding:8px 9px}
-      .nl-narrow .nl-publish{margin-left:4px;padding:8px 11px}
-    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-      &lt;div class=&quot;nl-wrap&quot;&gt;
-        &lt;section class=&quot;nl-popover&quot; id=&quot;nl-pop&quot; aria-label=&quot;Pre-launch tools&quot;&gt;
-          &lt;div class=&quot;nl-popover-head&quot;&gt;
-            &lt;span class=&quot;nl-popover-icon&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.98407 9.625L8.58935 11.0952C8.62792 11.1889 8.71922 11.25 8.82053 11.25H9.77587C9.88268 11.25 9.95527 11.1415 9.91454 11.0428L7.3828 4.90468C7.3442 4.81107 7.25294 4.75 7.15169 4.75H6.34295C6.24163 4.75 6.15033 4.81115 6.11177 4.90484L3.58524 11.0429C3.54461 11.1416 3.61719 11.25 3.72395 11.25H4.67399C4.7753 11.25 4.86659 11.1889 4.90516 11.0952L5.51045 9.625H7.98407ZM7.46943 8.375L6.74726 6.62092L6.02508 8.375H7.46943Z&quot;/&gt;&lt;path d=&quot;M10.75 11.25C10.6119 11.25 10.5 11.1381 10.5 11V5C10.5 4.86193 10.6119 4.75 10.75 4.75H11.5C11.6381 4.75 11.75 4.86193 11.75 5V11C11.75 11.1381 11.6381 11.25 11.5 11.25H10.75Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M0 5.5C0 2.73858 2.23858 0.5 5 0.5H11C13.7614 0.5 16 2.73858 16 5.5V10.5C16 13.2614 13.7614 15.5 11 15.5H5C2.23858 15.5 0 13.2614 0 10.5V5.5ZM5 1.75H11C13.0711 1.75 14.75 3.42893 14.75 5.5V10.5C14.75 12.5711 13.0711 14.25 11 14.25H5C2.92893 14.25 1.25 12.5711 1.25 10.5V5.5C1.25 3.42893 2.92893 1.75 5 1.75Z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
-            &lt;span class=&quot;nl-popover-title&quot;&gt;Pre-launch tools&lt;/span&gt;
-            &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap&quot; id=&quot;nl-pop-close&quot; aria-label=&quot;Close&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.9&quot; stroke-linecap=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-          &lt;/div&gt;
-          &lt;div class=&quot;nl-popover-body&quot;&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;SEO / GEO audit&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;Check that Google and AI assistants can find and read your site.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=d7bd9353-a6a3-442d-86f0-9b15488f68c3&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;Performance check&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;See how fast your pages load, and what is slowing them down.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=f8ef80a5-be9b-494d-9fac-a4ac5d5689a4&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-            
-      &lt;div class=&quot;nl-task&quot;&gt;
-        &lt;div class=&quot;nl-task-meta&quot;&gt;&lt;div class=&quot;nl-task-title&quot;&gt;Security audit&lt;/div&gt;&lt;div class=&quot;nl-task-desc&quot;&gt;Look for common weak spots, like out-of-date code or open settings.&lt;/div&gt;&lt;/div&gt;
-        &lt;a class=&quot;nl-task-run&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?promptTemplate=5f50f746-2ba1-4a3d-8a47-1a515f4420eb&amp;from_hud=private&amp;hud_action=ar_task&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;12&quot; height=&quot;12&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.68 9.925 4.607 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1zM9.96 9.925 8.886 8.85l-.013-.379 1.1-1.1.38.012 1.075 1.075.012.379-1.1 1.1z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M9.005 2.52v1.296h2.657a3.19 3.19 0 0 1 3.191 3.192v3.356a3.19 3.19 0 0 1-3.191 3.191H4.338a3.19 3.19 0 0 1-3.191-3.19V7.007a3.19 3.19 0 0 1 3.191-3.192h2.836V2.52l.229-.245h1.373zM4.338 5.316c-.934 0-1.691.758-1.691 1.692v3.356c0 .934.758 1.691 1.691 1.691h7.324c.933 0 1.69-.757 1.691-1.69V7.007c0-.934-.757-1.692-1.691-1.692z&quot;/&gt;&lt;/svg&gt; Run&lt;/a&gt;
-      &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/section&gt;
-        &lt;div class=&quot;nl-mini&quot; id=&quot;nl-mini&quot;&gt;
-          &lt;span class=&quot;nl-mini-brand&quot;&gt;&lt;svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
-    &lt;path fill=&quot;#fff&quot; d=&quot;M17.9922 18.3225H14.005L13.6746 17.9921V14.005L14.005 13.6746H17.9922L18.3226 14.005V17.9921L17.9922 18.3225Z&quot;/&gt;
-    &lt;g fill=&quot;#05BDBA&quot;&gt;
-      &lt;path d=&quot;M9.6958 24.3311H9.35705L7.6661 22.6401V22.3041L10.2511 19.7164L12.042 19.7191L12.2808 19.9552V21.7461L9.6958 24.3311Z&quot;/&gt;
-      &lt;path d=&quot;M7.6661 9.69576V9.35701L9.35705 7.66606H9.6958L12.2808 10.2511V12.0392L12.042 12.2808H10.2511L7.6661 9.69576Z&quot;/&gt;
-      &lt;path d=&quot;M10.0457 17.4369H0.205466L0 17.2314V14.7658L0.205466 14.5603H10.0457L10.2511 14.7658V17.2314L10.0457 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M31.7945 17.4369H21.9544L21.7489 17.2314V14.7658L21.9544 14.5603H31.7945L32 14.7658V17.2314L31.7945 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 10.0456V2.66547L14.7686 2.46001H17.2343L17.4396 2.66547V10.0456L17.2343 10.2511H14.7686L14.5631 10.0456Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 29.3316V21.9515L14.7686 21.746H17.2343L17.4396 21.9515V29.3316L17.2343 29.5371H14.7686L14.5631 29.3316Z&quot;/&gt;
-    &lt;/g&gt;&lt;/svg&gt;&lt;span class=&quot;nl-mini-lock&quot;&gt;&lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; fill-rule=&quot;evenodd&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 1.5A3.5 3.5 0 0 0 4.5 5v2H4A1.5 1.5 0 0 0 2.5 8.5v4A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12 7h-.5V5A3.5 3.5 0 0 0 8 1.5zm2 5.5V5a2 2 0 1 0-4 0v2h4z&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/span&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-mini-open&quot; id=&quot;nl-mini-open&quot;
-                  aria-label=&quot;Show Netlify site tools&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 4.5 8.5 8 12 11.5M7.5 4.5 4 8 7.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-mini-hide&quot; id=&quot;nl-mini-hide&quot;
-                  aria-label=&quot;Hide Netlify tools on this site&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.9&quot; stroke-linecap=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;section class=&quot;nl-tip&quot; id=&quot;nl-tip&quot; aria-label=&quot;Project visibility&quot;&gt;
-          This project is private - only your team and people you invite can view it.
-          &lt;a href=&quot;https://docs.netlify.com/manage/security/secure-access-to-sites/project-visibility/&quot;
-             target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Learn more &lt;span aria-hidden=&quot;true&quot;&gt;&amp;#8599;&lt;/span&gt;&lt;/a&gt;
-        &lt;/section&gt;
-        &lt;div class=&quot;nl-bar&quot; role=&quot;toolbar&quot; aria-label=&quot;Netlify site tools&quot;&gt;
-          &lt;span class=&quot;nl-logo&quot;&gt;&lt;svg width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 32 32&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
-    &lt;path fill=&quot;#fff&quot; d=&quot;M17.9922 18.3225H14.005L13.6746 17.9921V14.005L14.005 13.6746H17.9922L18.3226 14.005V17.9921L17.9922 18.3225Z&quot;/&gt;
-    &lt;g fill=&quot;#05BDBA&quot;&gt;
-      &lt;path d=&quot;M9.6958 24.3311H9.35705L7.6661 22.6401V22.3041L10.2511 19.7164L12.042 19.7191L12.2808 19.9552V21.7461L9.6958 24.3311Z&quot;/&gt;
-      &lt;path d=&quot;M7.6661 9.69576V9.35701L9.35705 7.66606H9.6958L12.2808 10.2511V12.0392L12.042 12.2808H10.2511L7.6661 9.69576Z&quot;/&gt;
-      &lt;path d=&quot;M10.0457 17.4369H0.205466L0 17.2314V14.7658L0.205466 14.5603H10.0457L10.2511 14.7658V17.2314L10.0457 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M31.7945 17.4369H21.9544L21.7489 17.2314V14.7658L21.9544 14.5603H31.7945L32 14.7658V17.2314L31.7945 17.4369Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 10.0456V2.66547L14.7686 2.46001H17.2343L17.4396 2.66547V10.0456L17.2343 10.2511H14.7686L14.5631 10.0456Z&quot;/&gt;
-      &lt;path d=&quot;M14.5631 29.3316V21.9515L14.7686 21.746H17.2343L17.4396 21.9515V29.3316L17.2343 29.5371H14.7686L14.5631 29.3316Z&quot;/&gt;
-    &lt;/g&gt;&lt;/svg&gt;&lt;/span&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-status&quot; id=&quot;nl-status&quot;
-                  aria-expanded=&quot;false&quot; aria-controls=&quot;nl-tip&quot;&gt;&lt;svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; fill-rule=&quot;evenodd&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M8 1.5A3.5 3.5 0 0 0 4.5 5v2H4A1.5 1.5 0 0 0 2.5 8.5v4A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12 7h-.5V5A3.5 3.5 0 0 0 8 1.5zm2 5.5V5a2 2 0 1 0-4 0v2h4z&quot;/&gt;&lt;/svg&gt;&lt;span class=&quot;nl-shrinks&quot;&gt;Private&lt;/span&gt;&lt;/button&gt;
-          &lt;span class=&quot;nl-sep&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
-          &lt;a class=&quot;nl-btn&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?modal=share&amp;from_hud=private&amp;hud_action=share&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.5636 8C6.94548 8.31953 6.24382 8.5 5.5 8.5C4.75618 8.5 4.05452 8.31953 3.4364 8H1.5L0.5 9V13L1.5 14H9.5L10.5 13V9L9.5 8H7.5636ZM8.87868 9.5H7.90075C7.16414 9.82186 6.35125 10 5.5 10C4.64875 10 3.83586 9.82186 3.09925 9.5H2.12132L2 9.62132V12.3787L2.12132 12.5H8.87868L9 12.3787V9.62132L8.87868 9.5Z&quot;/&gt;&lt;path d=&quot;M13.9999 10.1213V11.8463L12.2043 11.8481L12.0039 12.0357V13.1606L12.2043 13.3481H13.7955L13.7975 13.3463H14.7024L15.4999 12.5V9.5L14.5001 8.5001L12.2043 8.49976L12.0039 8.68726V9.81225L12.2043 9.99976L13.8786 10L13.9999 10.1213Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M5.5 7C6.88071 7 8 5.88071 8 4.5C8 3.11929 6.88071 2 5.5 2C4.11929 2 3 3.11929 3 4.5C3 5.88071 4.11929 7 5.5 7ZM5.5 5.5C6.05228 5.5 6.5 5.05228 6.5 4.5C6.5 3.94772 6.05228 3.5 5.5 3.5C4.94772 3.5 4.5 3.94772 4.5 4.5C4.5 5.05228 4.94772 5.5 5.5 5.5Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M13.7 5.1C13.7 6.25937 12.7594 7.2 11.6 7.2C10.4406 7.2 9.5 6.25937 9.5 5.1C9.5 3.94062 10.4406 3 11.6 3C12.7594 3 13.7 3.94062 13.7 5.1ZM11.6 5.7C11.9309 5.7 12.2 5.43095 12.2 5.1C12.2 4.76905 11.9309 4.5 11.6 4.5C11.2691 4.5 11 4.76905 11 5.1C11 5.43095 11.2691 5.7 11.6 5.7Z&quot;/&gt;&lt;/svg&gt;
-            &lt;span class=&quot;nl-shrinks&quot;&gt;Share&lt;/span&gt;&lt;/a&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-btn&quot; id=&quot;nl-tools&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;nl-pop&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M7.98407 9.625L8.58935 11.0952C8.62792 11.1889 8.71922 11.25 8.82053 11.25H9.77587C9.88268 11.25 9.95527 11.1415 9.91454 11.0428L7.3828 4.90468C7.3442 4.81107 7.25294 4.75 7.15169 4.75H6.34295C6.24163 4.75 6.15033 4.81115 6.11177 4.90484L3.58524 11.0429C3.54461 11.1416 3.61719 11.25 3.72395 11.25H4.67399C4.7753 11.25 4.86659 11.1889 4.90516 11.0952L5.51045 9.625H7.98407ZM7.46943 8.375L6.74726 6.62092L6.02508 8.375H7.46943Z&quot;/&gt;&lt;path d=&quot;M10.75 11.25C10.6119 11.25 10.5 11.1381 10.5 11V5C10.5 4.86193 10.6119 4.75 10.75 4.75H11.5C11.6381 4.75 11.75 4.86193 11.75 5V11C11.75 11.1381 11.6381 11.25 11.5 11.25H10.75Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M0 5.5C0 2.73858 2.23858 0.5 5 0.5H11C13.7614 0.5 16 2.73858 16 5.5V10.5C16 13.2614 13.7614 15.5 11 15.5H5C2.23858 15.5 0 13.2614 0 10.5V5.5ZM5 1.75H11C13.0711 1.75 14.75 3.42893 14.75 5.5V10.5C14.75 12.5711 13.0711 14.25 11 14.25H5C2.92893 14.25 1.25 12.5711 1.25 10.5V5.5C1.25 3.42893 2.92893 1.75 5 1.75Z&quot;/&gt;&lt;/svg&gt;
-            &lt;span class=&quot;nl-shrinks&quot;&gt;Pre-launch tools&lt;/span&gt;&lt;/button&gt;
-          &lt;a class=&quot;nl-publish&quot; href=&quot;https://app.netlify.com/projects/bda6403e-b9b8-4f3f-8b10-d57778c7669f/overview?modal=go-live&amp;from_hud=private&amp;hud_action=make_public&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;svg width=&quot;15&quot; height=&quot;15&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M11.072 6C10.8557 5.99995 10.6443 5.93576 10.4644 5.81554C10.2846 5.69533 10.1444 5.52449 10.0617 5.32463C9.97895 5.12477 9.95733 4.90486 9.99956 4.69271C10.0418 4.48056 10.146 4.2857 10.299 4.13276C10.4519 3.97982 10.6468 3.87568 10.859 3.8335C11.0711 3.79132 11.291 3.81299 11.4909 3.89578C11.6907 3.97857 11.8615 4.11876 11.9817 4.29862C12.1019 4.47848 12.166 4.68994 12.166 4.90625C12.1658 5.19633 12.0505 5.47447 11.8454 5.67956C11.6402 5.88464 11.3621 5.9999 11.072 6Z&quot;/&gt;&lt;path fill-rule=&quot;evenodd&quot; clip-rule=&quot;evenodd&quot; d=&quot;M3.59279 4.5H6.77473L8.48034 2.74577L10.1619 1L14.4308 1.00686L15 1.59031V6.01763L11.5291 9.61732L11.78 12.4852L11.1608 13.7165L8.58695 15.2986L7.59043 14.7959L7.31674 11.6676L4.624 8.875H1.65598L1.06836 7.92609L2.42011 5.22418L3.59279 4.5ZM8.7673 11.037L8.96573 13.305L10.0122 12.6618L10.2486 12.1917L10.1476 11.037L8.7673 11.037ZM8.43037 10.6616L12.036 6.93056L13.5 5.41225V2.50537L10.7987 2.50103L10.0283 3.30089L5.69627 7.82603L8.43037 10.6616ZM5.27424 7.38834L5.35943 6H4.01862L3.57089 6.27649L3.02131 7.375H5.26138L5.27424 7.38834Z&quot;/&gt;&lt;path d=&quot;M2.05008 10.9935L3.79156 9.6874L4.81429 10.7954L3.17932 12.0216L2.95615 13.1374L4.07201 12.9143L5.28155 11.3016L6.31603 12.4222L5.10008 14.0435L4.64717 14.3289L2.14717 14.8289L1.26465 13.9464L1.76465 11.4464L2.05008 10.9935Z&quot;/&gt;&lt;/svg&gt; Make public&lt;/a&gt;
-          &lt;button type=&quot;button&quot; class=&quot;nl-icon-btn nl-tap nl-min&quot; id=&quot;nl-min&quot;
-                  aria-label=&quot;Minimize Netlify tools&quot;&gt;&lt;svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M4 4.5 7.5 8 4 11.5M8.5 4.5 12 8 8.5 11.5&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;script&gt;
-        
-    function nlSend(){
-      var wrap=document.querySelector('.nl-wrap'),boxes=[];
-      for(var i=0;i&lt;wrap.children.length;i++){
-        var c=wrap.children[i];
-        if(!c.offsetWidth||!c.offsetHeight)continue;
-        boxes.push({x:c.offsetLeft-wrap.offsetLeft+8,
-                    y:c.offsetTop-wrap.offsetTop+8,
-                    w:c.offsetWidth,h:c.offsetHeight});
-      }
-      parent.postMessage({nlHud:'resize',
-        width:wrap.offsetWidth+26,
-        height:wrap.offsetHeight+26,
-        boxes:boxes},'*');
-    }
-    function nlSendSoon(){requestAnimationFrame(nlSend);}
-    window.addEventListener('load',nlSend);
-    window.addEventListener('message',function(e){
-      if(e.source!==parent||!e.data||e.data.nlHud!=='viewport')return;
-      var s=document.documentElement.style;
-      s.setProperty('--nl-vw',e.data.w+'px');
-      s.setProperty('--nl-vh',e.data.h+'px');
-      document.documentElement.classList.toggle('nl-narrow',e.data.w&lt;600);
-      nlSendSoon();
-    });
-    var nlCoarse=window.matchMedia('(pointer: coarse)').matches;
-    function nlSubmit(form){
-      if(form.requestSubmit)return form.requestSubmit();
-      if(form.checkValidity&amp;&amp;!form.checkValidity())
-        return form.reportValidity&amp;&amp;form.reportValidity();
-      form.submit();
-    }
-  
-        var btn=document.getElementById('nl-tools'),pop=document.getElementById('nl-pop');
-        function setOpen(open){
-          pop.classList.toggle('open',open);
-          btn.setAttribute('aria-expanded',open?'true':'false');
-          nlSendSoon();
-        }
-        btn.addEventListener('click',function(){setOpen(!pop.classList.contains('open'));});
-        document.getElementById('nl-pop-close').addEventListener('click',function(){setOpen(false);btn.focus();});
-
-        var statusBtn=document.getElementById('nl-status'),tip=document.getElementById('nl-tip'),tipTimer=null;
-        function setTip(open){
-          tip.classList.toggle('open',open);
-          statusBtn.setAttribute('aria-expanded',open?'true':'false');
-          nlSendSoon();
-        }
-        function openTip(){clearTimeout(tipTimer);setTip(true);}
-        function closeTipSoon(){clearTimeout(tipTimer);tipTimer=setTimeout(function(){setTip(false);},200);}
-        if(!nlCoarse){
-          statusBtn.addEventListener('mouseenter',openTip);
-          statusBtn.addEventListener('mouseleave',closeTipSoon);
-          tip.addEventListener('mouseenter',openTip);
-          tip.addEventListener('mouseleave',closeTipSoon);
-        }
-        statusBtn.addEventListener('focus',function(){
-          var keyboard;
-          try{keyboard=statusBtn.matches(':focus-visible');}catch(e){keyboard=!nlCoarse;}
-          if(keyboard)openTip();
-        });
-        statusBtn.addEventListener('blur',closeTipSoon);
-        statusBtn.addEventListener('click',function(){
-          clearTimeout(tipTimer);
-          setTip(nlCoarse ? !tip.classList.contains('open') : true);
-        });
-
-        var root=document.documentElement;
-        function setStage(value){
-          root.classList.toggle('nl-mini-state',value==='mini');
-          if(value==='mini'){setOpen(false);setTip(false);}
-          parent.postMessage({nlHud:'state',value:value},'*');
-          nlSendSoon();
-        }
-        document.getElementById('nl-min').addEventListener('click',function(){
-          setStage('mini');
-          document.getElementById('nl-mini-open').focus();
-        });
-        document.getElementById('nl-mini').addEventListener('click',function(e){
-          if(e.target.closest('#nl-mini-hide'))return;
-          setStage('');
-          document.getElementById('nl-min').focus();
-        });
-        document.getElementById('nl-mini-hide').addEventListener('click',function(){
-          parent.postMessage({nlHud:'state',value:'hidden'},'*');
-        });
-        document.addEventListener('keydown',function(e){
-          if(e.key!=='Escape')return;
-          if(tip.classList.contains('open')){setTip(false);statusBtn.focus();return;}
-          if(pop.classList.contains('open')){setOpen(false);btn.focus();}
-        });
-      &lt;/script&gt;
-    &lt;/body&gt;&lt;/html&gt;" data-nl-ready="1"></iframe></body></html>
+</body>
+</html>
